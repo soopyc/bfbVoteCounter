@@ -14,12 +14,12 @@ To setup the vote collector, you only need to follow a few steps.
 
 (If you're a pro gamer and know how to use git just clone the repo locally and cd to it and skup till step #.)
 
-1. Download the code. Click the "Clone or Download button". (![Clone or Download button](https://kenny-pls.go-get-a.life/YLMeWN.png))
+1. Download the code. Click the "Clone or Download button". (![Clone or Download button](https://kenny-pls.go-get-a.life/fbFxBO.png))
 
-2. Press the ``Download ZIP`` button. (![Download ZIP Button](https://kenny-pls.go-get-a.life/GiONdB.png))
+2. Press the ``Download ZIP`` button. (![Download ZIP Button](https://kenny-pls.go-get-a.life/lXDvJn.png))
 Save it to any directory you like. If your antivirus told you it's a virus please dismiss it. This code is not and will not be a virus. 
 All it does is just download the comments from Google's servers and process it in a fancy manner so you can see which character got how many votes. 
 You can see the VirusTotal scan result for the bare python code once it is finished.
 
-3. Uncompress the zip file. If you're on Windows and uses WinRAR, open it, right click on the ``bfbVoteCounter-master`` folder and press <kbd>Alt+E</kbd>
-or use this option (right click ![Button](https://kenny-pls.go-get-a.life/JeNRqh.png))
+3. Uncompress the zip file. If you're on Windows and uses WinRAR, open it, right click on the ``bfbVoteCounter-master`` folder and use any of these 
+options. ![Options](https://kenny-pls.go-get-a.life/TIrIyk.png)
