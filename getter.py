@@ -11,14 +11,19 @@ s = {
 	vidcomments = 0
 }
 
-vidinfo = requests.get(f"https://content.googleapis.com/youtube/v3/videos?part=snippet,statistics&id= &key={key}")
-# Example thing
+vi = requests.get(f"https://content.googleapis.com/youtube/v3/videos?part=snippet,statistics&id= &key={key}")
 
+# Example
 seg = {
 	shinyvotes = {
 		"RandomUsername": 5,
-		"iConker": 33",
+		"iConker": 33,
 		"george Source": 42
 	}
-	vidname = 
+	vidinfo = {
+		"title": "vi['items'][0]['snippet']['title']",
+		"publish": "vi['items'][0]['snippet']"
+	}
 }
+
+def 
