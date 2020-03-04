@@ -4,7 +4,7 @@ echo "Downloading latest archive..."
 wget https://github.com/kcomain/bfbVoteCounter/archive/master.zip -O /tmp/b53a5a29dfca42de.zip
 
 echo "Unpacking Files"
-unzip /tmp/b53a5a29dfca42de.zip
+yes|unzip /tmp/b53a5a29dfca42de.zip
 cd bfbVoteCounter-master
 
 echo "Please edit the configuration file, or press Control-C or Command-C to cancel this process. Note that the script needs the configuration to work."
