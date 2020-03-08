@@ -40,5 +40,10 @@ if len(p) == 0:
 else:
     config['vidid'] = p[1].replace('watch?v=', '')
 
+print('Next, pleaee give me your google api token (due to an earlier incident of someone stealing ny api token, you must'
+      'create your own api token to use this service. Instructions at https://github.com/kcomain/bfbVoteCounter/wiki/Ge'
+      'tting-your-Google-API-token')
+config['key'] = ask('Google API Token')
+
 
 print(config)
