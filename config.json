@@ -2,8 +2,8 @@
 	"info": "BFB 15 Vote config",
 	"videoID": "Please put the video id in here.",
 	"chars":{
-		"Barf Bag": "A"
-		"Bomby": "B"
+		"Barf Bag": "A",
+		"Bomby": "B",
 		"Spongy": "C",
 		"Gelatin": "D",
 		"Donut": "E",

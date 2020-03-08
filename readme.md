@@ -43,7 +43,11 @@ step.)
 
 
 ## Fast guide
-Quick and easy script to get this thing up and running. Please ensure you have python 3.6+ installed beforehand.
+Quick and easy script to get this thing up and running. Please ensure you have python 3.6+ installed beforehand, or this script will attempt installing it
+which will most likely fail because my lack of knowledge of making bash scripts.
 ```
-curl https://raw.githubusercontent.com/kcomain/bfbVoteCounter/master/setup.sh | bash
+wget https://raw.githubusercontent.com/kcomain/bfbVoteCounter/master/setup.sh; chmod +x setup.sh; 
 ```
+
+If you're on windows... uhhh...
+Download python if you haven't, install it, remember to check the "Add to PATH" checkbox, clone the repo, 
