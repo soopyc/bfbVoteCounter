@@ -49,5 +49,4 @@ which will most likely fail because my lack of knowledge of making bash scripts.
 wget https://raw.githubusercontent.com/kcomain/bfbVoteCounter/master/setup.sh; chmod +x setup.sh; 
 ```
 
-If you're on windows... uhhh...
-Download python if you haven't, install it, remember to check the "Add to PATH" checkbox, clone the repo, 
+If you're on windows, just follow the steps above or wait for a pyinstaller release.
