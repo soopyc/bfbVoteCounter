@@ -1,7 +1,13 @@
+import json
+import requests as req
 import dateutil.parser as dp
 
 
 class InvalidObject(Exception):
+    pass
+
+
+class VideoNotFoundException(Exception):
     pass
 
 
@@ -18,7 +24,7 @@ class Comment:
         self.published_at = p[2]
 
     def __str__(self):
-        return f"Comment: {self.text}"
+        return f"Comment: {self.text} --{self.author}"
 
     @staticmethod
     def _parse(o):
@@ -46,7 +52,10 @@ class CommentThread:
     :return: CommentThread object
     '''
     def __init__(self, obj):
-        p = self._parse(obj)
+        self.comment, self.reply_count, self.replies = self._parse(obj)
+
+    def __str__(self):
+        return f"CommentThread: {len(self.replies)} {'reply' if len(self.replies) == 1 else 'replies'}"
 
     @staticmethod
     def _parse(o):
@@ -81,7 +90,7 @@ class Video:
         self.comments = ct[5]
 
     def __str__(self):
-        return f'{self.title}, {self.comments} total comments.'
+        return f'Video: {self.title}, {self.comments} total comments.'
 
     @staticmethod
     def _parse(o):
@@ -104,5 +113,54 @@ class Video:
         return tuple([pub, title, desc, chnl, views, coms])
 
 
-"https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id={id}&key={key}"  # video items
-"https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId={id}&key={key}"  # comment snippets
+class Fetchers:
+    '''Quick and easy YouTube Data API fetching functions
+    :param key: Google API Token
+    '''
+    def __init__(self, key):
+        self.key = key
+
+    def comment_thread(self, vid, npt=None):
+        '''
+        Get a YouTube commentThread resource.
+
+        :param vid: Video ID
+        :param npt: Next page token. Will get first page result if not given.
+        :return: tuple(list([CommentThread, ...]), next_page_token)
+        '''
+        cth = []
+        temp = req.get(f'https://www.googleapis.com/youtube/v3/commentThreads?'
+                       f'part=snippet,replies&maxResults=100&videoId={vid}&key={self.key}'
+                       f'{""if npt is not None else f"pageToken={npt}"}')
+        r = json.loads(temp.content)
+        if 'error' in r:
+            raise VideoNotFoundException(f'Cannot find any video with the ID {vid}.')
+        for i in r['items']:
+            cth.append(CommentThread(i))
+        return tuple([cth, r['nextPageToken']])
+
+    def video(self, vid):
+        '''
+        Get a YouTube video resource.
+
+        :param vid: Video ID
+        :return: list([Video, ...])
+        '''
+        ret = []
+        temp = req.get(f'https://www.googleapis.com/youtube/v3/videos'
+                       f'?part=snippet,statistics&id={vid}&key={self.key}')
+        if temp.status_code == 403:
+            raise req.exceptions.HTTPError()
+        r = json.loads(temp.content)
+        if len(r['items']) == 0:
+            raise VideoNotFoundException(f'Video {vid} not found.')
+        for i in r['items']:
+            try:
+                ret.append(Video(i))
+            except Exception as e:
+                print(e)
+                exit(177)
+        return ret
+
+# "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id={id}&key={key}"  # video items
+# "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId={id}&key={key}"  # comment snippets

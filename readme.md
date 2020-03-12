@@ -30,8 +30,8 @@ In the future I might include a fancy pants configuration generator, but that wi
 work.
 
 5. When you're done editing the config, save it(presumably control+s or command+s) and you're ready to go! However, I strongly suggest you make your own token
-instead of using mine. My API only have 10000 quotas per day and every run takes up about at least 4000 when theres a day left in the voting period, 
-or maybe even more, which actually limits this script's function. I hope you can understand and help me by making a token yourself. Guide will be 
+instead of using mine. My API only have 10000 quotas per day and every run takes up about 2500 units of quota when theres a day left in the voting period, 
+or maybe even more, which limits this script's function. I hope you can understand and help me by making a token yourself. Guide will be 
 [here.](https://github.com/kcomain/bfbVoteCounter/wiki/Getting-your-Google-API-token)
 
 6. Open a console/terminal window by shift-right clicking on the folder and choose this option if you're on windows.

@@ -2,3 +2,6 @@ venv/
 
 # Testing files
 test/
+
+# PyCharm shit
+.idea/
