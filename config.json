@@ -1,8 +1,8 @@
 {
-	"info": "BFB 15 Vote config",
-	"videoID": "Please put the video id in here.",
-	"mode": "",
-	"characters": [
-
-	]
+	"info": "BFB 15 Vote config X",
+	"videoID": "Please put the video id in here. X",
+	"token": "YourGoogleApiTokenHere",
+	"characters": {
+		"key": "character"
+	}
 }

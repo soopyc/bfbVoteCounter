@@ -10,6 +10,8 @@ class InvalidObject(Exception):
 class VideoNotFoundException(Exception):
     pass
 
+class InvalidToken(Exception):
+    pass
 
 class Comment:
     '''Returns a custom Comment object.
@@ -149,17 +151,17 @@ class Fetchers:
         ret = []
         temp = req.get(f'https://www.googleapis.com/youtube/v3/videos'
                        f'?part=snippet,statistics&id={vid}&key={self.key}')
+        r = json.loads(temp.content)
         if temp.status_code == 403:
             raise req.exceptions.HTTPError()
-        r = json.loads(temp.content)
+        elif temp.status_code == 400:
+            for i in r['error']['errors']:  
+                if i['reason'] == "keyInvalid":
+                    raise InvalidToken
         if len(r['items']) == 0:
             raise VideoNotFoundException(f'Video {vid} not found.')
         for i in r['items']:
-            try:
-                ret.append(Video(i))
-            except Exception as e:
-                print(e)
-                exit(177)
+            ret.append(Video(i))
         return ret
 
 # "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id={id}&key={key}"  # video items
