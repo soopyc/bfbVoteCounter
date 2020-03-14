@@ -43,7 +43,7 @@ class Comment:
         except KeyError:
             raise InvalidObject('Invalid object passed into method, check https://developers.google.com/youtube/v3/docs'
                                 '/comments#resource for more information.')
-        return tuple([a, t, ti])
+        return (a, t, ti)
 
 
 class CommentThread:
@@ -72,7 +72,7 @@ class CommentThread:
         rs = []
         for i in o['replies']['comments']:
             rs.append(Comment(i))
-        return tuple([com, rc, rs])
+        return (com, rc, rs)
 
 
 class Video:
@@ -112,7 +112,7 @@ class Video:
         except KeyError:
             raise InvalidObject('Invalid object passed into method, check https://developers.google.com/youtube/v3/docs'
                                 '/videos#resource-representation for more information.')
-        return tuple([pub, title, desc, chnl, views, coms])
+        return (pub, title, desc, chnl, views, coms)
 
 
 class Fetchers:
@@ -139,7 +139,7 @@ class Fetchers:
             raise VideoNotFoundException(f'Cannot find any video with the ID {vid}.')
         for i in r['items']:
             cth.append(CommentThread(i))
-        return tuple([cth, r['nextPageToken']])
+        return (cth, r['nextPageToken'])
 
     def video(self, vid):
         '''
