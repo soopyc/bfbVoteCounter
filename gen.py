@@ -10,8 +10,10 @@ class InvalidObject(Exception):
 class VideoNotFoundException(Exception):
     pass
 
+
 class InvalidToken(Exception):
     pass
+
 
 class Comment:
     '''Returns a custom Comment object.
@@ -19,6 +21,7 @@ class Comment:
     :param obj: API return object, should match Google's API.
     :return: Comment object
     '''
+
     def __init__(self, obj):
         p = self._parse(obj)
         self.author = p[0]
@@ -53,6 +56,7 @@ class CommentThread:
     :param obj: API return object, should match Google's API.
     :return: CommentThread object
     '''
+
     def __init__(self, obj):
         self.comment, self.reply_count, self.replies = self._parse(obj)
 
@@ -82,6 +86,7 @@ class Video:
     :param obj: API return object, should match Google's API.
     :return: Video object
     '''
+
     def __init__(self, obj):
         ct = self._parse(obj)
         self.publish_time = ct[0]
@@ -119,6 +124,7 @@ class Fetchers:
     '''Quick and easy YouTube Data API fetching functions
     :param key: Google API Token
     '''
+
     def __init__(self, key):
         self.key = key
 
@@ -136,7 +142,8 @@ class Fetchers:
                        f'{""if npt is not None else f"pageToken={npt}"}')
         r = json.loads(temp.content)
         if 'error' in r:
-            raise VideoNotFoundException(f'Cannot find any video with the ID {vid}.')
+            raise VideoNotFoundException(
+                f'Cannot find any video with the ID {vid}.')
         for i in r['items']:
             cth.append(CommentThread(i))
         return (cth, r['nextPageToken'])
@@ -155,7 +162,7 @@ class Fetchers:
         if temp.status_code == 403:
             raise req.exceptions.HTTPError()
         elif temp.status_code == 400:
-            for i in r['error']['errors']:  
+            for i in r['error']['errors']:
                 if i['reason'] == "keyInvalid":
                     raise InvalidToken
         if len(r['items']) == 0:
