@@ -47,8 +47,7 @@ class Comment:
         except KeyError:
             raise InvalidObject(
                 "Invalid object passed into method, check https://developers.google.com/youtube/v3/docs"
-                "/comments#resource for more information."
-            )
+                "/comments#resource for more information.")
         return (a, t, ti)
 
 
@@ -120,8 +119,7 @@ class Video:
         except KeyError:
             raise InvalidObject(
                 "Invalid object passed into method, check https://developers.google.com/youtube/v3/docs"
-                "/videos#resource-representation for more information."
-            )
+                "/videos#resource-representation for more information.")
         return (pub, title, desc, chnl, views, coms)
 
 
@@ -145,11 +143,11 @@ class Fetchers:
         temp = req.get(
             f"https://www.googleapis.com/youtube/v3/commentThreads?"
             f"part=snippet,replies&maxResults=100&videoId={vid}&key={self.key}"
-            f'{""if npt is not None else f"pageToken={npt}"}'
-        )
+            f'{""if npt is not None else f"pageToken={npt}"}')
         r = json.loads(temp.content)
         if "error" in r:
-            raise VideoNotFoundException(f"Cannot find any video with the ID {vid}.")
+            raise VideoNotFoundException(
+                f"Cannot find any video with the ID {vid}.")
         for i in r["items"]:
             cth.append(CommentThread(i))
         return (cth, r["nextPageToken"])
@@ -162,10 +160,8 @@ class Fetchers:
         :return: list([Video, ...])
         """
         ret = []
-        temp = req.get(
-            f"https://www.googleapis.com/youtube/v3/videos"
-            f"?part=snippet,statistics&id={vid}&key={self.key}"
-        )
+        temp = req.get(f"https://www.googleapis.com/youtube/v3/videos"
+                       f"?part=snippet,statistics&id={vid}&key={self.key}")
         r = json.loads(temp.content)
         if temp.status_code == 403:
             raise req.exceptions.HTTPError()
