@@ -20,12 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450f05ac-2b61-49aa-bc4b-ad8dadd8e0f2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bfbs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/bfbs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configGen.py" beforeDir="false" afterPath="$PROJECT_DIR$/configGen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +106,7 @@
       <workItem from="1583671759715" duration="18435000" />
       <workItem from="1583973397622" duration="41701000" />
       <workItem from="1584110585285" duration="1307000" />
-      <workItem from="1584160436080" duration="12295000" />
+      <workItem from="1584160436080" duration="13755000" />
     </task>
     <servers />
   </component>

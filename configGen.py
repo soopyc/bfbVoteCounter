@@ -49,9 +49,9 @@ config['info'] = ask('This will help to distinguish between configurations when 
 print('Next, please give me the video URL or ID (the part after "/watch?v=" or "youtu.be/", looks like "vL2oRzWrSgE")')
 p = ask('Video ID').replace('//', '').split('/')  # Could be ['video_id'], ['https:youtube.com', 'watch?v=Video_ID'] or ['https:youtu.be','fkjdsjkfgadsfk']
 if len(p) == 1:
-    config['videoId'] = p[0]
+    config['videoID'] = p[0]
 else:
-    config['videoId'] = p[1].replace('watch?v=', '')
+    config['videoID'] = p[1].replace('watch?v=', '')
 
 print('Next, please give me your google api token (due to an earlier incident of someone stealing ny api token, you '
       'must create your own api token to use this service. Instructions will be in'
@@ -88,4 +88,4 @@ print('Alright, here\'s your configuration. \nFor your convenience, it has been 
 print('-----------------')
 print(config)
 print('-----------------')
-json.dump(config, open('config.json', 'w+'))
+json.dump(config, open('config.json', 'w+'), indent=4)
