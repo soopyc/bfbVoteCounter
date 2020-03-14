@@ -1,6 +1,7 @@
 import json
-import requests as req
+
 import dateutil.parser as dp
+import requests as req
 
 
 class InvalidObject(Exception):
