@@ -20,10 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450f05ac-2b61-49aa-bc4b-ad8dadd8e0f2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bfbs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/bfbs.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configGen.py" beforeDir="false" afterPath="$PROJECT_DIR$/configGen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/gen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +41,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/bfbs.txt" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1Ykt3cS6UsZsDThZpbapWbt9HMs" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -61,6 +66,35 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
+  <component name="RunManager">
+    <configuration name="configGen" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="bfb_vote_counter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/configGen.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.configGen" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -75,6 +109,7 @@
       <workItem from="1583671759715" duration="18435000" />
       <workItem from="1583973397622" duration="41701000" />
       <workItem from="1584110585285" duration="1307000" />
+      <workItem from="1584160436080" duration="12295000" />
     </task>
     <servers />
   </component>
@@ -101,9 +136,44 @@
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state x="92" y="92" width="1176" height="554" key="DiffContextDialog/0.0.1360.738@0.0.1360.738" timestamp="1584022697521" />
+    <state width="1317" height="220" key="GridCell.Tab.0.bottom" timestamp="1584165664523">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.0.bottom/0.0.1360.738@0.0.1360.738" timestamp="1584165664523" />
+    <state width="1317" height="220" key="GridCell.Tab.0.center" timestamp="1584165664523">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.0.center/0.0.1360.738@0.0.1360.738" timestamp="1584165664523" />
+    <state width="1317" height="220" key="GridCell.Tab.0.left" timestamp="1584165664523">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.0.left/0.0.1360.738@0.0.1360.738" timestamp="1584165664523" />
+    <state width="1317" height="220" key="GridCell.Tab.0.right" timestamp="1584165664523">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.0.right/0.0.1360.738@0.0.1360.738" timestamp="1584165664523" />
+    <state width="1317" height="220" key="GridCell.Tab.1.bottom" timestamp="1584165664524">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.1.bottom/0.0.1360.738@0.0.1360.738" timestamp="1584165664524" />
+    <state width="1317" height="220" key="GridCell.Tab.1.center" timestamp="1584165664524">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.1.center/0.0.1360.738@0.0.1360.738" timestamp="1584165664524" />
+    <state width="1317" height="220" key="GridCell.Tab.1.left" timestamp="1584165664523">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.1.left/0.0.1360.738@0.0.1360.738" timestamp="1584165664523" />
+    <state width="1317" height="220" key="GridCell.Tab.1.right" timestamp="1584165664524">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state width="1317" height="220" key="GridCell.Tab.1.right/0.0.1360.738@0.0.1360.738" timestamp="1584165664524" />
     <state x="385" y="72" key="MultipleFileMergeDialog" timestamp="1583907297314">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state x="385" y="72" key="MultipleFileMergeDialog/0.0.1360.738@0.0.1360.738" timestamp="1583907297314" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/bfb_vote_counter$configGen.coverage" NAME="configGen Coverage Results" MODIFIED="1584165620401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
