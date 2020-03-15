@@ -12,12 +12,13 @@ alphabeeet = 'abcdefghijklmnopqrstuvwxyz'
 
 # Functions
 def ask(q, default=None):
-    '''
+    """
     Quick and easy ask function
+
     :param q: Question to ask
     :param default: Default answer, leave blank to set as mandatory
     :return: str(reply)
-    '''
+    """
     resolve = False
     while not resolve:
         t = input(f'{q} [{"mandatory" if default is None else default}]: ')
@@ -33,13 +34,13 @@ def ask(q, default=None):
 
 
 def choice(text: str, ch: list):
-    '''
+    """
     Quick and easy choice asker
 
     :param text: Question to ask user
     :param ch: list: choices
     :return: str(reply)
-    '''
+    """
     resolve = False
     chs = '/'.join(ch)
     while not resolve:
