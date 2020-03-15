@@ -1,15 +1,17 @@
 # Main file
-import re
-import os
-import gen
 import json
-import random
-import requests
-from time import time, sleep
-
-# DEBUG
+import os
 import pickle
+import random
+import re
 import traceback
+from time import sleep
+from time import time
+
+import requests
+
+import gen
+# DEBUG
 
 start_time = time()
 # Setup veriables and configs
