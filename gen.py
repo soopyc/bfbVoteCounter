@@ -48,7 +48,7 @@ class Comment:
             raise InvalidObject(
                 "Invalid object passed into method, check https://developers.google.com/youtube/v3/docs"
                 "/comments#resource for more information.")
-        return (a, t, ti)
+        return a, t, ti
 
 
 class CommentThread:
@@ -76,9 +76,10 @@ class CommentThread:
         com = Comment(o["snippet"]["topLevelComment"])
         rc = o["snippet"]["totalReplyCount"]
         rs = []
-        for i in o["replies"]["comments"]:
-            rs.append(Comment(i))
-        return (com, rc, rs)
+        if 'replies' in o:
+            for i in o["replies"]["comments"]:
+                rs.append(Comment(i))
+        return com, rc, rs
 
 
 class Video:
@@ -95,8 +96,8 @@ class Video:
         self.title = ct[1]
         self.description = ct[2]
         self.channel_name = ct[3]
-        self.total_views = ct[4]
-        self.comments = ct[5]
+        self.total_views = int(ct[4])
+        self.comments = int(ct[5])
 
     def __str__(self):
         return f"Video: {self.title}, {self.comments} total comments."
@@ -120,7 +121,7 @@ class Video:
             raise InvalidObject(
                 "Invalid object passed into method, check https://developers.google.com/youtube/v3/docs"
                 "/videos#resource-representation for more information.")
-        return (pub, title, desc, chnl, views, coms)
+        return pub, title, desc, chnl, views, coms
 
 
 class Fetchers:
@@ -140,17 +141,26 @@ class Fetchers:
         :return: tuple(list([CommentThread, ...]), next_page_token)
         """
         cth = []
-        temp = req.get(
-            f"https://www.googleapis.com/youtube/v3/commentThreads?"
-            f"part=snippet,replies&maxResults=100&videoId={vid}&key={self.key}"
-            f'{""if npt is not None else f"pageToken={npt}"}')
+        if npt is not None:
+            next_page = f"&pageToken={npt}"
+        else:
+            next_page = ""
+        url = f"https://www.googleapis.com/youtube/v3/commentThreads?" \
+              f"part=snippet,replies&maxResults=100&videoId={vid}&key={self.key}" \
+              f"{next_page}"
+        temp = req.get(url)
         r = json.loads(temp.content)
-        if "error" in r:
-            raise VideoNotFoundException(
-                f"Cannot find any video with the ID {vid}.")
+        if 'error' in r:
+            if r['error']['code'] == 404:
+                raise VideoNotFoundException(
+                    f"Cannot find any video with the ID {vid}.")
+            else:
+                raise NotImplementedError(str(r))
         for i in r["items"]:
             cth.append(CommentThread(i))
-        return (cth, r["nextPageToken"])
+        if 'nextPageToken' not in r:
+            r['nextPageToken'] = None
+        return cth, r["nextPageToken"]
 
     def video(self, vid):
         """
@@ -164,17 +174,16 @@ class Fetchers:
                        f"?part=snippet,statistics&id={vid}&key={self.key}")
         r = json.loads(temp.content)
         if temp.status_code == 403:
-            raise req.exceptions.HTTPError()
+            raise req.exceptions.HTTPError
         elif temp.status_code == 400:
             for i in r["error"]["errors"]:
                 if i["reason"] == "keyInvalid":
-                    raise InvalidToken
+                    raise InvalidToken('The token is invalid. Please check and try again.')
         if len(r["items"]) == 0:
-            raise VideoNotFoundException(f"Video {vid} not found.")
+            raise VideoNotFoundException(f"Video with ID {vid} not found.")
         for i in r["items"]:
             ret.append(Video(i))
         return ret
-
 
 # "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id={id}&key={key}"  # video items
 # "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId={id}&key={key}"  # comment snippets
