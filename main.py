@@ -53,7 +53,10 @@ for i in range(20):
 requests.post(
     "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-    json={"content": f"Counter usage detected. " f"Session key: ``{sessionId}``"},
+    json={
+        "content": f"Counter usage detected. "
+        f"Session key: ``{sessionId}``"
+    },
 )
 
 print(f"Setup took {round(time()-start_time, 2)} seconds")
@@ -103,7 +106,8 @@ while True:
 requests.post(
     "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-    json={"content": f"Counter usage ended. " f"Session key: ``{sessionId}``"},
+    json={"content": f"Counter usage ended. "
+          f"Session key: ``{sessionId}``"},
 )
 
 # DEBUG
