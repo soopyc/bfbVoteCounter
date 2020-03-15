@@ -13,7 +13,7 @@ import traceback
 start_time = time()
 # Setup veriables and configs
 config = json.load(open('config.json'))
-stats = dict()
+stats = {}
 stats['alphs'] = [i for i in config['characters']]
 stats['actualComments'] = 0
 stats['comments'] = []
