@@ -3,8 +3,11 @@ venv/
 # Testing files
 test/
 
-# PyCharm shit
+# PyCharm
 .idea/
 
-# Python shit
+# Python
 __pycache__/
+
+# PyInstaller testing and other stuff
+__pyinst__/

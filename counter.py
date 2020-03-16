@@ -1,29 +1,23 @@
 # Main file
-import json
 import os
+import re
+import gen
+import json
 import pickle
 import random
-import re
-import traceback
-from time import sleep
-from time import time
-
 import requests
-
-import gen
+import argparse
+from time import sleep, time
 # DEBUG
+import traceback
 
 start_time = time()
-# Setup veriables and configs
+
+# Setup fucntion, veriables and configs
 config = json.load(open("config.json"))
-stats = {}
-stats["alphs"] = [i for i in config["characters"]]
-stats["actualComments"] = 0
-stats["comments"] = []
-stats["tokenUsage"] = 5
+stats = {"alphs": [i for i in config["characters"]], "actualComments": 0, "comments": [], "tokenUsage": 5}
 
 
-# Setup functions
 def clearsc():
     """Clears the screen"""
     _ = os.system("clear" if os.name == "posix" else "cls")
@@ -46,6 +40,15 @@ def check(text: str):
     return False if valid_vote is None else True, False if is_vote is None else True
 
 
+# Setup optional arguments
+parser = argparse.ArgumentParser(description="Simple python script for counting votes in BFB(Battle for BFDI), "
+                                             "n popular animated object show on YouTube.")
+parser.add_argument('-f', '--comment-file',
+                    help="The backup comment file when the code errored. It will look something like this: \n"
+                         "session_cbd312bc3b2c13cdbd.pickle",
+                    default=None, type=argparse.FileType('rb'))
+args = parser.parse_args()
+
 # Monitoring usages
 sessionId = ""
 for i in range(20):
@@ -55,12 +58,13 @@ requests.post(
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
     json={
         "content": f"Counter usage detected. "
-        f"Session key: ``{sessionId}``"
+                   f"Session key: ``{sessionId}``"
     },
 )
 
-print(f"Setup took {round(time()-start_time, 2)} seconds")
+print(f"Setup took {round(time() - start_time, 2)} seconds")
 start_time = time()
+
 # Main script
 fetcher = gen.Fetchers(config["token"])
 video = fetcher.video(config["videoID"])[0]
@@ -70,6 +74,10 @@ print(f"Video: {video.title}\tChannel: {video.channel_name}")
 print(f"Total comments: {video.comments}\tViews: {video.total_views}")
 npt = None
 while True:
+    if args.comment_file is not None:
+        argfile = pickle.load(args.comment_file)
+        for i in argfile:
+            0
     sleep(0.1)
     try:
         retv = fetcher.comment_thread(config["videoID"], npt)
@@ -93,9 +101,9 @@ while True:
             stats["actualComments"] += 1
             print(
                 f'\rGetting comments... [{stats["actualComments"]}/{video.comments}]\t'
-                f'({round((stats["actualComments"]/video.comments)*100, 2)}%, '
-                f'{stats["actualComments"]-video.comments})\t'
-                f"Time: {round(time()-start_time, 3)}\t"
+                f'({round((stats["actualComments"] / video.comments) * 100, 2)}%, '
+                f'{stats["actualComments"] - video.comments})\t'
+                f"Time: {round(time() - start_time, 3)}\t"
                 f'Est.Token Usage: {stats["tokenUsage"]}',
                 end="",
             )
@@ -107,7 +115,7 @@ requests.post(
     "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
     json={"content": f"Counter usage ended. "
-          f"Session key: ``{sessionId}``"},
+                     f"Session key: ``{sessionId}``"},
 )
 
 # DEBUG

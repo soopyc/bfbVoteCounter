@@ -1,3 +1,6 @@
+[![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/kcomain/bfbVoteCounter/?ref=repository-badge)
+
+
 # BFB Votes Collector
 Idea came from when I decided to go on HTC and saw people asking to count votes, I tried to help but ended up using sequencer's code instead.
 
