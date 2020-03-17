@@ -13,9 +13,48 @@ import traceback
 
 start_time = time()
 
+# Setup optional arguments
+parser = argparse.ArgumentParser(description="Simple python script for counting votes in BFB(Battle for BFDI), "
+                                             "n popular animated object show on YouTube.")
+parser.add_argument('-f', '--comment-file',
+                    help="The comment pickle file when it finished getting the votes and/or "
+                         "it errored out. It will look something like this: \n"
+                         "session_cbd312bc3b2c13cdbd.pickle",
+                    default=None, type=argparse.FileType('rb'))
+parser.add_argument('-d', '--delete-comments',
+                    help="Deletes all session pickle files inside of the sessions/ folder.",
+                    action='store_true')
+args = parser.parse_args()
+# Run functions if yes
+if args.delete_comments:
+    print('WARNING: All files inside of sessions/ directory will be removed. Are you sure you want to continue?')
+    a = input('Yes/No: ')
+    if a.lower() in ['yes', 'no', 'y', 'n']:
+        dire = os.listdir('sessions')
+        for i in dire:
+            try:
+                os.remove('sessions/' + i)
+            except:
+                print(f'Cannot remove file {i}.')
+            else:
+                print(f'Removed file {i}')
+        exit(0)
+    else:
+        print('Okay, cancelled.')
+        exit(0)
+
 # Setup fucntion, veriables and configs
 config = json.load(open("config.json"))
-stats = {"alphs": [i for i in config["characters"]], "actualComments": 0, "comments": [], "tokenUsage": 5}
+stats = {
+    "video": {
+        "name": "",
+        "publishTime": None
+    },
+    "alphs": [i for i in config["characters"]],
+    "actualComments": 0,
+    "comments": [],
+    "tokenUsage": 5
+}
 
 
 def clearsc():
@@ -40,14 +79,11 @@ def check(text: str):
     return False if valid_vote is None else True, False if is_vote is None else True
 
 
-# Setup optional arguments
-parser = argparse.ArgumentParser(description="Simple python script for counting votes in BFB(Battle for BFDI), "
-                                             "n popular animated object show on YouTube.")
-parser.add_argument('-f', '--comment-file',
-                    help="The backup comment file when the code errored. It will look something like this: \n"
-                         "session_cbd312bc3b2c13cdbd.pickle",
-                    default=None, type=argparse.FileType('rb'))
-args = parser.parse_args()
+# Create session dir if not present.
+try:
+    os.listdir('sessions')
+except FileNotFoundError:
+    os.makedirs("sessions")
 
 # Monitoring usages
 sessionId = ""
@@ -69,7 +105,7 @@ start_time = time()
 fetcher = gen.Fetchers(config["token"])
 video = fetcher.video(config["videoID"])[0]
 
-# Get Comments
+############################################################
 print(f"Video: {video.title}\tChannel: {video.channel_name}")
 print(f"Total comments: {video.comments}\tViews: {video.total_views}")
 npt = None
@@ -90,7 +126,7 @@ while True:
             f"Since an unexpected error occured, the scraped votes have been saved to votes/{sessionId}.pickle\n"
             "There will be an option to read from the file after the code is finished."
         )
-        pickle.dump(stats, open(f"votes/{sessionId}.pickle", "wb+"))
+        pickle.dump(stats, open(f"sessions/unfinished_{sessionId}.pickle", "wb+"))
     returnval = retv[0]
     npt = retv[1]
 
@@ -111,6 +147,13 @@ while True:
     if npt is None:
         break
 
+############################################################
+# Count dem votes
+print('Counting votes...')
+for i in stats['comments']:
+    print('a')
+
+############################################################
 # End session monitorings
 requests.post(
     "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
@@ -119,5 +162,4 @@ requests.post(
                      f"Session key: ``{sessionId}``"},
 )
 
-# DEBUG
-pickle.dump(stats, open(f"test/session_{sessionId}.pickle", "wb+"))
+pickle.dump(stats, open(f"sessions/session_{sessionId}.pickle", "wb+"))
