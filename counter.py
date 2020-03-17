@@ -8,9 +8,11 @@ import random
 import requests
 import argparse
 from time import sleep, time
+from colorama import init, Fore
 # DEBUG
 import traceback
 
+init(autoreset=True)
 start_time = time()
 
 # Setup optional arguments
@@ -27,9 +29,10 @@ parser.add_argument('-d', '--delete-comments',
 args = parser.parse_args()
 # Run functions if yes
 if args.delete_comments:
-    print('WARNING: All files inside of sessions/ directory will be removed. Are you sure you want to continue?')
+    print(Fore.YELLOW+'WARNING: All files inside of sessions/ directory will be removed. '
+                      'Are you sure you want to continue?')
     a = input('Yes/No: ')
-    if a.lower() in ['yes', 'no', 'y', 'n']:
+    if a.lower() in ['yes', 'y']:
         dire = os.listdir('sessions')
         for i in dire:
             try:
@@ -40,7 +43,7 @@ if args.delete_comments:
                 print(f'Removed file {i}')
         exit(0)
     else:
-        print('Okay, cancelled.')
+        print(Fore.GREEN+'Okay, cancelled.')
         exit(0)
 
 # Setup fucntion, veriables and configs
@@ -48,7 +51,8 @@ config = json.load(open("config.json"))
 stats = {
     "video": {
         "name": "",
-        "publishTime": None
+        "publishTime": None,
+        "obj": None
     },
     "alphs": [i for i in config["characters"]],
     "actualComments": 0,
@@ -79,6 +83,27 @@ def check(text: str):
     return False if valid_vote is None else True, False if is_vote is None else True
 
 
+def sayfill(text: str):
+    """
+    Print a string of text and filling the gap
+
+    :param text: The string text for testing
+    :return: None
+    """
+    col, _ = tuple(os.get_terminal_size())
+    print(text+''.join([' ' for _ in range(col-len(text)-1)]))
+
+
+def genbr():
+    """
+    Generate a line break thingy full of ---------
+
+    :return: None
+    """
+    col, _ = tuple(os.get_terminal_size())
+    sayfill(''.join(['-' for _ in range(cols - 1)]))
+
+
 # Create session dir if not present.
 try:
     os.listdir('sessions')
@@ -103,18 +128,23 @@ start_time = time()
 
 # Main script
 fetcher = gen.Fetchers(config["token"])
-video = fetcher.video(config["videoID"])[0]
-
+if args.comment_file is None:
+    video = fetcher.video(config["videoID"])[0]
+    stats['video']['obj'] = video
+    print('Getting comments, might be less than the statistic.')
+    stats['video']['name'] = video.title
+    stats['video']['publishTime'] = video.publish_time
+else:
+    stats = pickle.load(args.comment_file)
+    video = stats['video']['obj']
+    print(f"Comments loaded from file: {len(stats['comments'])}")
 ############################################################
 print(f"Video: {video.title}\tChannel: {video.channel_name}")
 print(f"Total comments: {video.comments}\tViews: {video.total_views}")
 npt = None
-print('Getting comments, might be less than the statistic.')
 while True:
     if args.comment_file is not None:
-        argfile = pickle.load(args.comment_file)
-        stats = argfile
-        print(f"Comments loaded from file: {len(argfile)}")
+        break
     sleep(0.1)
     try:
         retv = fetcher.comment_thread(config["videoID"], npt)
@@ -149,9 +179,27 @@ while True:
 
 ############################################################
 # Count dem votes
+sleep(5)
+clearsc()
 print('Counting votes...')
+count = 1
+t = time()
 for i in stats['comments']:
-    print('a')
+    cols, rows = tuple(os.get_terminal_size())
+    genbr()
+    sayfill(f'Comment {count} of {len(stats["comments"])}')
+    sayfill(f'Comment Author: {i.author}')
+    sayfill(f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
+    sayfill(f'Comment content: '
+            f'{i.text[0:cols-20]+f"...({len(i.text)-cols-20} characters left)" if len(i.text) > cols-19 else i.text}')
+    sayfill(f'Elapsed time: {round(time()-t, 3)}s')
+    genbr()
+    for _ in range(5):  # was rows-11
+        sayfill('')
+    # clearsc()
+    return_curzor()
+    count += 1
+
 
 ############################################################
 # End session monitorings
