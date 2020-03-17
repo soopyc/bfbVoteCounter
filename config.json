@@ -1,15 +1,13 @@
 {
-    "info": "bfb 3",
-    "videoID": "AiBqyXNtOEs",
+    "info": "bfb 15",
+    "videoID": "gI40pUTzGPI",
     "token": "AIzaSyDD2Y-CM7yKTTLJb7WyTc2NJR2djv28TY4",
     "characters": {
-        "a": "Donut",
+        "a": "Barf Bag",
         "b": "Bomby",
-        "c": "Naily",
-        "d": "Firey Jr.",
-        "e": "Bracelety",
-        "f": "Spongy",
-        "g": "Gelatin",
-        "h": "Barf Bag"
+        "c": "Spongy",
+        "d": "Gelatin",
+        "e": "Donut",
+        "f": "Naily"
     }
 }
