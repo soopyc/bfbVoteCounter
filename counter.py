@@ -12,7 +12,6 @@ from colorama import init, Fore
 # DEBUG
 import traceback
 
-init(autoreset=True)
 start_time = time()
 
 # Setup optional arguments
