@@ -73,11 +73,12 @@ video = fetcher.video(config["videoID"])[0]
 print(f"Video: {video.title}\tChannel: {video.channel_name}")
 print(f"Total comments: {video.comments}\tViews: {video.total_views}")
 npt = None
+print('Getting comments, might be less than the statistic.')
 while True:
     if args.comment_file is not None:
         argfile = pickle.load(args.comment_file)
-        for i in argfile:
-            0
+        stats = argfile
+        print(f"Comments loaded from file: {len(argfile)}")
     sleep(0.1)
     try:
         retv = fetcher.comment_thread(config["videoID"], npt)
