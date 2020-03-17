@@ -1,1 +1,2 @@
-pyinstaller --distpath __pyinst__/dist --workpath __pyinst__/build -y --specpath __pyinst__/ --log-level TRACE --clean --onefile --noupx counter.py
+rm __pyinst__/dist __pyinst__/build -vfr
+pyinstaller --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-level TRACE --clean --onefile --noupx __pyinst__/counter.spec
