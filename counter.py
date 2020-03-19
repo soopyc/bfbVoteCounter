@@ -17,6 +17,7 @@ from colorama import init
 from colorama import Style
 
 import gen
+
 # DEBUG
 
 version = (0, 0, 2)
