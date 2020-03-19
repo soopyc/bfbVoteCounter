@@ -17,7 +17,8 @@ version = (0, 0, 2)
 init(autoreset=True)
 start_time = time()
 if __name__ != "__main__":
-    raise NotImplementedError('You can only use this script on its own, but not importing it.')
+    raise NotImplementedError(
+        'You can only use this script on its own, but not importing it.')
 
 # Setup optional arguments
 parser = argparse.ArgumentParser(description="Simple python script for counting votes in BFB(Battle for BFDI), "
@@ -96,7 +97,8 @@ def check(text: str):
     :param text: The text to check
     :return: Tuple([bool:ValidVote, bool:IsVote])
     """
-    valid_vote = re.match(rf'\[({stats["alphs"]})\]', text)  # Check if the format is correct and the letter is ok
+    valid_vote = re.match(
+        rf'\[({stats["alphs"]})\]', text)  # Check if the format is correct and the letter is ok
     is_vote = re.match(r"\[\w\]", text)
     return False if valid_vote is None else True, False if is_vote is None else True
 
@@ -198,7 +200,8 @@ while True:
             f"Since an unexpected error occured, the scraped votes have been saved to votes/{sessionId}.pickle\n"
             "There will be an option to read from the file after the code is finished."
         )
-        pickle.dump(stats, open(f"sessions/unfinished_{sessionId}.pickle", "wb+"))
+        pickle.dump(stats, open(
+            f"sessions/unfinished_{sessionId}.pickle", "wb+"))
     returnval = retv[0]
     npt = retv[1]
 
@@ -236,7 +239,8 @@ for i in stats['comments']:
             cols, rows = 70, 16
         genbr()
         sayfill('Counter v%d.%d.%d' % version)
-        sayfill(f'Comment {count} of {len(stats["comments"])} [{round((count / len(stats["comments"]) * 100), 3)}%]')
+        sayfill(
+            f'Comment {count} of {len(stats["comments"])} [{round((count / len(stats["comments"]) * 100), 3)}%]')
         sayfill(f'Elapsed time: {round(time() - t, 3)}s')
     count += 1  # add one to the counter, woo hoo!
     if stats['video']['publishTStamp'] + 172800 < i.published_at.timestamp():
@@ -246,12 +250,15 @@ for i in stats['comments']:
         if check(i.text.lower())[1]:
             # Check: (isValid, isVote)
             stats['votes']['total'] += 1
-            stats['votes']['invalid'] += 1  # Is a vote, but doesn't match with a char.
+            # Is a vote, but doesn't match with a char.
+            stats['votes']['invalid'] += 1
         continue
     elif i.author in stats['votes']['voters']:
-        if i.author not in stats['votes']['shinies']:  # User voted once. Shiny.
+        # User voted once. Shiny.
+        if i.author not in stats['votes']['shinies']:
             stats['votes']['shinies'][i.author] = 0
-        stats['votes']['total'] += 1  # Still add 1 to the vote counter bc hey its valid so why not
+        # Still add 1 to the vote counter bc hey its valid so why not
+        stats['votes']['total'] += 1
         stats['votes']['shinies'][i.author] += 1  # Add 1 to user's shiny count
         stats['votes']['shinyvotes'] += 1  # Add 1 to the global counter
         continue
@@ -262,11 +269,13 @@ for i in stats['comments']:
     # sayfill(f'{count} comment(s) scanned.')
     if count > 1000 and str(count)[-3::] == "000":
         sayfill(f'Comment stats: '
-                f'{check_time(stats["video"]["publishTime"].timestamp(), i.published_at.timestamp())}\t'  # check_deadline
+                # check_deadline
+                f'{check_time(stats["video"]["publishTime"].timestamp(), i.published_at.timestamp())}\t'
                 f'{Fore.YELLOW + "[FORMAT_OK]" + Style.RESET_ALL if check(i.text.lower())[1] else Fore.RED + "[INVALID]"}\t'
                 f'{Fore.GREEN + "[TEXT_OK]" + Style.RESET_ALL if check(i.text.lower())[0] else ""}')
         sayfill(f'Comment Author: {i.author}')
-        sayfill(f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
+        sayfill(
+            f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
         genbr()
         sayfill(f'Total Votes: {stats["votes"]["total"]}')
         sayfill(f'Valid Votes: {stats["votes"]["valid"]}')
