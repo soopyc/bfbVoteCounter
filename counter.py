@@ -17,6 +17,7 @@ from colorama import init
 from colorama import Style
 
 import gen
+
 # DEBUG
 
 version = (0, 0, 2)
@@ -89,8 +90,8 @@ stats = {
         "invalid": 0,
         "deadlined": 0,
         "shinyvotes": 0,
-        "voters": list(),
-        "shinies": dict(),
+        "voters": [],
+        "shinies": {},
     },
     "alphs": [i for i in config["characters"]],
     "actualComments": 0,
