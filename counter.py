@@ -28,8 +28,7 @@ if __name__ != "__main__":
 
 # Setup optional arguments
 parser = argparse.ArgumentParser(
-    description=
-    "Simple python script for counting votes in BFB(Battle for BFDI), "
+    description="Simple python script for counting votes in BFB(Battle for BFDI), "
     "n popular animated object show on YouTube.")
 parser.add_argument(
     "-f",
