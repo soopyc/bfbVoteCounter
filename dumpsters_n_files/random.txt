@@ -1,0 +1,20 @@
+
+# CHECKER in COUNTER.PY :244
+    # if stats['video']['publishTime'].timestamp() + 172800 > i.published_at.timestamp():
+    #     checkea = check(i.text) ##
+    #     if checkea[1]:  # Is vote##
+    #         stats["votes"]["total"] += 1#
+    #         if checkea[0]:  # Is valid vote (contains character in config)
+    #             if i.author not in stats["votes"]["voters"]:
+    #                 stats["votes"]["valid"] += 1  # Not in voters list, on time, valid
+    #                 stats["votes"]["voters"].append(i.author)
+    #             else:
+    #                 if i.author not in stats["votes"]["shinies"]:
+    #                     stats["votes"]["shinies"][i.author] = 1  # in voters list, on time, shiny coward
+    #                 else:
+    #                     stats["votes"]["shinies"][i.author] += 1  # add sc count for user
+    #                 stats["votes"]["shinyvotes"] += 1
+    #     else:  # Is a vote, but doesn't contain any vote chars
+    #         stats["votes"]['invalid'] += 1
+    # else:
+    #     stats["votes"]["deadlined"] += 1  # Deadlined comment

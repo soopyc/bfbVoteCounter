@@ -41,7 +41,7 @@ class Comment:
         :return: Tuple([author, text, datetime(time)])
         """
         try:
-            a = o["snippet"]["authorDisplayName"]
+            a = str(o["snippet"]["authorDisplayName"])
             t = o["snippet"]["textOriginal"]
             ti = dp.parse(o["snippet"]["publishedAt"])
         except KeyError:
