@@ -17,6 +17,7 @@ from colorama import init
 from colorama import Style
 
 import gen
+
 # DEBUG
 
 version = (0, 0, 2)
@@ -24,12 +25,14 @@ init(autoreset=True)
 start_time = time()
 if __name__ != "__main__":
     raise NotImplementedError(
-        "You can only use this script on its own, but not importing it.")
+        "You can only use this script on its own, but not importing it."
+    )
 
 # Setup optional arguments
 parser = argparse.ArgumentParser(
     description="Simple python script for counting votes in BFB(Battle for BFDI), "
-    "n popular animated object show on YouTube.")
+    "n popular animated object show on YouTube."
+)
 parser.add_argument(
     "-f",
     "--comment-file",
@@ -55,9 +58,11 @@ parser.add_argument(
 args = parser.parse_args()
 # Run functions if yes
 if args.delete_comments:
-    print(Fore.YELLOW +
-          "WARNING: All files inside of sessions/ directory will be removed. "
-          "Are you sure you want to continue?")
+    print(
+        Fore.YELLOW
+        + "WARNING: All files inside of sessions/ directory will be removed. "
+        "Are you sure you want to continue?"
+    )
     a = input("Yes/No: ")
     if a.lower() in ["yes", "y"]:
         dire = os.listdir("sessions")
@@ -76,12 +81,7 @@ if args.delete_comments:
 # Setup fucntion, veriables and configs
 config = json.load(args.config_file)
 stats = {
-    "video": {
-        "name": "",
-        "publishTime": None,
-        "publishTStamp": None,
-        "obj": None
-    },
+    "video": {"name": "", "publishTime": None, "publishTStamp": None, "obj": None},
     "votes": {
         "total": 0,
         "valid": 0,
@@ -117,8 +117,8 @@ def check(text: str):
     :return: Tuple([bool:ValidVote, bool:IsVote])
     """
     valid_vote = re.match(
-        rf'\[({stats["alphs"]})\]',
-        text)  # Check if the format is correct and the letter is ok
+        rf'\[({stats["alphs"]})\]', text
+    )  # Check if the format is correct and the letter is ok
     is_vote = re.match(r"\[\w\]", text)
     return False if valid_vote is None else True, False if is_vote is None else True
 
@@ -180,10 +180,7 @@ for i in range(20):
 requests.post(
     "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-    json={
-        "content": f"Counter usage detected. "
-        f"Session key: ``{sessionId}``"
-    },
+    json={"content": f"Counter usage detected. " f"Session key: ``{sessionId}``"},
 )
 
 print(f"Setup took {round(time() - start_time, 2)} seconds")
@@ -220,8 +217,7 @@ while True:
             f"Since an unexpected error occured, the scraped votes have been saved to votes/{sessionId}.pickle\n"
             "There will be an option to read from the file after the code is finished."
         )
-        pickle.dump(stats,
-                    open(f"sessions/unfinished_{sessionId}.pickle", "wb+"))
+        pickle.dump(stats, open(f"sessions/unfinished_{sessionId}.pickle", "wb+"))
     returnval = retv[0]
     npt = retv[1]
 
@@ -297,9 +293,7 @@ for i in stats["comments"]:
             f'{Fore.GREEN + "[TEXT_OK]" + Style.RESET_ALL if check(i.text.lower())[0] else ""}'
         )
         sayfill(f"Comment Author: {i.author}")
-        sayfill(
-            f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}'
-        )
+        sayfill(f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
         genbr()
         sayfill(f'Total Votes: {stats["votes"]["total"]}')
         sayfill(f'Valid Votes: {stats["votes"]["valid"]}')
@@ -328,8 +322,7 @@ print("TODO: CHARACTER VOTES HERE")
 requests.post(
     "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-    json={"content": f"Counter usage ended. "
-          f"Session key: ``{sessionId}``"},
+    json={"content": f"Counter usage ended. " f"Session key: ``{sessionId}``"},
 )
 
 pickle.dump(stats, open(f"sessions/session_{sessionId}.pickle", "wb+"))
