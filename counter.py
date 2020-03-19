@@ -127,7 +127,7 @@ def genbr():
         col, _ = tuple(os.get_terminal_size())
     except OSError:
         col = 70
-    sayfill(''.join(['-' for _ in range(col - 1)]))
+    sayfill(''.join('-' for _ in range(col - 1)))
 
 
 def check_time(oldt: int, newt: int, deadline: int = 172800):
