@@ -1,56 +1,77 @@
 # Main file
-import os
-import re
-import gen
-import sys
+import argparse
 import json
+import os
 import pickle
 import random
-import requests
-import argparse
-from time import sleep, time
-from colorama import init, Fore, Style, Cursor
-# DEBUG
+import re
+import sys
 import traceback
+from time import sleep
+from time import time
+
+import requests
+from colorama import Cursor
+from colorama import Fore
+from colorama import init
+from colorama import Style
+
+import gen
+# DEBUG
 
 version = (0, 0, 2)
 init(autoreset=True)
 start_time = time()
 if __name__ != "__main__":
-    raise NotImplementedError('You can only use this script on its own, but not importing it.')
+    raise NotImplementedError(
+        "You can only use this script on its own, but not importing it.")
 
 # Setup optional arguments
-parser = argparse.ArgumentParser(description="Simple python script for counting votes in BFB(Battle for BFDI), "
-                                             "n popular animated object show on YouTube.")
-parser.add_argument('-f', '--comment-file',
-                    help="The comment pickle file when it finished getting the votes and/or "
-                         "it errored out. It will look something like this: \n"
-                         "session_cbd312bc3b2c13cdbd.pickle",
-                    default=None, type=argparse.FileType('rb'))
-parser.add_argument('-d', '--delete-comments',
-                    help="Deletes all session pickle files inside of the sessions/ folder.",
-                    action='store_true')
-parser.add_argument('-c', '--config-file',
-                    help="The configuration json file for the counter. Defaults to config.json",
-                    default=open('config.json', 'r'), type=argparse.FileType('r'))
+parser = argparse.ArgumentParser(
+    description=
+    "Simple python script for counting votes in BFB(Battle for BFDI), "
+    "n popular animated object show on YouTube.")
+parser.add_argument(
+    "-f",
+    "--comment-file",
+    help="The comment pickle file when it finished getting the votes and/or "
+    "it errored out. It will look something like this: \n"
+    "session_cbd312bc3b2c13cdbd.pickle",
+    default=None,
+    type=argparse.FileType("rb"),
+)
+parser.add_argument(
+    "-d",
+    "--delete-comments",
+    help="Deletes all session pickle files inside of the sessions/ folder.",
+    action="store_true",
+)
+parser.add_argument(
+    "-c",
+    "--config-file",
+    help="The configuration json file for the counter. Defaults to config.json",
+    default=open("config.json", "r"),
+    type=argparse.FileType("r"),
+)
 args = parser.parse_args()
 # Run functions if yes
 if args.delete_comments:
-    print(Fore.YELLOW + 'WARNING: All files inside of sessions/ directory will be removed. '
-                        'Are you sure you want to continue?')
-    a = input('Yes/No: ')
-    if a.lower() in ['yes', 'y']:
-        dire = os.listdir('sessions')
+    print(Fore.YELLOW +
+          "WARNING: All files inside of sessions/ directory will be removed. "
+          "Are you sure you want to continue?")
+    a = input("Yes/No: ")
+    if a.lower() in ["yes", "y"]:
+        dire = os.listdir("sessions")
         for i in dire:
             try:
-                os.remove('sessions/' + i)
+                os.remove("sessions/" + i)
             except:
-                print(f'Cannot remove file {i}.')
+                print(f"Cannot remove file {i}.")
             else:
-                print(f'Removed file {i}')
+                print(f"Removed file {i}")
         sys.exit(0)
     else:
-        print(Fore.GREEN + 'Okay, cancelled.')
+        print(Fore.GREEN + "Okay, cancelled.")
         sys.exit(0)
 
 # Setup fucntion, veriables and configs
@@ -81,7 +102,7 @@ stats = {
 def clearsc():
     """Clears the screen"""
     # _ = os.system("clear" if os.name == "posix" else "cls")
-    print('\x1b[2J')
+    print("\x1b[2J")
 
 
 def return_curzor():
@@ -96,7 +117,9 @@ def check(text: str):
     :param text: The text to check
     :return: Tuple([bool:ValidVote, bool:IsVote])
     """
-    valid_vote = re.match(rf'\[({stats["alphs"]})\]', text)  # Check if the format is correct and the letter is ok
+    valid_vote = re.match(
+        rf'\[({stats["alphs"]})\]',
+        text)  # Check if the format is correct and the letter is ok
     is_vote = re.match(r"\[\w\]", text)
     return False if valid_vote is None else True, False if is_vote is None else True
 
@@ -114,7 +137,7 @@ def sayfill(text: str):
     # except OSError:
     #     col = 70
     # print(text + ''.join([' ' for _ in range(col - len(text) - 1)]))  # add '\x1b[0K'+ on top if breaking
-    print('\x1b[0K' + text)
+    print("\x1b[0K" + text)
 
 
 def genbr():
@@ -127,7 +150,7 @@ def genbr():
         col, _ = tuple(os.get_terminal_size())
     except OSError:
         col = 70
-    sayfill(''.join(['-' for _ in range(col - 1)]))
+    sayfill("".join("-" for _ in range(col - 1)))
 
 
 def check_time(oldt: int, newt: int, deadline: int = 172800):
@@ -146,11 +169,11 @@ def check_time(oldt: int, newt: int, deadline: int = 172800):
 
 # Create session dir if not present.
 try:
-    os.listdir('sessions')
+    os.listdir("sessions")
 except FileNotFoundError:
     os.makedirs("sessions")
 
-print('Counter v%d.%d.%d' % version)
+print("Counter v%d.%d.%d" % version)
 # Monitoring usages
 sessionId = ""
 for i in range(20):
@@ -160,7 +183,7 @@ requests.post(
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
     json={
         "content": f"Counter usage detected. "
-                   f"Session key: ``{sessionId}``"
+        f"Session key: ``{sessionId}``"
     },
 )
 
@@ -171,14 +194,14 @@ start_time = time()
 fetcher = gen.Fetchers(config["token"])
 if args.comment_file is None:
     video = fetcher.video(config["videoID"])[0]
-    stats['video']['obj'] = video
-    print('Getting comments, might be less than the statistic.')
-    stats['video']['name'] = video.title
-    stats['video']['publishTime'] = video.publish_time
-    stats['video']['publishTStamp'] = video.publish_time.timestamp()
+    stats["video"]["obj"] = video
+    print("Getting comments, might be less than the statistic.")
+    stats["video"]["name"] = video.title
+    stats["video"]["publishTime"] = video.publish_time
+    stats["video"]["publishTStamp"] = video.publish_time.timestamp()
 else:
     stats = pickle.load(args.comment_file)
-    video = stats['video']['obj']
+    video = stats["video"]["obj"]
     print(f"Comments loaded from file: {len(stats['comments'])}")
 ############################################################
 print(f"Video: {video.title}\tChannel: {video.channel_name}")
@@ -198,7 +221,8 @@ while True:
             f"Since an unexpected error occured, the scraped votes have been saved to votes/{sessionId}.pickle\n"
             "There will be an option to read from the file after the code is finished."
         )
-        pickle.dump(stats, open(f"sessions/unfinished_{sessionId}.pickle", "wb+"))
+        pickle.dump(stats,
+                    open(f"sessions/unfinished_{sessionId}.pickle", "wb+"))
     returnval = retv[0]
     npt = retv[1]
 
@@ -223,10 +247,10 @@ while True:
 # Count dem votes
 sleep(5)
 clearsc()
-print('Counting votes...')
+print("Counting votes...")
 count = 1
 t = time()
-for i in stats['comments']:
+for i in stats["comments"]:
     if count > 1000 and str(count)[-3::] == "000":
         return_curzor()
         # clearsc()
@@ -235,38 +259,48 @@ for i in stats['comments']:
         except OSError:
             cols, rows = 70, 16
         genbr()
-        sayfill('Counter v%d.%d.%d' % version)
-        sayfill(f'Comment {count} of {len(stats["comments"])} [{round((count / len(stats["comments"]) * 100), 3)}%]')
-        sayfill(f'Elapsed time: {round(time() - t, 3)}s')
+        sayfill("Counter v%d.%d.%d" % version)
+        sayfill(
+            f'Comment {count} of {len(stats["comments"])} [{round((count / len(stats["comments"]) * 100), 3)}%]'
+        )
+        sayfill(f"Elapsed time: {round(time() - t, 3)}s")
     count += 1  # add one to the counter, woo hoo!
-    if stats['video']['publishTStamp'] + 172800 < i.published_at.timestamp():
-        stats['votes']['deadlined'] += 1  # Deadlined vote doesn't count.'
+    if stats["video"]["publishTStamp"] + 172800 < i.published_at.timestamp():
+        stats["votes"]["deadlined"] += 1  # Deadlined vote doesn't count.'
         continue
     elif not check(i.text.lower())[0]:
         if check(i.text.lower())[1]:
             # Check: (isValid, isVote)
-            stats['votes']['total'] += 1
-            stats['votes']['invalid'] += 1  # Is a vote, but doesn't match with a char.
+            stats["votes"]["total"] += 1
+            # Is a vote, but doesn't match with a char.
+            stats["votes"]["invalid"] += 1
         continue
-    elif i.author in stats['votes']['voters']:
-        if i.author not in stats['votes']['shinies']:  # User voted once. Shiny.
-            stats['votes']['shinies'][i.author] = 0
-        stats['votes']['total'] += 1  # Still add 1 to the vote counter bc hey its valid so why not
-        stats['votes']['shinies'][i.author] += 1  # Add 1 to user's shiny count
-        stats['votes']['shinyvotes'] += 1  # Add 1 to the global counter
+    elif i.author in stats["votes"]["voters"]:
+        # User voted once. Shiny.
+        if i.author not in stats["votes"]["shinies"]:
+            stats["votes"]["shinies"][i.author] = 0
+        # Still add 1 to the vote counter bc hey its valid so why not
+        stats["votes"]["total"] += 1
+        stats["votes"]["shinies"][i.author] += 1  # Add 1 to user's shiny count
+        stats["votes"]["shinyvotes"] += 1  # Add 1 to the global counter
         continue
     else:
-        stats['votes']['voters'].append(i.author)
-        stats['votes']['total'] += 1
-        stats['votes']['valid'] += 1
+        stats["votes"]["voters"].append(i.author)
+        stats["votes"]["total"] += 1
+        stats["votes"]["valid"] += 1
     # sayfill(f'{count} comment(s) scanned.')
     if count > 1000 and str(count)[-3::] == "000":
-        sayfill(f'Comment stats: '
-                f'{check_time(stats["video"]["publishTime"].timestamp(), i.published_at.timestamp())}\t'  # check_deadline
-                f'{Fore.YELLOW + "[FORMAT_OK]" + Style.RESET_ALL if check(i.text.lower())[1] else Fore.RED + "[INVALID]"}\t'
-                f'{Fore.GREEN + "[TEXT_OK]" + Style.RESET_ALL if check(i.text.lower())[0] else ""}')
-        sayfill(f'Comment Author: {i.author}')
-        sayfill(f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
+        sayfill(
+            f"Comment stats: "
+            # check_deadline
+            f'{check_time(stats["video"]["publishTime"].timestamp(), i.published_at.timestamp())}\t'
+            f'{Fore.YELLOW + "[FORMAT_OK]" + Style.RESET_ALL if check(i.text.lower())[1] else Fore.RED + "[INVALID]"}\t'
+            f'{Fore.GREEN + "[TEXT_OK]" + Style.RESET_ALL if check(i.text.lower())[0] else ""}'
+        )
+        sayfill(f"Comment Author: {i.author}")
+        sayfill(
+            f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}'
+        )
         genbr()
         sayfill(f'Total Votes: {stats["votes"]["total"]}')
         sayfill(f'Valid Votes: {stats["votes"]["valid"]}')
@@ -288,7 +322,7 @@ sayfill(f'Invalid Votes: {stats["votes"]["invalid"]}')
 sayfill(f'Deadlined Comments: {stats["votes"]["deadlined"]}')
 sayfill(f'Shiny Coward Votes: {stats["votes"]["shinyvotes"]}')
 genbr()
-print('TODO: CHARACTER VOTES HERE')
+print("TODO: CHARACTER VOTES HERE")
 
 ############################################################
 # End session monitorings
@@ -296,7 +330,7 @@ requests.post(
     "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
     "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
     json={"content": f"Counter usage ended. "
-                     f"Session key: ``{sessionId}``"},
+          f"Session key: ``{sessionId}``"},
 )
 
 pickle.dump(stats, open(f"sessions/session_{sessionId}.pickle", "wb+"))
