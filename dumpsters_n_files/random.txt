@@ -18,3 +18,37 @@
     #         stats["votes"]['invalid'] += 1
     # else:
     #     stats["votes"]["deadlined"] += 1  # Deadlined comment
+
+
+
+# stats file be like
+stats = {
+    "video": {
+        "name": "BFB 16 - RETURN OF I DONT FUCKING KNOW",
+        "publishTime": datetime.datetime(blah blah blah),
+        "publishTStamp": ^.timestamp(),
+        "obj": gen.Video
+    },
+    "votes": {
+        "total": 1222047,
+        "valid": 1022014,
+        "invalid": 10500,
+        "deadlined": 109214,
+        "shinyvotes": 80319,
+        "voters": ['name', 'gsfddasf', 'sdwewq','eqweqwewqewqeqweqw'],
+        "shinies": {'qwqwqwqw': 434234234234},
+        "characters": {
+            'a': {
+                'name': 'ShitName121212112'  # Character name
+                'total': 42332183627833,     # Total votes     [T]
+                'valid': 432423434344324224  # Valid votes     [V]
+                'shiny': 32131333,           # Shiny votes     [S]
+                'deadline': 43423            # Deadlined votes [D]
+            }
+        }
+    },
+    "alphs": [i for i in config["characters"]],
+    "actualComments": 0,
+    "comments": [],
+    "tokenUsage": 5,
+}

@@ -96,6 +96,8 @@ else:
         if texte == "Press return/enter to skip":
             break
         config['characters'][texte] = ask(f'Character name (of [{texte}]): ')
+print('Lastly, please give me the seconds until voting ends. Typically it will be 48 hours aka 172800 seconds.')
+
 
 print('Alright, here\'s your configuration. \nFor your convenience, it has been saved to config.json automatically.'
       'Then, you only need to run python3/python counter.py to start the counting process.')
