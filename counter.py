@@ -236,6 +236,11 @@ def main():
             break
     pickle.dump(stats, open(f"sessions/session_{session_id}.pickle", "wb+"))  # Save the file.
     ############################################################
+    # Pre count check to avoid being yelled at
+    if args.save_only:
+        print(f'File saved in sessions/session_{session_id}.pickle due to the --save-only parameter used.\n'
+              f'Read the file using the -f or --comment-file parameter like this:\n'
+              f'{sys.argv[0]}')
     # Count dem votes
     sleep(5)
     clearsc()
@@ -257,7 +262,7 @@ def main():
         count += 1  # add one to the counter, woo hoo!
         vote_alph = return_vote_item(i.text.lower(), stats['votes']['alphs'])
         vote = vote_alph[-1]
-        if stats['video']['publishTStamp'] + 172800 < i.published_at.timestamp():
+        if stats['video']['publishTStamp'] + config['deadline'] < i.published_at.timestamp():
             stats['votes']['deadlined'] += 1  # Deadlined vote doesn't count.
             if len(vote_alph) != 0 and vote in config['alphs']:
                 stats['votes']['characters'][vote]['deadlined'] += 1  # Add 1 to the deadline count for the character
