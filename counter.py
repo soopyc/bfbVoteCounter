@@ -182,14 +182,15 @@ def main():
         stats['video']['name'] = video.title
         stats['video']['publishTime'] = video.publish_time
         stats['video']['publishTStamp'] = video.publish_time.timestamp()
+        stats['config'] = config
         # Set character voting items
         for i in config['characters']:
             stats['votes']['characters'][i] = {'name': '', 'total': 0, 'valid': 0, 'shiny': 0, 'deadlined': 0}
             stats['votes']['characters'][i]['name'] = config['characters'][i]
-
     else:
         stats = pickle.load(args.comment_file)
         video = stats['video']['obj']
+        config = stats['config']
         print(f"Comments loaded from file: {len(stats['comments'])}")
     ############################################################
     print(f"Video: {video.title}\tChannel: {video.channel_name}")
@@ -230,7 +231,7 @@ def main():
                 )
         if npt is None:
             break
-    
+    pickle.dump(stats, open(f"sessions/session_{session_id}.pickle", "wb+"))  # Save the file.
     ############################################################
     # Count dem votes
     sleep(5)
@@ -310,12 +311,15 @@ def main():
     sayfill(f'Invalid Votes: {stats["votes"]["invalid"]}')
     sayfill(f'Deadlined Comments: {stats["votes"]["deadlined"]}')
     sayfill(f'Shiny Coward Votes: {stats["votes"]["shinyvotes"]}')
+    # Sort the shinies
+    shinies_sorted = sorted(stats['votes']['shinies'].items(), key=lambda kev: (kev[1], kev[0]))
+    sayfill(f'The shiniest coward: {shinies_sorted[-1][0]} ({shinies_sorted[-1][1]} votes)')
     genbr()
     sayfill('CHARACTERS')
     fchar = stats['votes']['characters']  # (UNOFFICIAL) Final character count
     for i in fchar:
         sayfill(f'{fchar[i]}\t'
-                f'{Fore.WHITE}Total:{fchar[i]["total"]}\t'
+                f'{Fore.WHI:{fchar[i]["total"]}\t}'
                 f'{Fore.GREEN}Valid:{fchar[i]["valid"]}\t'
                 f'{Fore.YELLOW}Shiny:{fchar[i]["shiny"]}\t'
                 f'{Fore.RED}Dead.L:{fchar[i]["deadlined"]}\t')
