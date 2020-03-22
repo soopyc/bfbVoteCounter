@@ -1,18 +1,23 @@
 # Main file
-import os
-import re
-import gen
-import sys
+import argparse
 import json
+import os
 import pickle
 import random
-import requests
-import argparse
-from time import sleep, time
-from colorama import init, Fore, Style, Cursor
-
-# DEBUG
+import re
+import sys
 import traceback
+from time import sleep
+from time import time
+
+import requests
+from colorama import Cursor
+from colorama import Fore
+from colorama import init
+from colorama import Style
+
+import gen
+# DEBUG
 
 version = ("0.", "1-alpha.", "3")
 init(autoreset=True)
