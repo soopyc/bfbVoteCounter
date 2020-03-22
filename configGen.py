@@ -1,4 +1,13 @@
 import json
+import argparse
+
+parser = argparse.ArgumentParser(description="Configuration Generator")
+parser.add_argument('-f', '--file-location',
+                    help="The configuration location to be stored in. Must be "
+                         "a json file. Example: 'bfb11.json'",
+                    type=argparse.FileType('w+'),
+                    default='config.json')
+args = parser.parse_args()
 
 # Prepare variables
 config = {
@@ -102,9 +111,9 @@ print('Lastly, please give me the seconds until voting ends. Typically it will b
       'Pick a very high number if you want to disable deadlines. (99999999999)')
 config['deadline'] = int(ask(f'Seconds until deadline: ', 172800))
 
-print('Alright, here\'s your configuration. \nFor your convenience, it has been saved to config.json automatically.'
-      'Then, you only need to run python3/python counter.py to start the counting process.')
+print('Alright, here\'s your configuration. \nFor your convenience, it has been saved to config.json or the specifiec '
+      'one automatically. Then, you only need to run python3/python counter.py to start the counting process.')
 print('-----------------')
 print(config)
 print('-----------------')
-json.dump(config, open('config.json', 'w+'), indent=4)
+json.dump(config, args.file_location, indent=4)
