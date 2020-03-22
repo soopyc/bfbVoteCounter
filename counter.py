@@ -28,9 +28,9 @@ def main():
     # Setup optional arguments
     start_time = time()
     parser = argparse.ArgumentParser(
-        description="Simple python script for counting votes in BFB(Battle for BFDI), "
-        "a popular animated object show on YouTube."
-    )
+        description=
+        "Simple python script for counting votes in BFB(Battle for BFDI), "
+        "a popular animated object show on YouTube.")
     parser.add_argument(
         "-f",
         "--comment-file",
@@ -49,7 +49,8 @@ def main():
     parser.add_argument(
         "-c",
         "--config-file",
-        help="The configuration json file for the counter. Defaults to config.json",
+        help=
+        "The configuration json file for the counter. Defaults to config.json",
         default=open("config.json", "r"),
         type=argparse.FileType("r"),
     )
@@ -57,10 +58,9 @@ def main():
     # Run functions if yes
     if args.delete_comments:
         print(
-            Fore.YELLOW
-            + "WARNING: All files inside of sessions/ directory will be removed. "
-            "Are you sure you want to continue?"
-        )
+            Fore.YELLOW +
+            "WARNING: All files inside of sessions/ directory will be removed. "
+            "Are you sure you want to continue?")
         a = input("Yes/No: ")
         if a.lower() in ["yes", "y"]:
             dire = os.listdir("sessions")
@@ -79,7 +79,12 @@ def main():
     # Setup fucntion, veriables and configs
     config = json.load(args.config_file)
     stats = {
-        "video": {"name": "", "publishTime": None, "publishTStamp": None, "obj": None},
+        "video": {
+            "name": "",
+            "publishTime": None,
+            "publishTStamp": None,
+            "obj": None
+        },
         "votes": {
             "total": 0,
             "valid": 0,
@@ -113,8 +118,8 @@ def main():
         :return: Tuple([bool:ValidVote, bool:IsVote])
         """
         valid_vote = re.match(
-            rf'\[({stats["alphs"]})\]', text
-        )  # Check if the format is correct and the letter is ok
+            rf'\[({stats["alphs"]})\]',
+            text)  # Check if the format is correct and the letter is ok
         is_vote = re.match(r"\[\w\]", text)
         return False if valid_vote is None else True, False if is_vote is None else True
 
@@ -183,7 +188,10 @@ def main():
     requests.post(
         "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
         "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-        json={"content": f"Counter usage detected. " f"Session key: ``{session_id}``"},
+        json={
+            "content": f"Counter usage detected. "
+            f"Session key: ``{session_id}``"
+        },
     )
 
     print(f"Setup took {round(time() - start_time, 2)} seconds")
@@ -232,7 +240,8 @@ def main():
                 f"Since an unexpected error occured, the scraped votes have been saved to votes/{session_id}.pickle\n"
                 "There will be an option to read from the file after the code is finished."
             )
-            pickle.dump(stats, open(f"sessions/unfinished_{session_id}.pickle", "wb+"))
+            pickle.dump(
+                stats, open(f"sessions/unfinished_{session_id}.pickle", "wb+"))
         # noinspection PyUnboundLocalVariable
         returnval = retv[0]
         npt = retv[1]
@@ -279,7 +288,8 @@ def main():
         count += 1  # add one to the counter, woo hoo!
         vote_alph = return_vote_item(i.text.lower(), stats["votes"]["alphs"])
         vote = vote_alph[-1]
-        if stats["video"]["publishTStamp"] + 172800 < i.published_at.timestamp():
+        if stats["video"]["publishTStamp"] + 172800 < i.published_at.timestamp(
+        ):
             stats["votes"]["deadlined"] += 1  # Deadlined vote doesn't count.
             if len(vote_alph) != 0 and vote in config["alphs"]:
                 # Add 1 to the deadline count for the character
@@ -328,7 +338,9 @@ def main():
                 f'{Fore.GREEN + "[TEXT_OK]" + Style.RESET_ALL if check(i.text.lower())[0] else Fore.RED + "[TEXT_NOK]"}'
             )
             sayfill(f"Comment Author: {i.author}")
-            sayfill(f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
+            sayfill(
+                f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}'
+            )
             genbr()
             sayfill(f'Total Votes: {stats["votes"]["total"]}')
             sayfill(f'Valid Votes: {stats["votes"]["valid"]}')
@@ -350,9 +362,8 @@ def main():
     sayfill(f'Deadlined Comments: {stats["votes"]["deadlined"]}')
     sayfill(f'Shiny Coward Votes: {stats["votes"]["shinyvotes"]}')
     # Sort the shinies
-    shinies_sorted = sorted(
-        stats["votes"]["shinies"].items(), key=lambda kev: (kev[1], kev[0])
-    )
+    shinies_sorted = sorted(stats["votes"]["shinies"].items(),
+                            key=lambda kev: (kev[1], kev[0]))
     sayfill(
         f"The shiniest coward: {shinies_sorted[-1][0]} ({shinies_sorted[-1][1]} votes)"
     )
@@ -360,19 +371,20 @@ def main():
     sayfill("CHARACTERS")
     fchar = stats["votes"]["characters"]  # (UNOFFICIAL) Final character count
     for i in fchar:
-        sayfill(
-            f"{fchar[i]}\t"
-            f'{Fore.WHI:{fchar[i]["total"]}\t}'
-            f'{Fore.GREEN}Valid:{fchar[i]["valid"]}\t'
-            f'{Fore.YELLOW}Shiny:{fchar[i]["shiny"]}\t'
-            f'{Fore.RED}Dead.L:{fchar[i]["deadlined"]}\t'
-        )
+        sayfill(f"{fchar[i]}\t"
+                f'{Fore.WHI:{fchar[i]["total"]}\t}'
+                f'{Fore.GREEN}Valid:{fchar[i]["valid"]}\t'
+                f'{Fore.YELLOW}Shiny:{fchar[i]["shiny"]}\t'
+                f'{Fore.RED}Dead.L:{fchar[i]["deadlined"]}\t')
     ############################################################
     # End session monitorings
     requests.post(
         "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
         "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-        json={"content": f"Counter usage ended. " f"Session key: ``{session_id}``"},
+        json={
+            "content": f"Counter usage ended. "
+            f"Session key: ``{session_id}``"
+        },
     )
 
     pickle.dump(stats, open(f"sessions/session_{session_id}.pickle", "wb+"))
