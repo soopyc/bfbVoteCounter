@@ -53,7 +53,7 @@ def main():
         else:
             print(Fore.GREEN + 'Okay, cancelled.')
             sys.exit(0)
-    
+
     # Setup fucntion, veriables and configs
     config = json.load(args.config_file)
     stats = {
@@ -78,31 +78,32 @@ def main():
         "comments": [],
         "tokenUsage": 5,
     }
-    
+
     def clearsc():
         """Clears the screen"""
         # _ = os.system("clear" if os.name == "posix" else "cls")
         print('\x1b[2J')
-    
+
     def return_curzor():
         """Return the curzor back to 0:0"""
         print(Cursor.POS())
-    
+
     def check(text: str):
         """
         Check the string if it matches the regexp
-    
+
         :param text: The text to check
         :return: Tuple([bool:ValidVote, bool:IsVote])
         """
-        valid_vote = re.match(rf'\[({stats["alphs"]})\]', text)  # Check if the format is correct and the letter is ok
+        valid_vote = re.match(
+            rf'\[({stats["alphs"]})\]', text)  # Check if the format is correct and the letter is ok
         is_vote = re.match(r"\[\w\]", text)
         return False if valid_vote is None else True, False if is_vote is None else True
-    
+
     def return_vote_item(text: str, alphs: list):
         """
         Pass in the vote and it will return a list of items matching the vote regex
-    
+
         :param text: the text to check for the strings
         :param alphs: list of alphabets used for voting
         :return: list([str])
@@ -114,7 +115,7 @@ def main():
         """
         Print a string of text and filling the gap.
         Should be flushprint but idc
-    
+
         :param text: The string text for filling
         :return: None
         """
@@ -124,11 +125,11 @@ def main():
         #     col = 70
         # print(text + ''.join([' ' for _ in range(col - len(text) - 1)]))  # add '\x1b[0K'+ on top if breaking
         print('\x1b[0K' + text)
-    
+
     def genbr():
         """
         Generate a line break thingy full of ---------
-    
+
         :return: None
         """
         try:
@@ -155,7 +156,7 @@ def main():
         os.listdir('sessions')
     except FileNotFoundError:
         os.makedirs("sessions")
-    
+
     print('Counter v%s.%s.%s' % version)
     # Monitoring usages
     session_id = ""
@@ -169,10 +170,10 @@ def main():
                        f"Session key: ``{session_id}``"
         },
     )
-    
+
     print(f"Setup took {round(time() - start_time, 2)} seconds")
     start_time = time()
-    
+
     # Main script
     fetcher = gen.Fetchers(config["token"])
     if args.comment_file is None:
@@ -185,7 +186,8 @@ def main():
         stats['config'] = config
         # Set character voting items
         for i in config['characters']:
-            stats['votes']['characters'][i] = {'name': '', 'total': 0, 'valid': 0, 'shiny': 0, 'deadlined': 0}
+            stats['votes']['characters'][i] = {
+                'name': '', 'total': 0, 'valid': 0, 'shiny': 0, 'deadlined': 0}
             stats['votes']['characters'][i]['name'] = config['characters'][i]
     else:
         stats = pickle.load(args.comment_file)
@@ -210,11 +212,12 @@ def main():
                 f"Since an unexpected error occured, the scraped votes have been saved to votes/{session_id}.pickle\n"
                 "There will be an option to read from the file after the code is finished."
             )
-            pickle.dump(stats, open(f"sessions/unfinished_{session_id}.pickle", "wb+"))
+            pickle.dump(stats, open(
+                f"sessions/unfinished_{session_id}.pickle", "wb+"))
         # noinspection PyUnboundLocalVariable
         returnval = retv[0]
         npt = retv[1]
-    
+
         for i in returnval:
             stats["comments"].append(i.comment)
             stats["actualComments"] += 1
@@ -231,7 +234,8 @@ def main():
                 )
         if npt is None:
             break
-    pickle.dump(stats, open(f"sessions/session_{session_id}.pickle", "wb+"))  # Save the file.
+    # Save the file.
+    pickle.dump(stats, open(f"sessions/session_{session_id}.pickle", "wb+"))
     ############################################################
     # Count dem votes
     sleep(5)
@@ -249,7 +253,8 @@ def main():
             #     cols, rows = 70, 16
             genbr()
             sayfill('Counter v%s%s%s' % version)
-            sayfill(f'Comment {count} of {len(stats["comments"])} [{round((count / len(stats["comments"]) * 100), 3)}%]')
+            sayfill(
+                f'Comment {count} of {len(stats["comments"])} [{round((count / len(stats["comments"]) * 100), 3)}%]')
             sayfill(f'Elapsed time: {round(time() - t, 3)}s')
         count += 1  # add one to the counter, woo hoo!
         vote_alph = return_vote_item(i.text.lower(), stats['votes']['alphs'])
@@ -257,40 +262,52 @@ def main():
         if stats['video']['publishTStamp'] + 172800 < i.published_at.timestamp():
             stats['votes']['deadlined'] += 1  # Deadlined vote doesn't count.
             if len(vote_alph) != 0 and vote in config['alphs']:
-                stats['votes']['characters'][vote]['deadlined'] += 1  # Add 1 to the deadline count for the character
-                stats['votes']['characters'][vote]['total'] += 1  # Add 1 to the character's total vote count.
+                # Add 1 to the deadline count for the character
+                stats['votes']['characters'][vote]['deadlined'] += 1
+                # Add 1 to the character's total vote count.
+                stats['votes']['characters'][vote]['total'] += 1
             continue
         elif not check(i.text.lower())[0]:
             if check(i.text.lower())[1]:
                 # Check: (isValid, isVote)
                 stats['votes']['total'] += 1
-                stats['votes']['invalid'] += 1  # Is a vote, but doesn't match with a char.
+                # Is a vote, but doesn't match with a char.
+                stats['votes']['invalid'] += 1
                 # Doesn't worth checking and adding to the vote thingy
             continue
         elif i.author in stats['votes']['voters']:
-            if i.author not in stats['votes']['shinies']:  # User voted once. Shiny.
+            # User voted once. Shiny.
+            if i.author not in stats['votes']['shinies']:
                 stats['votes']['shinies'][i.author] = 0
-            stats['votes']['total'] += 1  # Still add 1 to the vote counter bc hey its valid so why not
-            stats['votes']['shinies'][i.author] += 1  # Add 1 to user's shiny count
+            # Still add 1 to the vote counter bc hey its valid so why not
+            stats['votes']['total'] += 1
+            # Add 1 to user's shiny count
+            stats['votes']['shinies'][i.author] += 1
             stats['votes']['shinyvotes'] += 1  # Add 1 to the global counter
-            stats['votes']['characters'][vote]['shiny'] += 1  # Add 1 to the character's shiny vote counts.
-            stats['votes']['characters'][vote]['total'] += 1  # Add 1 to the character's total vote count.
+            # Add 1 to the character's shiny vote counts.
+            stats['votes']['characters'][vote]['shiny'] += 1
+            # Add 1 to the character's total vote count.
+            stats['votes']['characters'][vote]['total'] += 1
             continue
         else:
             stats['votes']['voters'].append(i.author)
-            stats['votes']['characters'][vote]['total'] += 1  # Add 1 to the character's total vote count.
-            stats['votes']['characters'][vote]['valid'] += 1  # Add 1 to the character's valid vote count.
+            # Add 1 to the character's total vote count.
+            stats['votes']['characters'][vote]['total'] += 1
+            # Add 1 to the character's valid vote count.
+            stats['votes']['characters'][vote]['valid'] += 1
             stats['votes']['total'] += 1
             stats['votes']['valid'] += 1
 
         # Display the votes when the count is a multiple of 1000 to avoid lag
         if count > 1000 and str(count)[-3::] == "000":
             sayfill(f'Comment stats: '
-                    f'{check_time(stats["video"]["publishTime"].timestamp(), i.published_at.timestamp(), config["deadline"])}\t'  # check_deadline
+                    # check_deadline
+                    f'{check_time(stats["video"]["publishTime"].timestamp(), i.published_at.timestamp(), config["deadline"])}\t'
                     f'{Fore.YELLOW + "[FORMAT_OK]" + Style.RESET_ALL if check(i.text.lower())[1] else Fore.RED + "[INVALID]"}\t'
                     f'{Fore.GREEN + "[TEXT_OK]" + Style.RESET_ALL if check(i.text.lower())[0] else Fore.RED + "[TEXT_NOK]"}')
             sayfill(f'Comment Author: {i.author}')
-            sayfill(f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
+            sayfill(
+                f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
             genbr()
             sayfill(f'Total Votes: {stats["votes"]["total"]}')
             sayfill(f'Valid Votes: {stats["votes"]["valid"]}')
@@ -302,7 +319,7 @@ def main():
             genbr()
             # for _ in range(5):  # was rows-11
             #     sayfill('')
-    
+
     # Finish counting votes, displaying results.
     clearsc()
     genbr()
@@ -312,8 +329,10 @@ def main():
     sayfill(f'Deadlined Comments: {stats["votes"]["deadlined"]}')
     sayfill(f'Shiny Coward Votes: {stats["votes"]["shinyvotes"]}')
     # Sort the shinies
-    shinies_sorted = sorted(stats['votes']['shinies'].items(), key=lambda kev: (kev[1], kev[0]))
-    sayfill(f'The shiniest coward: {shinies_sorted[-1][0]} ({shinies_sorted[-1][1]} votes)')
+    shinies_sorted = sorted(
+        stats['votes']['shinies'].items(), key=lambda kev: (kev[1], kev[0]))
+    sayfill(
+        f'The shiniest coward: {shinies_sorted[-1][0]} ({shinies_sorted[-1][1]} votes)')
     genbr()
     sayfill('CHARACTERS')
     fchar = stats['votes']['characters']  # (UNOFFICIAL) Final character count
@@ -331,7 +350,7 @@ def main():
         json={"content": f"Counter usage ended. "
                          f"Session key: ``{session_id}``"},
     )
-    
+
     pickle.dump(stats, open(f"sessions/session_{session_id}.pickle", "wb+"))
 
 
