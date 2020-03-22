@@ -39,8 +39,7 @@ or maybe even more, which limits this script's function. I hope you can understa
 
 ~~6. Open a console/terminal window by shift-right clicking on the folder and choose this option if you're on windows.
 ![](https://kenny-pls.go-get-a.life/KpycmF.png)
-(If you're on MacOS, I am guessing you know at least something about terminal. Open it by pressing Control+Alt+T. cd to the directory. Then just follow the next
-step.) ~~
+(If you're on MacOS, I am guessing you know at least something about terminal. Open it by pressing Control+Alt+T. cd to the directory. Then just follow the next step.)~~
 
 ~~7. Install Python 3.6/7/8 if you haven't. If you don't know which version to use, just choose version 3.8.1. A better easier executable file will be included~~
 
