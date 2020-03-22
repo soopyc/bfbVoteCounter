@@ -12,8 +12,8 @@ such as the "liked" character counts, etc.
 
 You may also notice this thing is not written in javascript but instead in python because...thats the only language I know quite fluently besides scratch :^)
 
-~~## Setting up
-To setup the vote collector, you only need to follow a few steps.
+## Setting up
+~~To setup the vote collector, you only need to follow a few steps.
 
 (If you're a pro gamer and know how to use git just use the [fast guide](#fast-guide).)
 
