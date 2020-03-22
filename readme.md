@@ -12,7 +12,7 @@ such as the "liked" character counts, etc.
 
 You may also notice this thing is not written in javascript but instead in python because...thats the only language I know quite fluently besides scratch :^)
 
-## Setting up
+~~## Setting up
 To setup the vote collector, you only need to follow a few steps.
 
 (If you're a pro gamer and know how to use git just use the [fast guide](#fast-guide).)
@@ -42,8 +42,9 @@ or maybe even more, which limits this script's function. I hope you can understa
 (If you're on MacOS, I am guessing you know at least something about terminal. Open it by pressing Control+Alt+T. cd to the directory. Then just follow the next
 step.) 
 
-7. Install Python 3.6/7/8 if you haven't. If you don't know which version to use, just choose version 3.8.1. A better easier executable file will be included
+7. Install Python 3.6/7/8 if you haven't. If you don't know which version to use, just choose version 3.8.1. A better easier executable file will be included~~
 
+Just use the packaged executable in releases.
 
 ## Fast guide
 Quick and easy script to get this thing up and running. Please ensure you have python 3.6+ installed beforehand, or this script will attempt installing it
