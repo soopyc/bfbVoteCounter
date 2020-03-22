@@ -34,6 +34,9 @@ def main():
     parser.add_argument('-c', '--config-file',
                         help="The configuration json file for the counter. Defaults to config.json",
                         default=open('config.json', 'r'), type=argparse.FileType('r'))
+    parser.add_argument('-s', '--save-only',
+                        help='Only get the comments and store them in the session pickle file.',
+                        action='store_true')
     args = parser.parse_args()
     # Run functions if yes
     if args.delete_comments:
@@ -208,7 +211,7 @@ def main():
             print(
                 "---------------------\n"
                 f"Since an unexpected error occured, the scraped votes have been saved to votes/{session_id}.pickle\n"
-                "There will be an option to read from the file after the code is finished."
+                "Use the -f parameter to load the file to count the votes."
             )
             pickle.dump(stats, open(f"sessions/unfinished_{session_id}.pickle", "wb+"))
         # noinspection PyUnboundLocalVariable
