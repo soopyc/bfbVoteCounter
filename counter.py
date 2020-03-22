@@ -39,7 +39,7 @@ def main():
                         action='store_true')
     parser.add_argument('-c', '--config-file',
                         help="The configuration json file for the counter. Defaults to config.json",
-                        default=open('config.json', 'r'), type=argparse.FileType('r'))
+                        default='config.json', type=argparse.FileType('r'))
     parser.add_argument('-s', '--save-only',
                         help='Only get the comments and store them in the session pickle file.',
                         action='store_true')
