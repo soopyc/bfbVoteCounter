@@ -9,6 +9,7 @@ import sys
 import traceback
 from time import sleep
 from time import time
+from datetime import datetime
 
 import requests
 from colorama import Cursor
@@ -17,6 +18,7 @@ from colorama import init
 from colorama import Style
 
 import gen
+
 # DEBUG
 
 version = ("0.", "1-alpha.", "3")
@@ -287,15 +289,16 @@ def main():
         try:
             vote = vote_alph[-1]
         except:
-            pass
-        if stats['video']['publishTStamp'] + config['deadline'] < i.published_at.timestamp():
+            vote = ''
+        if not stats['video']['publishTStamp'] + config['deadline'] >= i.published_at.timestamp():
             stats['votes']['deadlined'] += 1  # Deadlined vote doesn't count.
             # noinspection PyUnboundLocalVariable
             if len(vote_alph) != 0 and vote in stats['alphs']:
                 stats['votes']['characters'][vote]['deadlined'] += 1  # Add 1 to the deadline count for the character
                 stats['votes']['characters'][vote]['total'] += 1  # Add 1 to the character's total vote count.
             continue
-        elif not check(i.text.lower())[0]:
+        elif vote not in stats['alphs']:
+            # Check if vote is in alphs, better ngl, less bugs.
             if check(i.text.lower())[1]:
                 # Check: (isValid, isVote)
                 stats["votes"]["total"] += 1
@@ -374,6 +377,9 @@ def main():
                 f'{Fore.GREEN}Valid:{fchar[i]["valid"]}'.ljust(20) +
                 f'{Fore.YELLOW}Shiny:{fchar[i]["shiny"]}'.ljust(20) +
                 f'{Fore.RED}Dead.L:{fchar[i]["deadlined"]}')
+    genbr()
+    sayfill(f"VideoTime: {datetime.fromtimestamp(stats['video']['publishTStamp'])}")
+    sayfill(f"Deadline : {datetime.fromtimestamp(stats['video']['publishTStamp']+config['deadline'])}")
     ############################################################
     # End session monitorings
     requests.post(
@@ -381,7 +387,7 @@ def main():
         "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
         json={
             "content": f"Counter usage ended. "
-            f"Session key: ``{session_id}``"
+                       f"Session key: ``{session_id}``"
         },
     )
 
