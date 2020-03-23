@@ -43,8 +43,8 @@ def main():
     parser.add_argument('-s', '--save-only',
                         help='Only get the comments and store them in the session pickle file.',
                         action='store_true')
-    parser.add_argument('-a', '--show-me-the-nerds',
-                        help="SHOW ME THE SPAM SHOW ME THE NERD SHOW ME EVERYTHING SO I CAN ~~ruin~~ MY SANITY AAAAAAA",
+    parser.add_argument('-a', '--stats-for-nerds',
+                        help="SHOW ME THE SPAM SHOW ME THE STATS SHOW ME EVERYTHING SO I CAN ~~ruin~~ MY SANITY AAAAAAA",
                         action='store_true')
     args = parser.parse_args()
     # Run functions if yes
