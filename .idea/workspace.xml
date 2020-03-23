@@ -6,12 +6,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450f05ac-2b61-49aa-bc4b-ad8dadd8e0f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dumpsters_n_files/bfb1.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dumpsters_n_files/bfb2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_0b018de256a9ce2c858b.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_0e147bf1fb38099ae172.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_3593b716af32498b482a.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_69644d999903b029dbf8.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_b656d034c38b69d7b8ef.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_b9408e0ddd6a56d14d27.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_bbb75e347c898b406769.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_bcacca86f3035c9aefd8.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_d40ddf36eadad3e9e0c3.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_d83614f97421969673cc.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_e336e2579321a8f1ffee.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_f1218990279b23fd00f6.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/session_f476430fd2f5bb819376.pickle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configGen.py" beforeDir="false" afterPath="$PROJECT_DIR$/configGen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dumpsters_n_files/bfb15.json" beforeDir="false" afterPath="$PROJECT_DIR$/dumpsters_n_files/bfb15.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dumpsters_n_files/bfbs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dumpsters_n_files/bfbs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/counter.py" afterDir="false" />
     </list>
     <list id="2afcc3ce-fe74-473b-a9e0-c5ee858650b9" name="Restyled by yapf" comment="Restyled by yapf">
       <changelist_data name="Restyled.io" email="commits@restyled.io" date="1584190236000" />
@@ -57,6 +66,9 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\P\Python Projects\bfb_vote_counter\dumpsters_n_files" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\P\Python Projects\bfb_vote_counter" />
     </key>
@@ -98,7 +110,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/counter.py" />
-      <option name="PARAMETERS" value="-f sessions/session_edcfac715c4ad4a1a39c.pickle" />
+      <option name="PARAMETERS" value="-f sessions/session_bae280b78a7f1a865555.pickle -c $Prompt$" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -115,6 +127,9 @@
         <item itemvalue="Python.configGen" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="AUTOSCROLL_MODE" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -145,7 +160,9 @@
       <workItem from="1584718680264" duration="1310000" />
       <workItem from="1584759500895" duration="17599000" />
       <workItem from="1584800548212" duration="1014000" />
-      <workItem from="1584802137502" duration="35125000" />
+      <workItem from="1584802137502" duration="40094000" />
+      <workItem from="1584931522267" duration="1077000" />
+      <workItem from="1584933835302" duration="5027000" />
     </task>
     <servers />
   </component>
@@ -176,14 +193,18 @@
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state x="192" y="0" width="784" height="738" key="#JSON/0.0.1360.738@0.0.1360.738" timestamp="1584883759533" />
-    <state x="218" y="33" width="1092" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584524878837">
+    <state x="62" y="61" width="1092" height="523" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584890026823">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state x="218" y="33" width="1092" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1360.738@0.0.1360.738" timestamp="1584524878837" />
+    <state x="62" y="61" width="1092" height="523" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1360.738@0.0.1360.738" timestamp="1584890026823" />
     <state x="408" y="156" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1584286752344">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state x="408" y="156" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1360.738@0.0.1360.738" timestamp="1584286752344" />
+    <state x="388" y="27" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1584890022738">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state x="388" y="27" key="#com.intellij.ide.macro.MacrosDialog/0.0.1360.738@0.0.1360.738" timestamp="1584890022738" />
     <state x="-168" y="79" key="#xdebugger.XInspectDialog" timestamp="1584805328301">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
@@ -196,38 +217,38 @@
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state x="92" y="92" width="1176" height="554" key="DiffContextDialog/0.0.1360.738@0.0.1360.738" timestamp="1584022697521" />
-    <state width="1317" height="134" key="GridCell.Tab.0.bottom" timestamp="1584545020149">
+    <state width="1317" height="360" key="GridCell.Tab.0.bottom" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.0.bottom/0.0.1360.738@0.0.1360.738" timestamp="1584545020149" />
-    <state width="1317" height="134" key="GridCell.Tab.0.center" timestamp="1584545020149">
+    <state width="1317" height="360" key="GridCell.Tab.0.bottom/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
+    <state width="1317" height="360" key="GridCell.Tab.0.center" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.0.center/0.0.1360.738@0.0.1360.738" timestamp="1584545020149" />
-    <state width="1317" height="134" key="GridCell.Tab.0.left" timestamp="1584545020007">
+    <state width="1317" height="360" key="GridCell.Tab.0.center/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
+    <state width="1317" height="360" key="GridCell.Tab.0.left" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.0.left/0.0.1360.738@0.0.1360.738" timestamp="1584545020007" />
-    <state width="1317" height="134" key="GridCell.Tab.0.right" timestamp="1584545020149">
+    <state width="1317" height="360" key="GridCell.Tab.0.left/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
+    <state width="1317" height="360" key="GridCell.Tab.0.right" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.0.right/0.0.1360.738@0.0.1360.738" timestamp="1584545020149" />
-    <state width="1317" height="134" key="GridCell.Tab.1.bottom" timestamp="1584545020213">
+    <state width="1317" height="360" key="GridCell.Tab.0.right/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
+    <state width="1317" height="360" key="GridCell.Tab.1.bottom" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.1.bottom/0.0.1360.738@0.0.1360.738" timestamp="1584545020213" />
-    <state width="1317" height="134" key="GridCell.Tab.1.center" timestamp="1584545020149">
+    <state width="1317" height="360" key="GridCell.Tab.1.bottom/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
+    <state width="1317" height="360" key="GridCell.Tab.1.center" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.1.center/0.0.1360.738@0.0.1360.738" timestamp="1584545020149" />
-    <state width="1317" height="134" key="GridCell.Tab.1.left" timestamp="1584545020149">
+    <state width="1317" height="360" key="GridCell.Tab.1.center/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
+    <state width="1317" height="360" key="GridCell.Tab.1.left" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.1.left/0.0.1360.738@0.0.1360.738" timestamp="1584545020149" />
-    <state width="1317" height="134" key="GridCell.Tab.1.right" timestamp="1584545020149">
+    <state width="1317" height="360" key="GridCell.Tab.1.left/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
+    <state width="1317" height="360" key="GridCell.Tab.1.right" timestamp="1584895847617">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
-    <state width="1317" height="134" key="GridCell.Tab.1.right/0.0.1360.738@0.0.1360.738" timestamp="1584545020149" />
+    <state width="1317" height="360" key="GridCell.Tab.1.right/0.0.1360.738@0.0.1360.738" timestamp="1584895847617" />
     <state x="260" y="111" key="IDE.errors.dialog" timestamp="1584802317863">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
@@ -259,6 +280,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/bfb_vote_counter$configGen.coverage" NAME="configGen Coverage Results" MODIFIED="1584279871705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bfb_vote_counter$main.coverage" NAME="main Coverage Results" MODIFIED="1584540224705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bfb_vote_counter$main.coverage" NAME="main Coverage Results" MODIFIED="1584890856199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -43,6 +43,9 @@ def main():
     parser.add_argument('-s', '--save-only',
                         help='Only get the comments and store them in the session pickle file.',
                         action='store_true')
+    parser.add_argument('-a', '--show-me-the-nerds',
+                        help="SHOW ME THE SPAM SHOW ME THE NERD SHOW ME EVERYTHING SO I CAN ~~ruin~~ MY SANITY AAAAAAA",
+                        action='store_true')
     args = parser.parse_args()
     # Run functions if yes
     if args.delete_comments:
@@ -280,11 +283,15 @@ def main():
             )
             sayfill(f"Elapsed time: {round(time() - t, 3)}s")
         count += 1  # add one to the counter, woo hoo!
-        vote_alph = return_vote_item(i.text.lower(), stats["votes"]["alphs"])
-        vote = vote_alph[-1]
+        vote_alph = return_vote_item(i.text.lower(), stats["alphs"])
+        try:
+            vote = vote_alph[-1]
+        except:
+            pass
         if stats['video']['publishTStamp'] + config['deadline'] < i.published_at.timestamp():
             stats['votes']['deadlined'] += 1  # Deadlined vote doesn't count.
-            if len(vote_alph) != 0 and vote in config['alphs']:
+            # noinspection PyUnboundLocalVariable
+            if len(vote_alph) != 0 and vote in stats['alphs']:
                 stats['votes']['characters'][vote]['deadlined'] += 1  # Add 1 to the deadline count for the character
                 stats['votes']['characters'][vote]['total'] += 1  # Add 1 to the character's total vote count.
             continue
@@ -362,11 +369,11 @@ def main():
     sayfill("CHARACTERS")
     fchar = stats["votes"]["characters"]  # (UNOFFICIAL) Final character count
     for i in fchar:
-        sayfill(f"{fchar[i]}\t"
-                f'{Fore.WHI:{fchar[i]["total"]}\t}'
-                f'{Fore.GREEN}Valid:{fchar[i]["valid"]}\t'
-                f'{Fore.YELLOW}Shiny:{fchar[i]["shiny"]}\t'
-                f'{Fore.RED}Dead.L:{fchar[i]["deadlined"]}\t')
+        sayfill(f"{fchar[i]['name']}".ljust(15) +
+                f'{Fore.WHITE}:{fchar[i]["total"]}'.ljust(15) +
+                f'{Fore.GREEN}Valid:{fchar[i]["valid"]}'.ljust(20) +
+                f'{Fore.YELLOW}Shiny:{fchar[i]["shiny"]}'.ljust(20) +
+                f'{Fore.RED}Dead.L:{fchar[i]["deadlined"]}')
     ############################################################
     # End session monitorings
     requests.post(
