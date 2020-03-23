@@ -1,14 +1,15 @@
 {
-    "info": "a",
-    "videoID": "a",
-    "token": "a",
+    "info": "use configGen.py",
+    "videoID": "useconfigGen.py",
+    "token": "yourAPITokenHere",
     "characters": {
-        "a": "a",
-        "b": "a",
-        "c": "a",
-        "d": "a",
-        "e": "a",
-        "f": "a"
+        "a": "your",
+        "b": "character",
+        "c": "s",
+        "d": "will",
+        "e": "be",
+        "f": "in",
+        "g": "here"
     },
     "deadline": 172800
 }
