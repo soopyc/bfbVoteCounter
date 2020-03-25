@@ -369,7 +369,7 @@ def main():
         f"The shiniest coward: {shinies_sorted[-1][0]} ({shinies_sorted[-1][1]} votes)"
     )
     genbr()
-    sayfill("CHARACTERS")
+    sayfill("-- CHARACTERS --")
     fchar = stats["votes"]["characters"]  # (UNOFFICIAL) Final character count
     for i in fchar:
         sayfill(f"{fchar[i]['name']}".ljust(15) +

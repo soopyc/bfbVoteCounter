@@ -6,14 +6,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450f05ac-2b61-49aa-bc4b-ad8dadd8e0f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sessions/session_09b1495e4de8e1288f4a.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/session_24a166384f88146ddca9.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/session_4b2c354be3545773dea8.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/session_519ebd0b5c49d57b30d5.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/session_52884239cc2bff4f318d.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/session_55927c6ac70937681879.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/session_bad192ad048ec6ab2fb5.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/session_e1ade5151853b779b686.pickle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/counter.py" afterDir="false" />
     </list>
@@ -157,7 +149,8 @@
       <workItem from="1584800548212" duration="1014000" />
       <workItem from="1584802137502" duration="40094000" />
       <workItem from="1584931522267" duration="1077000" />
-      <workItem from="1584933835302" duration="15213000" />
+      <workItem from="1584933835302" duration="18250000" />
+      <workItem from="1585008658100" duration="180000" />
     </task>
     <servers />
   </component>
