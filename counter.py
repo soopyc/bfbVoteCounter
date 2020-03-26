@@ -223,7 +223,7 @@ def main():
     while True:
         if args.comment_file is not None:
             break
-        sleep(0.1)
+        # sleep(0.01)
         try:
             retv = fetcher.comment_thread(config["videoID"], npt)
             stats["tokenUsage"] += 5
@@ -236,6 +236,7 @@ def main():
             )
             pickle.dump(
                 stats, open(f"sessions/unfinished_{session_id}.pickle", "wb+"))
+            sys.exit(33)
         # noinspection PyUnboundLocalVariable
         returnval = retv[0]
         npt = retv[1]
