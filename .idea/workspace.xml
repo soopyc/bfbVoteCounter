@@ -6,8 +6,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="450f05ac-2b61-49aa-bc4b-ad8dadd8e0f2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/counter.old.py" afterDir="false" />
+      <change beforePath="C:/bots/waterbot/bot/.idea/workspace.xml" beforeDir="false" afterPath="C:/bots/waterbot/bot/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="C:/bots/waterbot/bot/bot.py" beforeDir="false" afterPath="C:/bots/waterbot/bot/bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/bfb_vote_counter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bfb_vote_counter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configGen.py" beforeDir="false" afterPath="$PROJECT_DIR$/configGen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/counter.ico" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/counter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dumpsters_n_files/session_0e147bf1fb38099ae172.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sessions/unfinished_c86f080b3668cb32921d.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/dumpsters_n_files/unfinished_c86f080b3668cb32921d.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upgrader.py" beforeDir="false" />
     </list>
     <list id="2afcc3ce-fe74-473b-a9e0-c5ee858650b9" name="Restyled by yapf" comment="Restyled by yapf">
       <changelist_data name="Restyled.io" email="commits@restyled.io" date="1584190236000" />
@@ -51,13 +63,14 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="G:\P\Python Projects\bfb_vote_counter" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\P\Python Projects\bfb_vote_counter\dumpsters_n_files" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\P\Python Projects\bfb_vote_counter" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -151,7 +164,15 @@
       <workItem from="1584931522267" duration="1077000" />
       <workItem from="1584933835302" duration="18250000" />
       <workItem from="1585008658100" duration="180000" />
-      <workItem from="1585123772605" duration="13680000" />
+      <workItem from="1585123772605" duration="83311000" />
+      <workItem from="1585392481234" duration="368000" />
+      <workItem from="1585392997226" duration="18253000" />
+      <workItem from="1585468394469" duration="18611000" />
+      <workItem from="1585559409682" duration="13407000" />
+      <workItem from="1585628135588" duration="33408000" />
+      <workItem from="1585706476311" duration="3953000" />
+      <workItem from="1585718409441" duration="4609000" />
+      <workItem from="1585796381918" duration="1964000" />
     </task>
     <servers />
   </component>
@@ -250,6 +271,10 @@
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state x="385" y="72" key="MultipleFileMergeDialog/0.0.1360.738@0.0.1360.738" timestamp="1584868697560" />
+    <state x="79" y="19" key="SettingsEditor" timestamp="1585556864223">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state x="79" y="19" key="SettingsEditor/0.0.1360.738@0.0.1360.738" timestamp="1585556864223" />
     <state x="401" y="110" width="585" height="540" key="StructurePopup" timestamp="1584433224538">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
@@ -258,6 +283,10 @@
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state width="688" height="377" key="XDebugger.FullValuePopup/0.0.1360.738@0.0.1360.738" timestamp="1584711299954" />
+    <state x="194" y="73" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1" timestamp="1585367992601">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state x="194" y="73" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1/0.0.1360.738@0.0.1360.738" timestamp="1585367992601" />
     <state x="284" y="282" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584884863240">
       <screen x="0" y="0" width="1360" height="738" />
     </state>
@@ -266,6 +295,10 @@
       <screen x="0" y="0" width="1360" height="738" />
     </state>
     <state x="322" y="22" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1360.738@0.0.1360.738" timestamp="1584526049574" />
+    <state x="343" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1585707061201">
+      <screen x="0" y="0" width="1360" height="738" />
+    </state>
+    <state x="343" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1360.738@0.0.1360.738" timestamp="1585707061201" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/bfb_vote_counter$configGen.coverage" NAME="configGen Coverage Results" MODIFIED="1584279871705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

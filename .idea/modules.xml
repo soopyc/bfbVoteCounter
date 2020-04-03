@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bfb_vote_counter.iml" filepath="$PROJECT_DIR$/.idea/bfb_vote_counter.iml" />
+      <module fileurl="file://C:/bots/waterbot/bot/.idea/waterbot.iml" filepath="C:/bots/waterbot/bot/.idea/waterbot.iml" />
     </modules>
   </component>
 </project>
