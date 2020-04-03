@@ -108,7 +108,7 @@ else:
         config['characters'][texte] = ask(f'Character name (of [{texte}]): ')
 print('Lastly, please give me the seconds until voting ends. Typically it will be 48 hours aka 172800 seconds.\n'
       'REMEMBER IT IS SECONDS AND ONLY SECONDS!!! YOU DON\'T NEED TO WRITE LIKE "172800s", JUST WRITE IT LIKE 172800.\n'
-      'Pick a very high number if you want to disable deadlines. (99999999999)')
+      'Pick 0 if you want to disable deadlines.')
 config['deadline'] = int(ask(f'Seconds until deadline: ', 172800))
 
 print('Alright, here\'s your configuration. \nFor your convenience, it has been saved to config.json or the specifiec '
