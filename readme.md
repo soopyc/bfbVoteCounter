@@ -3,3 +3,5 @@
 
 # BFB Votes Collector
 Rewriting in progress. Watch this repo for changes. Code currently is half broken but its too messy.
+
+Link to the branch: https://github.com/kcomain/bfbVoteCounter/tree/rewrite-1
