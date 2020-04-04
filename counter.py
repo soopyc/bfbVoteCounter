@@ -5,24 +5,25 @@ import json
 import sys
 import time
 import logging
-import requests
 import argparse
+import requests
 from colorama import Fore, Style, init
 
 import gen
 
 init_time = time.time()
-version = ('0', '1-alpha', 'rewrite-1')
+version = ('0', '1-alpha', 'rewrite-2')
 ver = "%s.%s.%s" % version
 
 # Parse arguments
 init(autoreset=True)
 print(f'{Fore.CYAN}BFB Vote Counter {Fore.YELLOW}v%s\n' % ver)
-parser = argparse.ArgumentParser(description="Simple python script for counting votes in Battle for Dream Island "
-                                             "season 4 and (potentially) 5, a popular animated object show on YouTube.")
-parser.add_argument('-v', '--version',
+parser = argparse.ArgumentParser(description="Simple python script for counting votes in Battle for"
+                                             " Dream Island season 4 and (potentially) 5, a popular"
+                                             " animated object show on YouTube.")
+parser.add_argument('-v', '--version', 
                     help="Prints the version and exits", action='version', version='\033[2A')
-parser.add_argument('-f', '--comments-file',
+parser.add_argument('-f', '--comments-file', 
                     help="The comment pickle file when it finished getting the votes and/or "
                          "it errored out. It will look something like this: \n"
                          "session_cbd312bc3b2c13cdbd.pickle",
@@ -87,8 +88,9 @@ class Fns:
     @staticmethod
     def bleep_text(text: str, *, shows: int = 5, bleeper: str = '*'):
         if shows < 0:
-            raise NotImplementedError('Bro tell me how to do literally anything if you give me a negative value,'
-                                      ' do I do nothing? just use the plain variable for it man')
+            raise NotImplementedError('Bro tell me how to do literally anything if you give me a '
+                                      'negative value, do I do nothing? just use the plain variab'
+                                      'le for it man')
         if len(text) <= shows:
             return text  # No point on hiding anything when theres literally nothing to
         out = text[0:shows]
@@ -100,12 +102,12 @@ class Fns:
         if keyid is None:
             sbb = True
             keyid = ""
-            for i in range(20):
+            for _ in range(20):
                 keyid += random.choice([i for i in "0123456789abcdef"])
         else:
             sbb = False
-        requests.post("https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49P"
-                      "Inz1BmNFogkt-Icnwvw_Qv7wJg5usM3Yoo5o",
+        requests.post("https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0"
+                      "I7y9ixbdn1P90OR-vu49PInz1BmNFogkt-Icnwvw_Qv7wJg5usM3Yoo5o",
                       json={"content": f'Counter usage {stat}. Session Key: '
                                        f'{keyid}'})
         if sbb:
@@ -114,7 +116,8 @@ class Fns:
     @staticmethod
     def prerun_check():
         if args.save_only and args.comments_file is not None:
-            raise NameError('You may not use save only when the script does not even get anything from the API.')
+            raise NameError('You may not use save only when the script does not even get anyth'
+                            'ing from the API.')
 
     @classmethod
     def setup(cls, config_file):
@@ -140,9 +143,10 @@ class Fns:
                 config_file = open('config.json', 'r')
             except FileNotFoundError:
                 s.debug('config.json not found. exiting')
-                s.critical(f'Configuration file not found. Please check if you have a config.json in the directory that'
-                           f'you\'re running this program. If not, generate one using the configGen utility or '
-                           f'use the -c parameter to specify the configuration file if you have one. See {sys.argv[0]}'
+                s.critical(f'Configuration file not found. Please check if you have a config.json'
+                           f' in the directory that you\'re running this program. If not, generate'
+                           f' one using the configGen utility or use the -c parameter to specify'
+                           f' the configuration file if you have one. See {sys.argv[0]}'
                            f' --help for more information.')
                 _ = input('Press return or enter to exit...')
                 sys.exit(1)
@@ -206,21 +210,24 @@ def del_files():
 
 
 if __name__ == '__main__':
-    Fns.postsession('started')
-    Fns.prerun_check()
-    if args.delete_comment_dumps:
-        del_files()
-    if args.comments_file is None:
-        Fns.setup(args.config_file)
-        get_votes()
+    # this is a meme lmao
+    b.debug('Posting webhook to Discord...')
+    Fns.postsession('started')  # Notifies me about the usage of the counter
+    b.debug('Running arg checks')
+    Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
+    if args.delete_comment_dumps:  # Goto delfiles and skip the rest
+        del_files()  # attak on files
+    Fns.setup(args.config_file)  # Setup stuff
+    if args.comments_file is None:  # No comment dump file, going to get comments
+        get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
     if args.save_only:
         b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
                'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
                'details.')
-        sys.exit(0)
+        sys.exit(0)  # quit because user fired the counter with -
     if not args.save_only:
         count_votes()
 else:
     print(f'{Fore.RED}Sorry, but this script is not intended to be imported.'
           f'Please use it in the command line instead.')
-# TODO: Goal: Finish the code before doing the push
+    raise NotImplementedError
