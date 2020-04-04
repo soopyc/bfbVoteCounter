@@ -224,10 +224,10 @@ if __name__ == '__main__':
         b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
                'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
                'details.')
-        sys.exit(0)  # quit because user fired the counter with -
+        sys.exit(0)  # quit because user fired the counter with -s param
     if not args.save_only:
         count_votes()
-else:
+else:  # bruh why use this script as a module, support for that will come soon:tm:
     print(f'{Fore.RED}Sorry, but this script is not intended to be imported.'
           f'Please use it in the command line instead.')
-    raise NotImplementedError  # bruh why
+    raise NotImplementedError
