@@ -17,6 +17,7 @@ from colorama import Fore, Style, init
 import gen
 
 init_time = time.time()
+t = Terminal()
 version = ('0', '1-alpha', 'rewrite-2')
 ver = "%s.%s.%s" % version
 
@@ -34,10 +35,11 @@ parser.add_argument('-f', '--comments-file',
                          "session_cbd312bc3b2c13cdbd.pickle",
                     default=None, type=argparse.FileType('rb'))
 parser.add_argument('-r', '--delete-comment-dumps',
-                    help="Deletes all session pickle files inside of the sessions/ folder.",
+                    help=f"Deletes all session pickle files inside of the {t.underline(sessions/)}"
+                         f" folder.",
                     action='store_true')
 parser.add_argument('--delete-logs',
-                    help="Deletes all log files inside of the logs/ folder.",
+                    help=f"Deletes all log files inside of the {t.underline('logs/')} folder.",
                     action='store_true')
 parser.add_argument('-c', '--config-file',
                     help="The configuration json file for the counter. Defaults to config.json",
@@ -88,7 +90,6 @@ votes = {"total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
 fetcher = None
 err_ = None
 oh_no_error = False
-t = Terminal()
 # b.debug('')
 
 
