@@ -21,3 +21,6 @@ logs/
 # VSCode and theia
 .theia/
 .vscode/
+
+# GitPod stuff
+index.html

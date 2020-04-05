@@ -10,7 +10,7 @@ import traceback
 from datetime import datetime
 
 import requests
-from blessings import Terminal
+from blessed import Terminal
 from colorama import Fore, Style, init
 
 import gen
@@ -59,10 +59,10 @@ logging.basicConfig(
     ]
 )
 # Get logger objects
-b = logging.getLogger('Script')  # Base Logger
-s = logging.getLogger('Functions')  # Setup logger
-g = logging.getLogger('Getter')  # Comment Getter logger
-c = logging.getLogger('Counter')  # Counting module Logger
+b = logging.getLogger('counter')  # Base Logger
+s = logging.getLogger('setup')  # Setup logger
+g = logging.getLogger('get_votes')  # Comment Getter logger
+c = logging.getLogger('count_votes')  # Counting module Logger
 # Start spamming stdout with debug shit
 b.debug(f'Arguments: {args}')
 b.debug(f'Comment dump: {"None" if args.comments_file is None else args.comments_file.name}')
@@ -189,7 +189,8 @@ class Fns:
             video['views'] = video_.total_views
             video['comments'] = video_.comments
             print(f'{Fore.CYAN}Video: {video["name"]}\n'
-                  f'{Fore.LIGHTBLUE_EX}')
+                  f'{Fore.LIGHTBLUE_EX}{video["comments"]} comment(s), '
+                  f'{Fore.CYAN}{video["views"]} view(s)')
         else:
             b.debug(f'comments_file seems to be filled. filename is {args.comments_file.name}')
             b.info('Entering Count only mode.')
