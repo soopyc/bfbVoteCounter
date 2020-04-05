@@ -1,12 +1,16 @@
 import os
-import random
 import re
 import json
 import sys
 import time
+import random
 import logging
 import argparse
+import traceback
+from datetime import datetime
+
 import requests
+from blessings import Terminal
 from colorama import Fore, Style, init
 
 import gen
@@ -42,11 +46,18 @@ parser.add_argument('-d', '--debug-messages',
                     action='store_true')
 args = parser.parse_args()
 
-# Set logging level based on arguments
-if args.debug_messages:
-    logging.basicConfig(level=logging.DEBUG, format='[%(name)s %(levelname)s] %(message)s')
-else:
-    logging.basicConfig(level=logging.INFO, format='[%(name)s %(levelname)s] %(message)s')
+# Set logging level based on arguments and basica configs
+if not os.path.exists('logs'):
+    os.mkdir('logs')
+log_file = 'logs/{}.log'.format(datetime.fromtimestamp(init_time).strftime('%Y%m%d_%H%M%S'))
+logging.basicConfig(
+    level=logging.DEBUG if args.debug_messages else logging.INFO, 
+    format='%(asctime)s [%(name)s %(levelname)s] %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler(log_file)
+    ]
+)
 # Get logger objects
 b = logging.getLogger('Script')  # Base Logger
 s = logging.getLogger('Functions')  # Setup logger
@@ -56,8 +67,11 @@ c = logging.getLogger('Counter')  # Counting module Logger
 b.debug(f'Arguments: {args}')
 b.debug(f'Comment dump: {"None" if args.comments_file is None else args.comments_file.name}')
 b.debug(f'Delete comment dumps: {args.delete_comment_dumps}')
+b.debug(f'Logging outputs to stdout and {log_file}')
 
 # Define variables and stuff
+b.debug('Defining variables')
+session = ''
 video_id = ""
 deadline = 172800
 token = ""
@@ -65,9 +79,13 @@ video = {"name": '', "views": 0, "comments": 0}
 characters = {}
 votes = {"total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
 fetcher = None
+err_ = None
+oh_no_error = False
+t = Terminal()
 # b.debug('')
 
 
+b.debug('Defining helper functions')
 class Fns:
     @staticmethod
     def clear():
@@ -212,22 +230,37 @@ def del_files():
 if __name__ == '__main__':
     # this is a meme lmao
     b.debug('Posting webhook to Discord...')
-    Fns.postsession('started')  # Notifies me about the usage of the counter
+    session = Fns.postsession('started')  # Notifies me about the usage of the counter
     b.debug('Running arg checks')
     Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
-    if args.delete_comment_dumps:  # Goto delfiles and skip the rest
-        del_files()  # attak on files
-    Fns.setup(args.config_file)  # Setup stuff
-    if args.comments_file is None:  # No comment dump file, going to get comments
-        get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
-    if args.save_only:
-        b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
-               'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
-               'details.')
-        sys.exit(0)  # quit because user fired the counter with -s param
-    if not args.save_only:
-        count_votes()
+    b.debug('setup finished, entering fullscreen mode using ctx mgr')
+    with t.fullscreen():  # Start fullscreening
+        Fns.cur_back()
+        try:
+            if args.delete_comment_dumps:  # Goto delfiles and skip the rest
+                del_files()  # attak on files
+            Fns.setup(args.config_file)  # Setup stuff
+            if args.comments_file is None:  # No comment dump file, going to get comments
+                try:
+                    get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
+                except Exception as e:
+                    b.fatal('An error occured. The script cannot continue. See the error above ')
+            if args.save_only:
+                b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
+                       'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
+                       'details.')
+                sys.exit(0)  # quit because user fired the counter with -s param
+            if not args.save_only:
+                count_votes()
+                _ = input('Press return or enter to continue... This screen will get removed after you press the button.')
+        except Exception as e:
+            oh_no_error = True
+            err_ = e
+    if oh_no_error:
+        print('Hey bro the code errored out somehow so this is the fallback and ill display'
+              ' the traceback here.')
+        print(traceback.TracebackException.from_exception(err_))
 else:  # bruh why use this script as a module, support for that will come soon:tm:
-    print(f'{Fore.RED}Sorry, but this script is not intended to be imported.'
+    print(f'{Fore.RED}Sorry, but this script is not intended to be imported. '
           f'Please use it in the command line instead.')
     raise NotImplementedError

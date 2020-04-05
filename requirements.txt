@@ -1,4 +1,5 @@
 requests==2.23.0
-iso-8601==0.3.0
+# iso-8601==0.3.0  # Not sure if I have to use this but eh stfu
 python-dateutil
 colorama>=0.4.1
+blessings>=1.7

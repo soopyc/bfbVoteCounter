@@ -11,3 +11,6 @@ __pycache__/
 
 # PyInstaller testing and other stuff
 __pyinst__/
+
+# log files
+logs/
