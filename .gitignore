@@ -11,6 +11,9 @@ __pycache__/
 
 # PyInstaller testing and other stuff
 __pyinst__/
+configGen.spec
+counter.spec
+upgrader.spec
 
 # log files
 logs/
