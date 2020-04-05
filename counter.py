@@ -44,6 +44,8 @@ parser.add_argument('-s', '--save-only',
 parser.add_argument('-d', '--debug-messages',
                     help="Spams the console with debug items",
                     action='store_true')
+parser.add_argument('--debug-mode',
+                    help="Enters debug mode. Does not send requests to Google's servers. ")
 args = parser.parse_args()
 
 # Set logging level based on arguments and basica configs
@@ -199,7 +201,7 @@ class Fns:
 
 # TODO: Now get the votes
 def get_votes():
-    return 0
+    g.debug('Get_Votes is called. Running script.')
 
 
 # TODO: Count shines deadlines and stuffs that bsically just crash the script
