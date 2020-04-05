@@ -5,4 +5,4 @@ so complex. Anyways, this is the site branch. You will not be able to find the c
 You can find it [here](https://github.com/kcomain/bfbVoteCounter) though. Happy counting!
 
 Oh also, I removed the ability of people using the default provided token so :P get your own 
-token, it's easy.
+token, it's easy. Just follow the [guide here.](https://github.com/kcomain/bfbVoteCounter/wiki/Getting-your-Google-API-token)
