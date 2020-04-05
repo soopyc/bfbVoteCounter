@@ -46,7 +46,8 @@ parser.add_argument('-d', '--debug-messages',
                     help="Spams the console with debug items",
                     action='store_true')
 parser.add_argument('--debug-mode',
-                    help="Enters debug mode. Does not send requests to Google's servers. ")
+                    help="Enters debug mode. Does not send requests to Google's servers.",
+                    action='store_true')
 args = parser.parse_args()
 
 # Set logging level based on arguments and basica configs
