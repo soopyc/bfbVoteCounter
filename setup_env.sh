@@ -4,8 +4,13 @@ echo "Setting up environment"
 echo "Installing python version 3.8.2"
 pyenv install 3.8.2
 echo "Setting local version to 3.8.2, might not be required."
-pyenv local 3.8.2
+pyenv global 3.8.2
 echo "Install dependencies"
 pip3 install -r ./requirements.txt
 echo "Install pylint"
-pip3 install pylint
+pip3 install pylint thefuck
+echo "Run fuck twice"
+fuck
+fuck
+source ~/.bashrc
+echo "run source ~/.bashrc"
