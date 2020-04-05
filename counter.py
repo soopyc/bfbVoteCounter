@@ -36,6 +36,9 @@ parser.add_argument('-f', '--comments-file',
 parser.add_argument('-r', '--delete-comment-dumps',
                     help="Deletes all session pickle files inside of the sessions/ folder.",
                     action='store_true')
+parser.add_argument('--delete-logs',
+                    help="Deletes all log files inside of the logs/ folder.",
+                    action='store_true')
 parser.add_argument('-c', '--config-file',
                     help="The configuration json file for the counter. Defaults to config.json",
                     default=None, type=argparse.FileType('r'))
@@ -230,7 +233,9 @@ def count_votes():
     return 0
 
 
-def del_files():
+def del_dumps():
+    if not args.delete_comment_dumps:
+        return 0
     print(f"{Fore.YELLOW}WARNING: All files inside of sessions/ directory will be removed. "
           f"Are you sure you want to continue?\n{Style.RESET_ALL}[{Fore.RED}Yes{Style.RESET_ALL}/"
           f"{Fore.GREEN}No{Style.RESET_ALL}]: ", end='')
@@ -240,6 +245,28 @@ def del_files():
         for i in dire:
             try:
                 os.remove("sessions/" + i)
+            except:
+                print(f"Cannot remove file {i}.")
+            else:
+                print(f"Removed file {i}")
+        sys.exit(0)
+    else:
+        print(Fore.GREEN + "Okay, cancelled.")
+        sys.exit(0)
+
+
+def del_logs():
+    if not args.delete_logs:
+        return 0
+    print(f"{Fore.YELLOW}WARNING: All files inside of logs/ directory will be removed. "
+          f"Are you sure you want to continue?\n{Style.RESET_ALL}[{Fore.RED}Yes{Style.RESET_ALL}/"
+          f"{Fore.GREEN}No{Style.RESET_ALL}]: ", end='')
+    a = input()
+    if a.lower() in ["yes", "y"]:
+        dire = os.listdir("logs")
+        for i in dire:
+            try:
+                os.remove("logs/" + i)
             except:
                 print(f"Cannot remove file {i}.")
             else:
@@ -260,8 +287,10 @@ if __name__ == '__main__':
     with t.fullscreen():  # Start fullscreening
         Fns.cur_back()
         try:
-            if args.delete_comment_dumps:  # Goto delfiles and skip the rest
-                del_files()  # attak on files
+            if args.delete_comment_dumps or args.delete_logs:  # Goto delfiles and skip the rest
+                del_dumps()  # attak on files
+                del_logs()  # attak on logs
+                sys.exit(0)  # attak on DIE
             Fns.setup(args.config_file)  # Setup stuff
             if args.comments_file is None:  # No comment dump file, going to get comments
                 try:
