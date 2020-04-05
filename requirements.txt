@@ -1,4 +1,0 @@
-requests==2.23.0
-iso-8601==0.3.0
-python-dateutil
-colorama>=0.4.1
