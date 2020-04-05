@@ -35,7 +35,7 @@ parser.add_argument('-f', '--comments-file',
                          "session_cbd312bc3b2c13cdbd.pickle",
                     default=None, type=argparse.FileType('rb'))
 parser.add_argument('-r', '--delete-comment-dumps',
-                    help=f"Deletes all session pickle files inside of the {t.underline(sessions/)}"
+                    help=f"Deletes all session pickle files inside of the {t.underline('sessions/')}"
                          f" folder.",
                     action='store_true')
 parser.add_argument('--delete-logs',
