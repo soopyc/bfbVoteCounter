@@ -1,9 +1,10 @@
 import os
 import re
-import json
 import sys
 import time
+import json
 import random
+import pickle
 import logging
 import argparse
 import traceback
@@ -157,6 +158,7 @@ class Fns:
         s.debug('using global votes')
         global fetcher
         s.debug('using global fetcher')
+        video_ = None
         if config_file is None:
             s.debug('Config is None. Falling back to default.')
             try:
@@ -178,7 +180,23 @@ class Fns:
         token = config['token']
         b.info(f'Using token {cls.bleep_text(token)}')
         b.debug('Testing if getting a video is required')
-        if args.comments_file is None:
+        if args.debug_mode:
+            b.debug('debug mode is used.')
+            b.debug('using dummy video object')
+            video_ = pickle.loads(b'\x80\x04\x95e\x01\x00\x00\x00\x00\x00\x00\x8c\x03gen\x94\x8c'
+                                  b'\x05Video\x94\x93\x94)\x81\x94}\x94(\x8c\x0cpublish_time\x94'
+                                  b'\x8c\x08datetime\x94\x8c\x08datetime\x94\x93\x94C\n\x07\xcf'
+                                  b'\x0c\x1a\x06\x00\x00\x00\x00\x00\x94\x8c\x0edateutil.tz.tz\x94'
+                                  b'\x8c\x07tzlocal\x94\x93\x94)\x81\x94}\x94(\x8c\x0b_std_offset'
+                                  b'\x94h\x06\x8c\ttimedelta\x94\x93\x94K\x00K\x00K\x00\x87\x94R'
+                                  b'\x94\x8c\x0b_dst_offset\x94h\x13\x8c\n_dst_saved\x94h\x11K\x00K'
+                                  b'\x00K\x00\x87\x94R\x94\x8c\x07_hasdst\x94\x89\x8c\x08_tznames'
+                                  b'\x94\x8c\x03UTC\x94\x8c\x03UTC\x94\x86\x94ub\x86\x94R\x94\x8c'
+                                  b'\x05title\x94\x8c\x0bDebug Video\x94\x8c\x0bdescription\x94\x8c'
+                                  b'\x17Just for testing. Shhhh\x94\x8c\x0cchannel_name\x94\x8c\x07'
+                                  b'kcomain\x94\x8c\x0btotal_views\x94J\xff\xe0\xf5\x05\x8c\x08comm'
+                                  b'ents\x94J\xa24\x02\x00ub.')
+        elif args.comments_file is None:
             b.debug('comments_file is unfilled. assume not using count only mode')
             b.info('Entering Get-Count mode.')
             b.debug('Getting a fetcher object')
@@ -187,15 +205,16 @@ class Fns:
             b.debug('Sending (testing) video information request to Google...')
             video_ = fetcher.video(video_id)[0]
             b.debug(f'Got video, info: {video_}')
-            video['name'] = video_.title
-            video['views'] = video_.total_views
-            video['comments'] = video_.comments
-            print(f'{Fore.CYAN}Video: {video["name"]}\n'
-                  f'{Fore.LIGHTBLUE_EX}{video["comments"]} comment(s), '
-                  f'{Fore.CYAN}{video["views"]} view(s)')
         else:
             b.debug(f'comments_file seems to be filled. filename is {args.comments_file.name}')
             b.info('Entering Count only mode.')
+            video_ = pickle.load(args.comments_file)
+        video['name'] = video_.title
+        video['views'] = video_.total_views
+        video['comments'] = video_.comments
+        print(f'{Fore.CYAN}Video: {video["name"]}\n'
+              f'{Fore.LIGHTBLUE_EX}{video["comments"]} comment(s), '
+              f'{Fore.CYAN}{video["views"]} view(s)')
         # Loop through list and assign characters and eeeeeeeeeeeeeee
 
 
