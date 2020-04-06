@@ -217,8 +217,8 @@ class Fns:
         video['name'] = video_.title
         video['views'] = video_.total_views
         video['comments'] = video_.comments
-        print(t.cyan(f'Video: {video["name"]}')+ '\n' + \
-              t.bright_blue(f'{video["comments"]} comment(s), ')+ '\n' + \
+        print(t.bright_green(f'Video: {video["name"]}')+ '\n' + \
+              t.bright_yellow(f'{video["comments"]} comment(s), ')+ '\n' + \
               t.bright_cyan(f'{video["views"]} view(s)')
               )
         # Loop through list and assign characters and eeeeeeeeeeeeeee
