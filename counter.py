@@ -12,7 +12,6 @@ from datetime import datetime
 
 import requests
 from blessed import Terminal
-from colorama import Fore, Style, init
 
 import gen
 
@@ -22,8 +21,7 @@ version = ('0', '1-alpha', 'rewrite-2')
 ver = "%s.%s.%s" % version
 
 # Parse arguments
-# init(autoreset=True)
-print(f'{t.cyan("BFB Vote Counter")} {t.bright_yellow("v%s" % ver)}\n')
+print(f'{t.bright_cyan("BFB Vote Counter")} {t.bright_yellow("v%s" % ver)}\n')
 parser = argparse.ArgumentParser(description="Simple python script for counting votes in Battle for"
                                              " Dream Island season 4 and (potentially) 5, a popular"
                                              " animated object show on YouTube.")
@@ -217,9 +215,10 @@ class Fns:
         video['name'] = video_.title
         video['views'] = video_.total_views
         video['comments'] = video_.comments
-        print(f'{Fore.CYAN}Video: {video["name"]}\n'
-              f'{Fore.LIGHTBLUE_EX}{video["comments"]} comment(s), '
-              f'{Fore.CYAN}{video["views"]} view(s)')
+        print(t.cyan(f'Video: {video["name"]}')+ '\n' + \
+              t.bright_blue(f'{video["comments"]} comment(s), ')+ '\n' + \
+              t.bright_cyan(f'{video["views"]} view(s)')
+              )
         # Loop through list and assign characters and eeeeeeeeeeeeeee
 
 
@@ -296,6 +295,6 @@ if __name__ == '__main__':
               ' the traceback here.')
         print(traceback.TracebackException.from_exception(err_))
 else:  # bruh why use this script as a module, support for that will come soon:tm:
-    print(f'{Fore.RED}Sorry, but this script is not intended to be imported. '
-          f'Please use it in the command line instead.')
+    print(f'{t.red}Sorry, but this script is not intended to be imported. '
+          f'Please use it in the command line instead.{t.normal}')
     raise NotImplementedError
