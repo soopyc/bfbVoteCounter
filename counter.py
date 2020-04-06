@@ -239,6 +239,10 @@ class Fns:
 # TODO: Now get the votes
 def get_votes():
     g.debug('Get_Votes is called. Running script.')
+    g.debug('Initialize googlerequest-o-tron 9000')
+    g.debug('Sleeping for 5 seconds shhhh')
+    time.sleep(5)
+
 
 
 # TODO: Count shines deadlines and stuffs that bsically just crash the script
@@ -271,6 +275,7 @@ def del_stuff():
             print(t.bright_green("Okay, cancelled."))
 
 
+# Main stuff
 if __name__ == '__main__':
     # this is a meme lmao
     b.debug('Posting webhook to Discord...')
@@ -300,6 +305,9 @@ if __name__ == '__main__':
                 sys.exit(0)  # quit because user fired the counter with -s param
             if not args.save_only:
                 count_votes()
+        except KeyboardInterrupt:
+            oh_no_error = True
+            err_ = KeyboardInterrupt
         except Exception as e:
             oh_no_error = True
             err_ = e
@@ -307,7 +315,9 @@ if __name__ == '__main__':
     if oh_no_error:
         print('Hey bro the code errored out somehow so this is the fallback and ill display'
               ' the traceback here.')
-        print(traceback.TracebackException.from_exception(err_))
+        errortrace = traceback.TracebackException.from_exception(err_) if err_ != KeyboardInterrupt \
+            else "You pressed the break command!"
+        print(errortrace)
 else:  # bruh why use this script as a module, support for that will come soon:tm:
     print(f'{t.red}Sorry, but this script is not intended to be imported. '
           f'Please use it in the command line instead.{t.normal}')
