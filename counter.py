@@ -84,6 +84,7 @@ deadline = 172800
 token = ""
 video = {"name": '', "views": 0, "comments": 0}
 characters = {}
+char_valids = {}  # For use in counting to well speed it up
 votes = {"total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
 fetcher = None
 err_ = None
@@ -175,17 +176,17 @@ class Fns:
                            f' --help for more information.')
                 _ = input('Press return or enter to exit...')
                 sys.exit(1)
-        b.info(f'Using configuration file: {config_file.name}')
         config = json.load(config_file)
-        b.debug('loading config file contents to config')
+        b.info(f'Using configuration file: {config["info"]}')
+        s.debug('loading config file contents to config')
         video_id = config['videoID']
         deadline = None if config['deadline'] == 0 else config['deadline']
         token = config['token']
         b.info(f'Using token {cls.bleep_text(token)}')
-        b.debug('Testing if getting a video is required')
+        s.debug('Testing if getting a video is required')
         if args.debug_mode:
-            b.debug('debug mode is used.')
-            b.debug('using dummy video object')
+            s.debug('debug mode is used.')
+            s.debug('using dummy video object')
             video_ = pickle.loads(b'\x80\x04\x95e\x01\x00\x00\x00\x00\x00\x00\x8c\x03gen\x94\x8c'
                                   b'\x05Video\x94\x93\x94)\x81\x94}\x94(\x8c\x0cpublish_time\x94'
                                   b'\x8c\x08datetime\x94\x8c\x08datetime\x94\x93\x94C\n\x07\xcf'
@@ -199,6 +200,7 @@ class Fns:
                                   b'\x17Just for testing. Shhhh\x94\x8c\x0cchannel_name\x94\x8c\x07'
                                   b'kcomain\x94\x8c\x0btotal_views\x94J\xff\xe0\xf5\x05\x8c\x08comm'
                                   b'ents\x94J\xa24\x02\x00ub.')
+            0
         elif args.comments_file is None:
             b.debug('comments_file is unfilled. assume not using count only mode')
             b.info('Entering Get-Count mode.')
@@ -220,6 +222,15 @@ class Fns:
               t.bright_cyan(f'{video["views"]} view(s)')
               )
         # Loop through list and assign characters and eeeeeeeeeeeeeee
+        for i in config['characters']:
+            s.debug(f'Loading character {config["characters"][i]}[{i}]')
+            characters[i] = {
+                "name": config['characters'][i],
+                "total": 0, 
+                "valid": 0, 
+                "shinies": 0, 
+                "deadlined": 0
+            }
 
 
 # TODO: Now get the votes
