@@ -1,2 +1,2 @@
 tasks:
-  - command: bash setup_env.sh
+  - command: bash setup_env.sh &&source ~/.bashrc
