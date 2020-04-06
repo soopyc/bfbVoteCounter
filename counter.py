@@ -23,7 +23,7 @@ ver = "%s.%s.%s" % version
 
 # Parse arguments
 # init(autoreset=True)
-print(f'{t.cyan("BFB Vote Counter")} {t.bright_yellow("v%s\n" % ver)}')
+print(f'{t.cyan("BFB Vote Counter")} {t.bright_yellow("v%s" % ver)}\n')
 parser = argparse.ArgumentParser(description="Simple python script for counting votes in Battle for"
                                              " Dream Island season 4 and (potentially) 5, a popular"
                                              " animated object show on YouTube.")
