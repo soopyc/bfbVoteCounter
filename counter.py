@@ -241,9 +241,9 @@ def del_stuff():
     if args.delete_comment_dumps:
         deletes.append('sessions/')
     for i in deletes:
-        print(t.bright_yellow(f'WARNING: All files inside of {t.underline(i)} directory will be removed.')})
+        print(t.bright_yellow(f'WARNING: All files inside of {t.underline(i)} directory will be removed.'))
         print('Are you sure you want to continue?')
-        print(f'[{t.bright_red('Yes')}/{t.bright_green('No')}]:', end='')
+        print(f'[{t.bright_red("Yes/Y")}/{t.bright_green("No/N")}]:', end='')
         a = input()
         if a.lower() in ["yes", "y"]:
             dire = os.listdir(i)
