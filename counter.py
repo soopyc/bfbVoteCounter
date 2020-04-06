@@ -222,8 +222,9 @@ class Fns:
               t.bright_cyan(f'{video["views"]} view(s)')
               )
         # Loop through list and assign characters and eeeeeeeeeeeeeee
+        # Also does setup valid char votes for sorting
         for i in config['characters']:
-            s.debug(f'Loading character {config["characters"][i]}[{i}]')
+            s.debug(f'Loading character [{i}] {config["characters"][i]}')
             characters[i] = {
                 "name": config['characters'][i],
                 "total": 0, 
@@ -231,6 +232,8 @@ class Fns:
                 "shinies": 0, 
                 "deadlined": 0
             }
+            s.debug(f'adding {i} to char_valids')
+            char_valids[i] = 0
 
 
 # TODO: Now get the votes
