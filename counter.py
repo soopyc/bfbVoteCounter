@@ -250,10 +250,8 @@ def del_dumps():
                 print(f"Cannot remove file {i}.")
             else:
                 print(f"Removed file {i}")
-        sys.exit(0)
     else:
         print(Fore.GREEN + "Okay, cancelled.")
-        sys.exit(0)
 
 
 def del_logs():
@@ -272,10 +270,8 @@ def del_logs():
                 print(f"Cannot remove file {i}.")
             else:
                 print(f"Removed file {i}")
-        sys.exit(0)
     else:
         print(Fore.GREEN + "Okay, cancelled.")
-        sys.exit(0)
 
 
 if __name__ == '__main__':
