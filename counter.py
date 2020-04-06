@@ -22,7 +22,7 @@ version = ('0', '1-alpha', 'rewrite-2')
 ver = "%s.%s.%s" % version
 
 # Parse arguments
-init(autoreset=True)
+# init(autoreset=True)
 print(f'{Fore.CYAN}BFB Vote Counter {Fore.YELLOW}v%s\n' % ver)
 parser = argparse.ArgumentParser(description="Simple python script for counting votes in Battle for"
                                              " Dream Island season 4 and (potentially) 5, a popular"
