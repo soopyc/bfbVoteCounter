@@ -284,10 +284,10 @@ if __name__ == '__main__':
                 sys.exit(0)  # quit because user fired the counter with -s param
             if not args.save_only:
                 count_votes()
-                _ = input('Press return or enter to continue... This screen will get removed after you press the button.')
         except Exception as e:
             oh_no_error = True
             err_ = e
+        _ = input('Press return or enter to continue... This screen will get removed after you press the button.')
     if oh_no_error:
         print('Hey bro the code errored out somehow so this is the fallback and ill display'
               ' the traceback here.')
