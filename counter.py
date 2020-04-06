@@ -270,6 +270,8 @@ if __name__ == '__main__':
         try:
             if args.delete_comment_dumps or args.delete_logs:  # Goto delfiles and skip the rest
                 del_stuff()  # attak on FILES!!
+                _ = input('Press return or enter to continue... This '
+                          'screen will get removed after you press the button.')
                 sys.exit(0)  # attak on DIE
             Fns.setup(args.config_file)  # Setup stuff
             if args.comments_file is None:  # No comment dump file, going to get comments
@@ -281,6 +283,7 @@ if __name__ == '__main__':
                 b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
                        'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
                        'details.')
+                _ = input('Press return or enter to continue... This screen will get removed after you press the button.')
                 sys.exit(0)  # quit because user fired the counter with -s param
             if not args.save_only:
                 count_votes()
