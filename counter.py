@@ -263,7 +263,7 @@ def del_stuff():
                 except:
                     print(t.bright_yellow(f"Cannot remove file {b}."))
                 else:
-                    print(f"Removed file {t.underline(b)}")
+                    print(t.bright_green(f"Removed file {t.underline(b)}"))
         else:
             print(t.bright_green("Okay, cancelled."))
 
