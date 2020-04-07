@@ -1,8 +1,8 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report a bug, or bugs, whether it be small or large.
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
@@ -12,27 +12,27 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. run this
+2. wait a minute
+3. error!
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
+
+**Actual behavior**
+The actual behavior the counter produced. Must be clear or I might not be able to identify the issue.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+ - OS: [e.g. Windows, macOS, Linux, etc]
+ - OS Version: [e.g. 2004 build 19037.1]
+ - Python version [e.g. chrome, safari]
+ - Version [e.g. 3.8.2]
 
 **Additional context**
 Add any other context about the problem here.
+
+**Log file**
+Use the -d parameter to output debug logs and send them here. They should be in the logs/ folder.
