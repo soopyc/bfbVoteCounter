@@ -95,6 +95,10 @@ b.debug(f'Logging outputs to stdout and {log_file}')
 # Define variables and stuff
 b.debug('Defining variables')
 
+# Essential directories
+if not os.path.exists('sessions'):
+    os.mkdir('sessions')
+
 # Main stuff
 session = ''
 token = ""
