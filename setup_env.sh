@@ -12,5 +12,4 @@ pip3 install pylint thefuck
 echo "Run fuck twice"
 fuck
 fuck
-source ~/.bashrc
 echo "run source ~/.bashrc"

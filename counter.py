@@ -218,7 +218,7 @@ class Fns:
         video['views'] = video_.total_views
         video['comments'] = video_.comments
         print(t.bright_green(f'Video: {video["name"]}')+ '\n' + \
-              t.bright_yellow(f'{video["comments"]} comment(s), ')+ '\n' + \
+              t.bright_yellow(f'{video["comments"]} comment(s), ') + \
               t.bright_cyan(f'{video["views"]} view(s)')
               )
         # Loop through list and assign characters and eeeeeeeeeeeeeee
@@ -236,12 +236,29 @@ class Fns:
             char_valids[i] = 0
 
 
-# TODO: Now get the votes
+# TODO: Now get the votes (edit: doing it ok shut up)
 def get_votes():
+    if args.debug_mode:
+        return "Debug mode. I won't get any votes."
+    global fetcher
     g.debug('Get_Votes is called. Running script.')
     g.debug('Initialize googlerequest-o-tron 9000')
-    g.debug('Sleeping for 5 seconds shhhh')
-    time.sleep(5)
+    g.debug('sending request to get comments (#1 batch) and '
+            'getting first next page token')
+    try:
+        threads, npt = fetcher.comment_thread(video_id)
+        # raise NotImplementedError('Testing')
+    except Exception as e:
+        g.fatal(f'Error!\nDetails: {e}\n'
+                f'Stack: {traceback.TracebackException.from_exception(e)}')
+        print(f'an unexpected error occured. ({e})')
+        print(f'Since the error occured, the unfinished dump is saved to '
+              f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
+    fetch_count = 1
+    while npt is not None:
+        fetch_count += 1
+        threads
+        g.debug(f'Getting #{fetch_count}')
 
 
 
@@ -283,35 +300,29 @@ if __name__ == '__main__':
     b.debug('Running arg checks')
     Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
     b.debug('setup finished, entering fullscreen mode using ctx mgr')
-    with t.fullscreen():  # Start fullscreening
-        Fns.cur_back()
-        try:
-            if args.delete_comment_dumps or args.delete_logs:  # Goto delfiles and skip the rest
-                del_stuff()  # attak on FILES!!
-                _ = input('Press return or enter to continue... This '
-                          'screen will get removed after you press the button.')
-                sys.exit(0)  # attak on DIE
-            Fns.setup(args.config_file)  # Setup stuff
-            if args.comments_file is None:  # No comment dump file, going to get comments
-                try:
-                    get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
-                except Exception as e:
-                    b.fatal('An error occured. The script cannot continue. See the error above ')
-            if args.save_only:
-                b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
-                       'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
-                       'details.')
-                _ = input('Press return or enter to continue... This screen will get removed after you press the button.')
-                sys.exit(0)  # quit because user fired the counter with -s param
-            if not args.save_only:
-                count_votes()
-        except KeyboardInterrupt:
-            oh_no_error = True
-            err_ = KeyboardInterrupt
-        except Exception as e:
-            oh_no_error = True
-            err_ = e
-        _ = input('Press return or enter to continue... This screen will get removed after you press the button.')
+    try:
+        if args.delete_comment_dumps or args.delete_logs:  # Goto delfiles and skip the rest
+            del_stuff()  # attak on FILES!!
+            sys.exit(0)  # attak on DIE
+        Fns.setup(args.config_file)  # Setup stuff
+        if args.comments_file is None:  # No comment dump file, going to get comments
+            try:
+                get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
+            except Exception as e:
+                b.fatal('An error occured. The script cannot continue. See the error above ')
+        if args.save_only:
+            b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
+                   'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
+                   'details.')
+            sys.exit(0)  # quit because user fired the counter with -s param
+        if not args.save_only:
+            count_votes()
+    except KeyboardInterrupt:
+        oh_no_error = True
+        err_ = KeyboardInterrupt
+    except Exception as e:
+        oh_no_error = True
+        err_ = e
     if oh_no_error:
         print('Hey bro the code errored out somehow so this is the fallback and ill display'
               ' the traceback here.')

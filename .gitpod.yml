@@ -1,2 +1,2 @@
 tasks:
-  - command: bash setup_env.sh &&source ~/.bashrc
+  - command: bash setup_env.sh &&source ~/.bashrc&&echo "All Configured! Time to work."
