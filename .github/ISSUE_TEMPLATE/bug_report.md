@@ -2,7 +2,7 @@
 name: Bug report
 about: Report a bug, or bugs, whether it be small or large.
 title: ''
-labels: 'bug'
+labels: bug
 assignees: ''
 
 ---
@@ -13,7 +13,7 @@ A clear and concise description of what the bug is.
 **To Reproduce**
 Steps to reproduce the behavior:
 1. run this
-2. wait
+2. wait a minute
 3. error!
 
 **Expected behavior**
