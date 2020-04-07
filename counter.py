@@ -94,21 +94,26 @@ b.debug(f'Logging outputs to stdout and {log_file}')
 
 # Define variables and stuff
 b.debug('Defining variables')
+
+# Main stuff
 session = ''
-video_id = ""
-deadline = 172800
 token = ""
-video = {"name": '', "views": 0, "comments": 0}
-characters = {}
-char_valids = {}  # For use in counting to well speed it up
-votes = {"total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
-comments = []
-comment_count = 0
 fetcher = None
 err_ = None
 oh_no_error = False
-# b.debug('')
 
+# Downloading stuff
+video_id = ""  # Le video ID
+comments = []  # Le comments by GlOuRiOuS voters
+comment_count = 0  # Le counts
+video = {"name": '', "views": 0, "comments": 0, "published": None}  # Le video infos
+
+# Counting stuff
+deadline = 172800
+characters = {}  # {"name": "", "total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
+char_valids = {}  # charAlphabet: characters[charAlphabet]['valid']
+votes = {"total": 0, "valid": 0, "invalid": 0, "shinies": 0, "deadlined": 0}
+valid_votealphs = ''
 
 b.debug('Defining helper functions')
 class Fns:
@@ -123,6 +128,11 @@ class Fns:
     @staticmethod
     def get_vote(text: str, alphs: list):
         return re.findall(fr"\[({alphs})\]", text.lower())
+
+    @staticmethod
+    def is_vote(text: str):
+        match_res = re.match(r'\[[a-z]+\]', text)
+        return False if match_res is None else True
 
     @staticmethod
     def say(text: str):
@@ -180,6 +190,8 @@ class Fns:
         s.debug('using global votes')
         global fetcher
         s.debug('using global fetcher')
+        global comments
+        s.debug('using global comments')
         video_ = None
         if config_file is None:
             s.debug('Config is None. Falling back to default.')
@@ -231,10 +243,19 @@ class Fns:
         else:
             b.debug(f'comments_file seems to be filled. filename is {args.comments_file.name}')
             b.info('Entering Count only mode.')
-            video_ = pickle.load(args.comments_file)
+            comments = pickle.load(args.comments_file)
+            video_ = type('commentfile', (), 
+                             {
+                                 "title": "Comment Dump", 
+                                 "total_views": 500,
+                                 "comments": len(comments),
+                                 "publish_time": datetime.now()
+                             }
+                         )
         video['name'] = video_.title
         video['views'] = video_.total_views
         video['comments'] = video_.comments
+        video['published'] = video_.publish_time
         print(t.bright_green(f'Video: {video["name"]}')+ '\n' + \
               t.bright_yellow(f'{video["comments"]} comment(s), ') + \
               t.bright_cyan(f'{video["views"]} view(s)')
@@ -313,9 +334,69 @@ def count_votes():
     c.debug('Got signal count_votes')
     c.debug('building the counting system')
     # Start loading variables and stuff
+    global Fns
+    global video
+    global votes
     global comments
     global characters
     global char_valids
+    count = 0
+    voters = []
+    shinies = {}
+    alphs = [i for i in characters]
+    # Loop through comments
+    c.debug('Ready to go!')
+    for i in comments:
+        # Get the vote
+        c_text = i.text.lower()
+        c.debug('Got comment {c_text}')
+        try_vote = Fns.get_vote(c_text, alphs)
+        c.debug(f'Votes: {[f"[{voteas}] " for voteas in try_vote]}')
+        '''
+        Possible outcomes
+        - deadlined
+        - shiny
+        - valid
+        - not valid but is vote
+        - not a vote
+        '''
+        count += 1
+        if Fns.is_vote(c_text):
+            # If match vote regex then go, if no then skip
+            # No point on doing the count because pointless.
+            votes['total'] += 1
+            # Check if its a character
+            if len(try_vote) != 0:
+                # oh it is a char, gonna add it to the global counter.
+                characters[try_vote[-1]]['total'] += 1
+        else:
+            continue
+        # Check the due date
+        if i.published_at.timestamp >= video['publish']:
+            if len(try_vote) != 0:
+                characters[try_vote[-1]]['deadlined'] += 1
+                votes['deadlined'] += 1
+            # No match, not worth adding.
+        elif len(try_vote) == 0:
+            votes['invalid'] += 1
+            # It follows the format but sadly its not a valid vote.
+            # P.S. this one does not have the character alph in it.
+        elif i.author in voters:
+            # Author is in the voters list! SHINY DETECTED!!!!!!!!!
+            if i.author in shinies:
+                # AUTHOR IS ALSO IN THE SHINIES LIST!! ULTRA SHINY!!!
+                shinies[i.author] += 1
+            else:
+                # Author is not in shinies list. Not too shiny, phew.
+                shinies[i.author] = 1  # set 1 to avoid doing it a few times thus stonks.
+            # Sorry character, but the shinies have came to attack.
+            characters[try_vote[-1]]['shinies'] += 1
+            # Add 1 to the global counter as well.
+            votes['shinies'] += 1
+        else:
+            # CONGRATS YOU PASSED ALL TESTS YAAAAAAAAAAAA
+            characters[try_vote[-1]]['valid'] += 1
+            char_valids[try_vote[-1]] += 1
 
 
 def del_stuff():
