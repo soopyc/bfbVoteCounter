@@ -17,7 +17,7 @@ import gen
 
 init_time = time.time()
 t = Terminal()
-version = ('0', '1-alpha', 'rewrite-2')
+version = ('0', '1-alpha', 'rewrite-3')
 ver = "%s.%s.%s" % version
 
 # Parse arguments
@@ -254,7 +254,7 @@ class Fns:
             char_valids[i] = 0
 
 
-# TODO: Now get the votes (edit: doing it ok shut up)
+# Now get the votes (edit: doing it ok shut up)
 def get_votes():
     if args.debug_mode:
         return "Debug mode. I won't get any votes."
@@ -311,6 +311,11 @@ def get_votes():
 def count_votes():
     # Count votes
     c.debug('Got signal count_votes')
+    c.debug('building the counting system')
+    # Start loading variables and stuff
+    global comments
+    global characters
+    global char_valids
 
 
 def del_stuff():
