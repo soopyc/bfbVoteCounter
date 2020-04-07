@@ -6,3 +6,6 @@ You can find it [here](https://github.com/kcomain/bfbVoteCounter) though. Happy 
 
 Oh also, I removed the ability of people using the default provided token so :P 
 Get your own token, it's easy. Just follow the [guide here.](https://github.com/kcomain/bfbVoteCounter/wiki/Getting-your-Google-API-token)
+
+## Navigation
+- [News channel](./news)
