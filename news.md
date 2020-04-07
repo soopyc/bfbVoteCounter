@@ -1,13 +1,11 @@
 # News
 The one and only bfbVoteCounter news channel! 
 
-## Table of Contents
-- [Breaking news](#breaking-news)
-- [Smaller news](#corkboard)
+This is just the navigation portal so there will be nothing here so shut up and follow the link below
 
-## Breaking news
-### Apr 3, 2020
-Rewrite has started. The old script (currently in #master branch) is now deprecated due to messy code and large bug count, and speed.
+## Table of Contents
+- [Breaking news](./breaking)
+- [Smaller news](#corkboard)
 
 ## Corkboard
 ### Apr 7, 2020
