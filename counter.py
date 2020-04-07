@@ -25,32 +25,48 @@ print(f'{t.bright_cyan("BFB Vote Counter")} {t.bright_yellow("v%s" % ver)}\n')
 parser = argparse.ArgumentParser(description="Simple python script for counting votes in Battle for"
                                              " Dream Island season 4 and (potentially) 5, a popular"
                                              " animated object show on YouTube.")
+
+# Groups
+par_runtimes = parser.add_argument_group('script changers (optional)')
+par_delgroup = parser.add_argument_group('file deletion (optional)')
+par_debugs = parser.add_argument_group('debug options (optional)')
+
+# Essentials (optional)
 parser.add_argument('-v', '--version', 
-                    help="Prints the version and exits", action='version', version='\033[2A')
-parser.add_argument('-f', '--comments-file', 
-                    help="The comment pickle file when it finished getting the votes and/or "
-                         "it errored out. It will look something like this: \n"
-                         "session_cbd312bc3b2c13cdbd.pickle",
-                    default=None, type=argparse.FileType('rb'))
-parser.add_argument('-r', '--delete-comment-dumps',
-                    help=f"Deletes all session pickle files inside of the {t.underline('sessions/')}"
-                         f" folder.",
-                    action='store_true')
-parser.add_argument('--delete-logs',
-                    help=f"Deletes all log files inside of the {t.underline('logs/')} folder.",
-                    action='store_true')
-parser.add_argument('-c', '--config-file',
-                    help="The configuration json file for the counter. Defaults to config.json",
-                    default=None, type=argparse.FileType('r'))
-parser.add_argument('-s', '--save-only',
-                    help='Only get the comments and store them in the session pickle file.',
-                    action='store_true')
-parser.add_argument('-d', '--debug-messages',
-                    help="Spams the console with debug items",
-                    action='store_true')
-parser.add_argument('--debug-mode',
-                    help="Enters debug mode. Does not send requests to Google's servers.",
-                    action='store_true')
+                    help="Prints the version and exits", action='version', version='\033[2A') 
+                    # Basically return back cursor to just not make it print anything.
+
+# Runtime params (optional)
+par_runtimes.add_argument('-f', '--comments-file', 
+                          help="The comment pickle file when it finished getting the votes and/or "
+                               "it errored out. It will look something like this: \n"
+                               "session_cbd312bc3b2c13cdbd.pickle",
+                          default=None, type=argparse.FileType('rb'))
+par_runtimes.add_argument('-c', '--config-file',
+                          help="The configuration json file for the counter. "
+                               "Defaults to config.json",
+                          default=None, type=argparse.FileType('r'))
+par_runtimes.add_argument('-s', '--save-only',
+                          help='Only get the comments and store them in the session pickle file.',
+                          action='store_true')
+
+# Delete files (optional)
+par_delgroup.add_argument('-r', '--delete-dumps',
+                          help=f"Deletes all session pickle files(raw dumps) inside of the "
+                               f"{t.underline('sessions/')} folder.",
+                          action='store_true')
+par_delgroup.add_argument('-l', '--delete-logs',
+                          help=f"Deletes all log files inside of the {t.underline('logs/')} "
+                               f"folder.",
+                          action='store_true')
+
+# Debug mode (optional)
+par_debugs.add_argument('-d', '--debug-messages',
+                        help="Spams the console with debug items",
+                        action='store_true')
+par_debugs.add_argument('-m', '--debug-mode',
+                        help="Enters debug mode. Does not send requests to Google's servers.",
+                        action='store_true')
 args = parser.parse_args()
 
 # Set logging level based on arguments and basica configs
@@ -73,7 +89,7 @@ c = logging.getLogger('count_votes')  # Counting module Logger
 # Start spamming stdout with debug shit
 b.debug(f'Arguments: {args}')
 b.debug(f'Comment dump: {"None" if args.comments_file is None else args.comments_file.name}')
-b.debug(f'Delete comment dumps: {args.delete_comment_dumps}')
+b.debug(f'Delete comment dumps: {args.delete_dumps}')
 b.debug(f'Logging outputs to stdout and {log_file}')
 
 # Define variables and stuff
@@ -255,34 +271,37 @@ def get_votes():
     comment_count = 0
     get_starttime = time.time()
     e_qusage = 5
-    while npt is not None:
-        e_qusage += 5
-        try:
-            threads, npt = fetcher.comment_thread(video_id, npt if npt != 555555555555 else None)
-            # raise NotImplementedError('Testing')
-        except Exception as e:
-            g.fatal(f'Error!\nDetails: {e}\n'
-                    f'Stack: {traceback.TracebackException.from_exception(e)}')
-            print(f'an unexpected error occured. ({e})')
-            print(f'Since the error occured, the unfinished dump is saved to '
-                  f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
-            pickle.dump(comments, open(f"sessions/unfinished_{session}.pickle", 'wb+'))
-            raise requests.ConnectionError('Check logs.')
-        fetch_count += 1
-        threads
-        g.debug(f'Getting #{fetch_count}')
-        for i in threads:
-            comments.append(i.comment)
-            comment_count += 1
-            g.debug(f'adding comment {i.comment} ({comment_count}/{video["comments"]})')
-            if len(i.replies) != 0:
-                for b in i.replies:
-                    comments.append(b)
-                    comment_count += 1
-                    g.debug(f'adding comment {i.comment} ({comment_count}/{video["comments"]})')
-        print(f"{'Comments: [{}/{}]'.format(comment_count,video['comments']).ljust(25)}"
-              f"{f'Est.QuotaUsage: {e_qusage}'.ljust(25)}"
-              f"{f'Elap.Time: {round(time.time()-get_starttime, 3)}s'.ljust(25)}", end='\r')
+    try:
+        while npt is not None:
+            e_qusage += 5
+            try:
+                threads, npt = fetcher.comment_thread(video_id, npt if npt != 555555555555 else None)
+                # raise NotImplementedError('Testing')
+            except Exception as e:
+                g.fatal(f'Error!\nDetails: {e}\n'
+                        f'Stack: {traceback.TracebackException.from_exception(e)}')
+                print(f'an unexpected error occured. ({e})')
+                print(f'Since the error occured, the unfinished dump is saved to '
+                    f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
+                pickle.dump(comments, open(f"sessions/unfinished_{session}.pickle", 'wb+'))
+                raise requests.ConnectionError('Check logs.')
+            fetch_count += 1
+            g.debug(f'Getting #{fetch_count}')
+            for i in threads:  # Dump results into comments var
+                comments.append(i.comment)
+                comment_count += 1
+                g.debug(f'adding comment {i.comment} ({comment_count}/{video["comments"]})')
+                if len(i.replies) != 0:
+                    for b in i.replies:
+                        comments.append(b)
+                        comment_count += 1
+                        g.debug(f'adding reply {i.comment} ({comment_count}/{video["comments"]})')
+            print(f"{'Comments: [{}/{}] ({}%)'.format(comment_count,video['comments'], round(int(comment_count)/int(video['comments']), 3)).ljust(35)}"
+                f"{f'Est.QuotaUsage: {e_qusage}'.ljust(25)}"
+                f"{f'Elap.Time: {round(time.time()-get_starttime, 3)}s'.ljust(25)}", end='\r')
+    except Exception as e:
+        g.debug('Emergency dump.')
+        pickle.dump(comments, open(f"sessions/unfinished_emergency_{session}.pickle", 'wb+'))
     pickle.dump(comments, open(f"sessions/{session}.pickle", 'wb+'))
     g.debug(f'dumped comments to sessions/{session}.pickle')
 
@@ -291,14 +310,14 @@ def get_votes():
 # TODO: Count shines deadlines and stuffs that bsically just crash the script
 def count_votes():
     # Count votes
-    return 0
+    c.debug('Got signal count_votes')
 
 
 def del_stuff():
     deletes = []
     if args.delete_logs:
         deletes.append('logs/')
-    if args.delete_comment_dumps:
+    if args.delete_dumps:
         deletes.append('sessions/')
     for i in deletes:
         print(t.bright_yellow(f'WARNING: All files inside of {t.underline(i)} directory will be removed.'))
@@ -321,35 +340,44 @@ def del_stuff():
 # Main stuff
 if __name__ == '__main__':
     # this is a meme lmao
-    b.debug('Posting webhook to Discord...')
-    session = Fns.postsession('started')  # Notifies me about the usage of the counter
-    b.debug('Running arg checks')
-    Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
-    b.debug('setup finished, entering fullscreen mode using ctx mgr')
     try:
-        if args.delete_comment_dumps or args.delete_logs:  # Goto delfiles and skip the rest
+        b.debug('Posting webhook to Discord...')
+        session = Fns.postsession('started')  # Notifies me about the usage of the counter
+
+        b.debug('Running arg checks')
+        Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
+
+        b.debug('setup finished.')
+        print('Please Wait...')
+        time.sleep(3)
+
+        if args.delete_dumps or args.delete_logs:  # Goto delfiles and skip the rest
             del_stuff()  # attak on FILES!!
             sys.exit(0)  # attak on DIE
         Fns.setup(args.config_file)  # Setup stuff
+
         if args.comments_file is None:  # No comment dump file, going to get comments
-            try:
-                get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
-            except Exception as e:
-                b.fatal('An error occured. The script cannot continue. See the error above ')
-                b.debug(f'Error: {e}')
+            Fns.postsession('getting votes', session)
+            get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
+        
         if args.save_only:
-            b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
-                   'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
-                   'details.')
+            b.info(f'Since the save-only parameter is used, the comments collected are dumped '
+                   f'to sessions directory. To use it, just use this script again with the -f '
+                   f'parameter. see {sys.argv[0]} --help for more details.')
             sys.exit(0)  # quit because user fired the counter with -s param
+
         if not args.save_only:
+            Fns.postsession('counting', session)
             count_votes()
+
     except Exception as e:
+        b.debug(f'Error: {e}')
         print('Hey bro the code errored out somehow so this is the fallback and ill display'
               ' the traceback here.')
-        errortrace = traceback.TracebackException.from_exception(err_) if err_ != KeyboardInterrupt \
-            else "NonetypeError" if err_ is None else "You pressed the break command!"
+        errortrace = "You pressed the break command!" if err_ == KeyboardInterrupt \
+            else "NonetypeError" if err_ is None else traceback.TracebackException.from_exception(err_)
         print(errortrace)
+    print('Finished!')
 else:  # bruh why use this script as a module, support for that will come soon:tm:
     print(f'{t.red}Sorry, but this script is not intended to be imported. '
           f'Please use it in the command line instead.{t.normal}')
