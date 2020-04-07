@@ -10,6 +10,13 @@ The one and only bfbVoteCounter news channel!
 Rewrite has started. The old script (currently in #master branch) is now deprecated due to messy code and large bug count, and speed.
 
 ## Corkboard
+### Apr 7, 2020
+```diff
+! `Video` object and `Comment` object output their title and comment text respectively 
++ Counting method
++ dumps comments just like the old one
+```
+
 ### Apr 6, 2020
 Changed stuff:
 ```diff
