@@ -30,7 +30,7 @@ class Comment:
         self.published_at = p[2]
 
     def __str__(self):
-        return f"Comment: {self.text} --{self.author}"
+        return self.text
 
     @staticmethod
     def _parse(o):
@@ -100,7 +100,7 @@ class Video:
         self.comments = int(ct[5])
 
     def __str__(self):
-        return f"Video: {self.title}, {self.comments} total comments."
+        return self.title
 
     @staticmethod
     def _parse(o):

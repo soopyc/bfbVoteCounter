@@ -86,6 +86,8 @@ video = {"name": '', "views": 0, "comments": 0}
 characters = {}
 char_valids = {}  # For use in counting to well speed it up
 votes = {"total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
+comments = []
+comment_count = 0
 fetcher = None
 err_ = None
 oh_no_error = False
@@ -241,24 +243,48 @@ def get_votes():
     if args.debug_mode:
         return "Debug mode. I won't get any votes."
     global fetcher
+    g.debug('using global fetcher')
+    global comments
+    g.debug('using global comments')
     g.debug('Get_Votes is called. Running script.')
     g.debug('Initialize googlerequest-o-tron 9000')
     g.debug('sending request to get comments (#1 batch) and '
             'getting first next page token')
-    try:
-        threads, npt = fetcher.comment_thread(video_id)
-        # raise NotImplementedError('Testing')
-    except Exception as e:
-        g.fatal(f'Error!\nDetails: {e}\n'
-                f'Stack: {traceback.TracebackException.from_exception(e)}')
-        print(f'an unexpected error occured. ({e})')
-        print(f'Since the error occured, the unfinished dump is saved to '
-              f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
     fetch_count = 1
+    npt = 555555555555
+    comment_count = 0
+    get_starttime = time.time()
+    e_qusage = 5
     while npt is not None:
+        e_qusage += 5
+        try:
+            threads, npt = fetcher.comment_thread(video_id, npt if npt != 555555555555 else None)
+            # raise NotImplementedError('Testing')
+        except Exception as e:
+            g.fatal(f'Error!\nDetails: {e}\n'
+                    f'Stack: {traceback.TracebackException.from_exception(e)}')
+            print(f'an unexpected error occured. ({e})')
+            print(f'Since the error occured, the unfinished dump is saved to '
+                  f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
+            pickle.dump(comments, open(f"sessions/unfinished_{session}.pickle", 'wb+'))
+            raise requests.ConnectionError('Check logs.')
         fetch_count += 1
         threads
         g.debug(f'Getting #{fetch_count}')
+        for i in threads:
+            comments.append(i.comment)
+            comment_count += 1
+            g.debug(f'adding comment {i.comment} ({comment_count}/{video["comments"]})')
+            if len(i.replies) != 0:
+                for b in i.replies:
+                    comments.append(b)
+                    comment_count += 1
+                    g.debug(f'adding comment {i.comment} ({comment_count}/{video["comments"]})')
+        print(f"{'Comments: [{}/{}]'.format(comment_count,video['comments']).ljust(25)}"
+              f"{f'Est.QuotaUsage: {e_qusage}'.ljust(25)}"
+              f"{f'Elap.Time: {round(time.time()-get_starttime, 3)}s'.ljust(25)}", end='\r')
+    pickle.dump(comments, open(f"sessions/{session}.pickle", 'wb+'))
+    g.debug(f'dumped comments to sessions/{session}.pickle')
 
 
 
@@ -310,6 +336,7 @@ if __name__ == '__main__':
                 get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
             except Exception as e:
                 b.fatal('An error occured. The script cannot continue. See the error above ')
+                b.debug(f'Error: {e}')
         if args.save_only:
             b.info('Since the save-only parameter is used, the comments collected are dumped to sessions directory.'
                    'to use it, just use this script again with the -f parameter. see {sys.argv[0]} --help for more '
@@ -317,17 +344,11 @@ if __name__ == '__main__':
             sys.exit(0)  # quit because user fired the counter with -s param
         if not args.save_only:
             count_votes()
-    except KeyboardInterrupt:
-        oh_no_error = True
-        err_ = KeyboardInterrupt
     except Exception as e:
-        oh_no_error = True
-        err_ = e
-    if oh_no_error:
         print('Hey bro the code errored out somehow so this is the fallback and ill display'
               ' the traceback here.')
         errortrace = traceback.TracebackException.from_exception(err_) if err_ != KeyboardInterrupt \
-            else "You pressed the break command!"
+            else "NonetypeError" if err_ is None else "You pressed the break command!"
         print(errortrace)
 else:  # bruh why use this script as a module, support for that will come soon:tm:
     print(f'{t.red}Sorry, but this script is not intended to be imported. '
