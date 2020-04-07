@@ -15,6 +15,7 @@ Rewrite has started. The old script (currently in #master branch) is now depreca
 ! `Video` object and `Comment` object output their title and comment text respectively 
 + Counting method
 + dumps comments just like the old one
++ argument groups (looks so so so so so much better)
 ```
 
 ### Apr 6, 2020
