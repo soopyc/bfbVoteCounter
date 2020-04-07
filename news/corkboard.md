@@ -1,5 +1,5 @@
 # Corkboard 
-(Smaller/minor news)
+Smaller/minor news
 ### Apr 7, 2020
 ```diff
 ! `Video` object and `Comment` object output their title and comment text respectively 
