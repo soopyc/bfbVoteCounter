@@ -6,6 +6,7 @@ Smaller/minor news
 + Counting method
 + dumps comments just like the old one
 + argument groups (looks so so so so so much better)
++ emergency dump
 ```
 
 ### Apr 6, 2020
