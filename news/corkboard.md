@@ -25,3 +25,5 @@ Changed items:
 - blessings (no support on windows but i imagine most people using this thing will run windows so :P)
 + unintentional gitpod advertisement (https://github.com/kcomain/bfbVoteCounter/commit/927f3ab40eebc191074a053a99fdf56ae19da8fe)
 ```
+
+[Go back](../news)
