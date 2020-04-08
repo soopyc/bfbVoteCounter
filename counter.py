@@ -486,6 +486,7 @@ def count_votes():
         else:
             # CONGRATS YOU PASSED ALL TESTS YAAAAAAAAAAAA
             voters[i.author] = 1
+            votes['valid'] += 1
             characters[try_vote[-1]]["valid"] += 1
             char_valids[try_vote[-1]] += 1
 
