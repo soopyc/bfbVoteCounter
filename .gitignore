@@ -23,4 +23,5 @@ logs/
 .vscode/
 
 # GitPod stuff
-index.html
+index.html 
+gitlogs.txt 
