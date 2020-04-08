@@ -76,7 +76,7 @@ class CommentThread:
         com = Comment(o["snippet"]["topLevelComment"])
         rc = o["snippet"]["totalReplyCount"]
         rs = []
-        if 'replies' in o:
+        if "replies" in o:
             for i in o["replies"]["comments"]:
                 rs.append(Comment(i))
         return com, rc, rs
@@ -145,21 +145,22 @@ class Fetchers:
             next_page = f"&pageToken={npt}"
         else:
             next_page = ""
-        url = f"https://www.googleapis.com/youtube/v3/commentThreads?" \
-              f"part=snippet,replies&maxResults=100&videoId={vid}&key={self.key}" \
-              f"{next_page}"
+        url = (
+            f"https://www.googleapis.com/youtube/v3/commentThreads?"
+            f"part=snippet,replies&maxResults=100&videoId={vid}&key={self.key}"
+            f"{next_page}")
         temp = req.get(url)
         r = json.loads(temp.content)
-        if 'error' in r:
-            if r['error']['code'] == 404:
+        if "error" in r:
+            if r["error"]["code"] == 404:
                 raise VideoNotFoundException(
                     f"Cannot find any video with the ID {vid}.")
             else:
                 raise NotImplementedError(str(r))
         for i in r["items"]:
             cth.append(CommentThread(i))
-        if 'nextPageToken' not in r:
-            r['nextPageToken'] = None
+        if "nextPageToken" not in r:
+            r["nextPageToken"] = None
         return cth, r["nextPageToken"]
 
     def video(self, vid):
@@ -178,12 +179,14 @@ class Fetchers:
         elif temp.status_code == 400:
             for i in r["error"]["errors"]:
                 if i["reason"] == "keyInvalid":
-                    raise InvalidToken('The token is invalid. Please check and try again.')
+                    raise InvalidToken(
+                        "The token is invalid. Please check and try again.")
         if len(r["items"]) == 0:
             raise VideoNotFoundException(f"Video with ID {vid} not found.")
         for i in r["items"]:
             ret.append(Video(i))
         return ret
+
 
 # "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id={id}&key={key}"  # video items
 # "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId={id}&key={key}"  # comment snippets
