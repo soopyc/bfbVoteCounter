@@ -7,9 +7,9 @@ import random
 import re
 import sys
 import traceback
+from datetime import datetime
 from time import sleep
 from time import time
-from datetime import datetime
 
 import requests
 from colorama import Cursor

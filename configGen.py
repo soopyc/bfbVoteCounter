@@ -1,5 +1,5 @@
-import json
 import argparse
+import json
 
 parser = argparse.ArgumentParser(description="Configuration Generator")
 parser.add_argument(

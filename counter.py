@@ -1,12 +1,12 @@
+import argparse
+import json
+import logging
 import os
+import pickle
+import random
 import re
 import sys
 import time
-import json
-import random
-import pickle
-import logging
-import argparse
 import traceback
 from datetime import datetime
 
