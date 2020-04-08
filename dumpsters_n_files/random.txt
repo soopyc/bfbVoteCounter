@@ -52,3 +52,5 @@ stats = {
     "comments": [],
     "tokenUsage": 5,
 }
+
+python counter.py -df dumpsters_n_files/9f4582c1385ead999685.pickle

@@ -6,7 +6,7 @@ pyinstaller --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-leve
 mv __pyinst__/dist/counter.exe __pyinst__/
 pyinstaller --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-level DEBUG --clean --onefile --noupx configGen.py
 mv __pyinst__/dist/configGen.exe __pyinst__/
-pyinstaller --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-level DEBUG --clean --onefile --noupx upgrader.py
-mv __pyinst__/dist/upgrader.exe __pyinst__/
+REM pyinstaller --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-level DEBUG --clean --onefile --noupx upgrader.py
+REM mv __pyinst__/dist/upgrader.exe __pyinst__/
 
 cp config.json __pyinst__/dist/config.json
