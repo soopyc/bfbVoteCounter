@@ -414,10 +414,10 @@ def count_votes():
     for i in sorted_char_valids:
         print(f'[{i[0]}]'.ljust(6)+\
               f'{characters[i[0]]["name"]}'.ljust(len(longest_char_name)+4)+\
-              f'Total: {characters[i[0]]["total"]}'.ljust(12)+\
-              t.bright_green(f'Valid: {characters[i[0]]["valid"]}'.ljust(12))+\
-              t.bright_yellow(f'Shiny: {characters[i[0]]["shinies"]}'.ljust(12))+\
-              t.bright_red(f'Deadlined: {characters[i[0]]["deadlined"]}'.ljust(12)))
+              f'Total: {characters[i[0]]["total"]}'.ljust(15)+\
+              t.bright_green(f'Valid: {characters[i[0]]["valid"]}'.ljust(15))+\
+              t.bright_yellow(f'Shiny: {characters[i[0]]["shinies"]}'.ljust(15))+\
+              t.bright_red(f'Deadlined: {characters[i[0]]["deadlined"]}'.ljust(15)))
 
 
 def del_stuff():
