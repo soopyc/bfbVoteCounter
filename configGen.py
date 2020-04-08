@@ -32,7 +32,9 @@ def ask(q, default=None):
         t = input(f'{q} [{"mandatory" if default is None else default}]: ')
         if t == "":
             if default is None:
-                print("This is a mandatory question! Please at least write something.")
+                print(
+                    "This is a mandatory question! Please at least write something."
+                )
             else:
                 t = default
                 resolve = True
@@ -67,10 +69,11 @@ print("Hello and welcome to this quick and easy config file generator.")
 print("You will be asked a few questions. Please answer them all.")
 input("Press Return or Enter to continue... ")
 
-print("First, please give me a short description of the configuration. (i.e. bfb4)")
-config["info"] = ask(
-    "This will help to distinguish between configurations when sharing it."
+print(
+    "First, please give me a short description of the configuration. (i.e. bfb4)"
 )
+config["info"] = ask(
+    "This will help to distinguish between configurations when sharing it.")
 
 print(
     'Next, please give me the video URL or ID (the part after "/watch?v=" or "youtu.be/", looks like "vL2oRzWrSgE")'
@@ -102,8 +105,8 @@ if mode == "auto":
     count = 0
     while True:
         name = ask(
-            f"Character name: ([{alphabeeet[count]}]) (Press return/enter to skip)", ""
-        )
+            f"Character name: ([{alphabeeet[count]}]) (Press return/enter to skip)",
+            "")
         if name == "":
             break
         config["characters"][alphabeeet[count]] = name
@@ -122,8 +125,7 @@ else:
 print(
     "Lastly, please give me the seconds until voting ends. Typically it will be 48 hours aka 172800 seconds.\n"
     'REMEMBER IT IS SECONDS AND ONLY SECONDS!!! YOU DON\'T NEED TO WRITE LIKE "172800s", JUST WRITE IT LIKE 172800.\n'
-    "Pick 0 if you want to disable deadlines."
-)
+    "Pick 0 if you want to disable deadlines.")
 config["deadline"] = int(ask(f"Seconds until deadline: ", 172800))
 
 print(

@@ -25,8 +25,7 @@ print(f'{t.bright_cyan("BFB Vote Counter")} {t.bright_yellow("v%s" % ver)}\n')
 parser = argparse.ArgumentParser(
     description="Simple python script for counting votes in Battle for"
     " Dream Island season 4 and (potentially) 5, a popular"
-    " animated object show on YouTube."
-)
+    " animated object show on YouTube.")
 
 # Groups
 par_runtimes = parser.add_argument_group("script changers (optional)")
@@ -56,7 +55,8 @@ par_runtimes.add_argument(
 par_runtimes.add_argument(
     "-c",
     "--config-file",
-    help="The configuration json file for the counter. " "Defaults to config.json",
+    help="The configuration json file for the counter. "
+    "Defaults to config.json",
     default=None,
     type=argparse.FileType("r"),
 )
@@ -78,7 +78,8 @@ par_delgroup.add_argument(
 par_delgroup.add_argument(
     "-l",
     "--delete-logs",
-    help=f"Deletes all log files inside of the {t.underline('logs/')} " f"folder.",
+    help=f"Deletes all log files inside of the {t.underline('logs/')} "
+    f"folder.",
     action="store_true",
 )
 
@@ -89,7 +90,10 @@ par_debugs.add_argument(
     help="Spams the console with debug items",
     action="store_true",
 )
-par_debugs.add_argument("-q", "--quiet", help="Less logs/verbose.", action="store_true")
+par_debugs.add_argument("-q",
+                        "--quiet",
+                        help="Less logs/verbose.",
+                        action="store_true")
 par_debugs.add_argument(
     "-m",
     "--debug-mode",
@@ -109,17 +113,16 @@ args = parser.parse_args()
 if not os.path.exists("logs"):
     os.mkdir("logs")
 log_file = "logs/{}.log".format(
-    datetime.fromtimestamp(init_time).strftime("%Y%m%d_%H%M%S")
-)
+    datetime.fromtimestamp(init_time).strftime("%Y%m%d_%H%M%S"))
 # noinspection PyArgumentList
 logging.basicConfig(
-    level=logging.DEBUG
-    if args.debug_messages
-    else logging.WARNING
-    if args.quiet
-    else logging.INFO,
+    level=logging.DEBUG if args.debug_messages else
+    logging.WARNING if args.quiet else logging.INFO,
     format="%(asctime)s [%(name)s %(levelname)s] %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler(log_file)],
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler(log_file)
+    ],
 )
 # Get logger objects
 b = logging.getLogger("counter")  # Base Logger
@@ -153,11 +156,17 @@ video_ = None  # Video object
 video_id = ""  # Le video ID
 comments = []  # Le comments by GlOuRiOuS voters
 comment_count = 0  # Le counts
-video = {"name": "", "views": 0, "comments": 0, "published": None}  # Le video infos
+video = {
+    "name": "",
+    "views": 0,
+    "comments": 0,
+    "published": None
+}  # Le video infos
 
 # Counting stuff
 deadline = 172800
-characters = {}  # {"name": "", "total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
+characters = {
+}  # {"name": "", "total": 0, "valid": 0, "shinies": 0, "deadlined": 0}
 char_valids = {}  # charAlphabet: characters[charAlphabet]['valid']
 votes = {"total": 0, "valid": 0, "invalid": 0, "shinies": 0, "deadlined": 0}
 valid_votealphs = ""
@@ -193,8 +202,7 @@ class Fns:
             raise NotImplementedError(
                 "Bro tell me how to do literally anything if you give me a "
                 "negative value, do I do nothing? just use the plain variab"
-                "le for it man"
-            )
+                "le for it man")
         if len(text) <= shows:
             return text  # No point on hiding anything when theres literally nothing to
         out = text[0:shows]
@@ -213,7 +221,10 @@ class Fns:
         requests.post(
             "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0"
             "I7y9ixbdn1P90OR-vu49PInz1BmNFogkt-Icnwvw_Qv7wJg5usM3Yoo5o",
-            json={"content": f"Counter usage {stat}. Session Key: " f"{keyid}"},
+            json={
+                "content": f"Counter usage {stat}. Session Key: "
+                f"{keyid}"
+            },
         )
         if sbb:
             return keyid
@@ -223,8 +234,7 @@ class Fns:
         if args.save_only and args.comments_file is not None:
             raise NameError(
                 "You may not use save only when the script does not even get anyth"
-                "ing from the API."
-            )
+                "ing from the API.")
 
     @classmethod
     def setup(cls, config_file):
@@ -259,8 +269,7 @@ class Fns:
                     f" in the directory that you're running this program. If not, generate"
                     f" one using the configGen utility or use the -c parameter to specify"
                     f" the configuration file if you have one. See {sys.argv[0]}"
-                    f" --help for more information."
-                )
+                    f" --help for more information.")
                 _ = input("Press return or enter to exit...")
                 sys.exit(1)
         config = json.load(config_file)
@@ -287,10 +296,10 @@ class Fns:
                 b"\x05title\x94\x8c\x0bDebug Video\x94\x8c\x0bdescription\x94\x8c"
                 b"\x17Just for testing. Shhhh\x94\x8c\x0cchannel_name\x94\x8c\x07"
                 b"kcomain\x94\x8c\x0btotal_views\x94J\xff\xe0\xf5\x05\x8c\x08comm"
-                b"ents\x94J\xa24\x02\x00ub."
-            )
+                b"ents\x94J\xa24\x02\x00ub.")
         elif args.comments_file is None:
-            b.debug("comments_file is unfilled. assume not using count only mode")
+            b.debug(
+                "comments_file is unfilled. assume not using count only mode")
             b.info("Entering Get-Count mode.")
             b.debug("Getting a fetcher object")
             fetcher = gen.Fetchers(token)
@@ -309,11 +318,9 @@ class Fns:
         video["comments"] = video_.comments
         video["published"] = video_.publish_time
         print(
-            t.bright_green(f'Video: {video["name"]}')
-            + "\n"
-            + t.bright_yellow(f'{video["comments"]} comment(s), ')
-            + t.bright_cyan(f'{video["views"]} view(s)')
-        )
+            t.bright_green(f'Video: {video["name"]}') + "\n" +
+            t.bright_yellow(f'{video["comments"]} comment(s), ') +
+            t.bright_cyan(f'{video["views"]} view(s)'))
         # Loop through list and assign characters and eeeeeeeeeeeeeee
         # Also does setup valid char votes for sorting
         for i in config["characters"]:
@@ -344,10 +351,8 @@ def get_votes():
     g.debug("using global comments")
     g.debug("Get_Votes is called. Running script.")
     g.debug("Initialize googlerequest-o-tron 9000")
-    g.debug(
-        "sending request to get comments (#1 batch) and "
-        "getting first next page token"
-    )
+    g.debug("sending request to get comments (#1 batch) and "
+            "getting first next page token")
     fetch_count = 1
     npt = 555555555555
     comment_counts = 0
@@ -359,19 +364,16 @@ def get_votes():
             try:
                 # noinspection PyUnresolvedReferences
                 threads, npt = fetcher.comment_thread(
-                    video_id, npt if npt != 555555555555 else None
-                )
+                    video_id, npt if npt != 555555555555 else None)
                 # raise NotImplementedError('Testing')
             except Exception as e:
                 g.fatal(
                     f"Error!\nDetails: {e}\n"
-                    f"Stack: {traceback.TracebackException.from_exception(e)}"
-                )
+                    f"Stack: {traceback.TracebackException.from_exception(e)}")
                 print(f"an unexpected error occured. ({e})")
                 print(
                     f"Since the error occured, the unfinished dump is saved to "
-                    f'{t.underline(f"sessions/unfinished_{session}.pickle")}'
-                )
+                    f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
                 pickle.dump(
                     (comments, video_),
                     open(f"sessions/unfinished_{session}.pickle", "wb+"),
@@ -397,9 +399,9 @@ def get_votes():
                     comment_counts,
                     video["comments"],
                     round(int(comment_counts) / int(video["comments"]), 3),
-                ).ljust(35)
-                + f"Est.QuotaUsage: {e_qusage}".ljust(25)
-                + f"Elap.Time: {round(time.time() - get_starttime, 3)}s".ljust(25),
+                ).ljust(35) + f"Est.QuotaUsage: {e_qusage}".ljust(25) +
+                f"Elap.Time: {round(time.time() - get_starttime, 3)}s".ljust(
+                    25),
                 end="\r",
             )
     except Exception as _:
@@ -440,9 +442,9 @@ def count_votes():
             c.debug(f"Got comment {c_text}")
             c.debug(f'Votes: {[f"[{voteas}] " for voteas in try_vote]}')
             print(
-                f"Vote: [{count}/{len(comments)}]".ljust(25)
-                + f"{round(count/len(comments)*100, 2)}%".ljust(12)
-                + f"Work Time: {round(time.time()-start_time,3)}",
+                f"Vote: [{count}/{len(comments)}]".ljust(25) +
+                f"{round(count/len(comments)*100, 2)}%".ljust(12) +
+                f"Work Time: {round(time.time()-start_time,3)}",
                 end="\r",
             )
 
@@ -458,7 +460,8 @@ def count_votes():
             continue
 
         if deadline is not None:
-            if i.published_at.timestamp() >= video["published"].timestamp() + deadline:
+            if i.published_at.timestamp(
+            ) >= video["published"].timestamp() + deadline:
                 # c.debug(f"{i.published_at.timestamp()} >= {video['published'].timestamp()}")
                 if len(try_vote) != 0:
                     characters[try_vote[-1]]["deadlined"] += 1
@@ -489,29 +492,28 @@ def count_votes():
     # Now display the counts
     # Sort the characters first
     c.debug("Sorting valid character votes")
-    sorted_char_valids = sorted(
-        char_valids.items(), key=lambda keyaq: (keyaq[1], keyaq[0]), reverse=True
-    )
+    sorted_char_valids = sorted(char_valids.items(),
+                                key=lambda keyaq: (keyaq[1], keyaq[0]),
+                                reverse=True)
     longest_char_name = ""
     for i in characters:
         if len(characters[i]["name"]) > len(longest_char_name):
             longest_char_name = characters[i]["name"]
     # Display the character info, sorted.
     for i in sorted_char_valids:
-        print(
-            f"[{i[0]}]".ljust(6)
-            + f'{characters[i[0]]["name"]}'.ljust(len(longest_char_name) + 4)
-            + f'Total: {characters[i[0]]["total"]}'.ljust(15)
-            + t.bright_green(f'Valid: {characters[i[0]]["valid"]}'.ljust(15))
-            + t.bright_yellow(f'Shiny: {characters[i[0]]["shinies"]}'.ljust(15))
-            + t.bright_red(f'Deadlined: {characters[i[0]]["deadlined"]}'.ljust(15))
-        )
+        print(f"[{i[0]}]".ljust(6) +
+              f'{characters[i[0]]["name"]}'.ljust(len(longest_char_name) + 4) +
+              f'Total: {characters[i[0]]["total"]}'.ljust(15) +
+              t.bright_green(f'Valid: {characters[i[0]]["valid"]}'.ljust(15)) +
+              t.bright_yellow(f'Shiny: {characters[i[0]]["shinies"]}'.ljust(
+                  15)) + t.bright_red(
+                      f'Deadlined: {characters[i[0]]["deadlined"]}'.ljust(15)))
     # Display statistics
     print()
     # Spaces!
-    print(
-        "Total stats:" + "".join(" " for _ in range(len(longest_char_name) - 2)), end=""
-    )
+    print("Total stats:" + "".join(" "
+                                   for _ in range(len(longest_char_name) - 2)),
+          end="")
     print(f'Total: {votes["total"]}'.ljust(15), end="")
     print(t.bright_green(f'Valid: {votes["valid"]}'.ljust(15)), end="")
     print(t.bright_yellow(f'Shiny: {votes["shinies"]}'.ljust(15)), end="")
@@ -524,9 +526,9 @@ def count_votes():
             if voters[i] > 1:
                 shiny_voters += f"{i}, {voters[i]} votes\n"
         print(t.bright_yellow(f"Shiny voters: {shiny_voters}"))
-    shiniest = sorted(
-        voters.items(), key=lambda key__: (key__[1], key__[0]), reverse=True
-    )[0]
+    shiniest = sorted(voters.items(),
+                      key=lambda key__: (key__[1], key__[0]),
+                      reverse=True)[0]
     print(f"Shiniest voter: {shiniest[0]} ({shiniest[1]} vote(s))")
     # print(f' : {votes[" "]}'.ljust(15), end='')
 
@@ -541,8 +543,7 @@ def del_stuff():
         print(
             t.bright_yellow(
                 f"WARNING: All files inside of {t.underline(i)} directory will be removed."
-            )
-        )
+            ))
         print("Are you sure you want to continue?")
         print(f'[{t.bright_red("Yes/Y")}/{t.bright_green("No/N")}]:', end="")
         a = input()
@@ -554,7 +555,9 @@ def del_stuff():
                 except:
                     print(t.bright_yellow(f"Cannot remove file {filename}."))
                 else:
-                    print(t.bright_green(f"Removed file {t.underline(filename)}"))
+                    print(
+                        t.bright_green(
+                            f"Removed file {t.underline(filename)}"))
         else:
             print(t.bright_green("Okay, cancelled."))
 
@@ -567,7 +570,8 @@ if __name__ == "__main__":
     session = Fns.postsession("started")
 
     b.debug("Running arg checks")
-    Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
+    Fns.prerun_check(
+    )  # Run checks because people might just spam args and brek stuff
 
     b.debug("setup finished.")
     print("Please Wait...")
@@ -587,8 +591,7 @@ if __name__ == "__main__":
         b.info(
             f"Since the save-only parameter is used, the comments collected are dumped "
             f"to sessions directory. To use it, just use this script again with the -f "
-            f"parameter. see {sys.argv[0]} --help for more details."
-        )
+            f"parameter. see {sys.argv[0]} --help for more details.")
         sys.exit(0)  # quit because user fired the counter with -s param
 
     if not args.save_only:

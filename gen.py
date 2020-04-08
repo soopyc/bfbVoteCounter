@@ -47,8 +47,7 @@ class Comment:
         except KeyError:
             raise InvalidObject(
                 "Invalid object passed into method, check https://developers.google.com/youtube/v3/docs"
-                "/comments#resource for more information."
-            )
+                "/comments#resource for more information.")
         return a, t, ti
 
 
@@ -121,8 +120,7 @@ class Video:
         except KeyError:
             raise InvalidObject(
                 "Invalid object passed into method, check https://developers.google.com/youtube/v3/docs"
-                "/videos#resource-representation for more information."
-            )
+                "/videos#resource-representation for more information.")
         return pub, title, desc, chnl, views, coms
 
 
@@ -150,15 +148,13 @@ class Fetchers:
         url = (
             f"https://www.googleapis.com/youtube/v3/commentThreads?"
             f"part=snippet,replies&maxResults=100&videoId={vid}&key={self.key}"
-            f"{next_page}"
-        )
+            f"{next_page}")
         temp = req.get(url)
         r = json.loads(temp.content)
         if "error" in r:
             if r["error"]["code"] == 404:
                 raise VideoNotFoundException(
-                    f"Cannot find any video with the ID {vid}."
-                )
+                    f"Cannot find any video with the ID {vid}.")
             else:
                 raise NotImplementedError(str(r))
         for i in r["items"]:
@@ -175,10 +171,8 @@ class Fetchers:
         :return: list([Video, ...])
         """
         ret = []
-        temp = req.get(
-            f"https://www.googleapis.com/youtube/v3/videos"
-            f"?part=snippet,statistics&id={vid}&key={self.key}"
-        )
+        temp = req.get(f"https://www.googleapis.com/youtube/v3/videos"
+                       f"?part=snippet,statistics&id={vid}&key={self.key}")
         r = json.loads(temp.content)
         if temp.status_code == 403:
             raise req.exceptions.HTTPError
@@ -186,8 +180,7 @@ class Fetchers:
             for i in r["error"]["errors"]:
                 if i["reason"] == "keyInvalid":
                     raise InvalidToken(
-                        "The token is invalid. Please check and try again."
-                    )
+                        "The token is invalid. Please check and try again.")
         if len(r["items"]) == 0:
             raise VideoNotFoundException(f"Video with ID {vid} not found.")
         for i in r["items"]:

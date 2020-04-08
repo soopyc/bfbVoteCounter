@@ -30,9 +30,9 @@ def main():
     # Setup optional arguments
     start_time = time()
     parser = argparse.ArgumentParser(
-        description="Simple python script for counting votes in BFB(Battle for BFDI), "
-        "a popular animated object show on YouTube."
-    )
+        description=
+        "Simple python script for counting votes in BFB(Battle for BFDI), "
+        "a popular animated object show on YouTube.")
     parser.add_argument(
         "-f",
         "--comment-file",
@@ -51,7 +51,8 @@ def main():
     parser.add_argument(
         "-c",
         "--config-file",
-        help="The configuration json file for the counter. Defaults to config.json",
+        help=
+        "The configuration json file for the counter. Defaults to config.json",
         default="config.json",
         type=argparse.FileType("r"),
     )
@@ -64,17 +65,17 @@ def main():
     parser.add_argument(
         "-a",
         "--stats-for-nerds",
-        help="SHOW ME THE SPAM SHOW ME THE STATS SHOW ME EVERYTHING SO I CAN ~~ruin~~ MY SANITY AAAAAAA",
+        help=
+        "SHOW ME THE SPAM SHOW ME THE STATS SHOW ME EVERYTHING SO I CAN ~~ruin~~ MY SANITY AAAAAAA",
         action="store_true",
     )
     args = parser.parse_args()
     # Run functions if yes
     if args.delete_comments:
         print(
-            Fore.YELLOW
-            + "WARNING: All files inside of sessions/ directory will be removed. "
-            "Are you sure you want to continue?"
-        )
+            Fore.YELLOW +
+            "WARNING: All files inside of sessions/ directory will be removed. "
+            "Are you sure you want to continue?")
         a = input("Yes/No: ")
         if a.lower() in ["yes", "y"]:
             dire = os.listdir("sessions")
@@ -93,7 +94,12 @@ def main():
     # Setup fucntion, veriables and configs
     config = json.load(args.config_file)
     stats = {
-        "video": {"name": "", "publishTime": None, "publishTStamp": None, "obj": None},
+        "video": {
+            "name": "",
+            "publishTime": None,
+            "publishTStamp": None,
+            "obj": None
+        },
         "votes": {
             "total": 0,
             "valid": 0,
@@ -127,8 +133,8 @@ def main():
         :return: Tuple([bool:ValidVote, bool:IsVote])
         """
         valid_vote = re.match(
-            rf'\[({stats["alphs"]})\]', text
-        )  # Check if the format is correct and the letter is ok
+            rf'\[({stats["alphs"]})\]',
+            text)  # Check if the format is correct and the letter is ok
         is_vote = re.match(r"\[\w\]", text)
         return False if valid_vote is None else True, False if is_vote is None else True
 
@@ -197,7 +203,10 @@ def main():
     requests.post(
         "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
         "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-        json={"content": f"Counter usage detected. " f"Session key: ``{session_id}``"},
+        json={
+            "content": f"Counter usage detected. "
+            f"Session key: ``{session_id}``"
+        },
     )
 
     print(f"Setup took {round(time() - start_time, 2)} seconds")
@@ -243,8 +252,7 @@ def main():
             print(
                 "---------------------\n"
                 f"Since an unexpected error occured, the scraped votes have been saved to votes/{session_id}.pickle\n"
-                "Use the -f parameter to load the file to count the votes."
-            )
+                "Use the -f parameter to load the file to count the votes.")
             pickle.dump(
                 stats["comments"],
                 open(f"sessions/unfinished_{session_id}.pickle", "wb+"),
@@ -278,8 +286,7 @@ def main():
         print(
             f"File saved in sessions/session_{session_id}.pickle due to the --save-only parameter used.\n"
             f"Read the file using the -f or --comment-file parameter like this:\n"
-            f"{sys.argv[0]}"
-        )
+            f"{sys.argv[0]}")
     # Count dem votes
     sleep(5)
     clearsc()
@@ -306,10 +313,8 @@ def main():
             vote = vote_alph[-1]
         except:
             vote = ""
-        if (
-            not stats["video"]["publishTStamp"] + config["deadline"]
-            >= i.published_at.timestamp()
-        ):
+        if (not stats["video"]["publishTStamp"] + config["deadline"] >=
+                i.published_at.timestamp()):
             stats["votes"]["deadlined"] += 1  # Deadlined vote doesn't count.
             # noinspection PyUnboundLocalVariable
             if len(vote_alph) != 0 and vote in stats["alphs"]:
@@ -360,7 +365,9 @@ def main():
                 f'{Fore.GREEN + "[TEXT_OK]" + Style.RESET_ALL if check(i.text.lower())[0] else Fore.RED + "[TEXT_NOK]"}'
             )
             sayfill(f"Comment Author: {i.author}")
-            sayfill(f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}')
+            sayfill(
+                f'Comment time: {i.published_at.strftime("%Y/%m/%d %H:%M:%S UTC")}'
+            )
             genbr()
             sayfill(f'Total Votes: {stats["votes"]["total"]}')
             sayfill(f'Valid Votes: {stats["votes"]["valid"]}')
@@ -382,9 +389,8 @@ def main():
     sayfill(f'Deadlined Comments: {stats["votes"]["deadlined"]}')
     sayfill(f'Shiny Coward Votes: {stats["votes"]["shinyvotes"]}')
     # Sort the shinies
-    shinies_sorted = sorted(
-        stats["votes"]["shinies"].items(), key=lambda kev: (kev[1], kev[0])
-    )
+    shinies_sorted = sorted(stats["votes"]["shinies"].items(),
+                            key=lambda kev: (kev[1], kev[0]))
     sayfill(
         f"The shiniest coward: {shinies_sorted[-1][0]} ({shinies_sorted[-1][1]} votes)"
     )
@@ -393,20 +399,19 @@ def main():
     fchar = stats["votes"]["characters"]  # (UNOFFICIAL) Final character count
     sorted_chars = [
         ret_char[1]
-        for ret_char in sorted(
-            fchar.items(), key=lambda keya: (keya[0], keya[1]["valid"])
-        )
+        for ret_char in sorted(fchar.items(),
+                               key=lambda keya: (keya[0], keya[1]["valid"]))
     ]
     for i in sorted_chars:
-        sayfill(
-            f"{i['name']}".ljust(15)
-            + f'{Fore.WHITE}:{i["total"]}'.ljust(15)
-            + f'{Fore.GREEN}Valid:{i["valid"]}'.ljust(20)
-            + f'{Fore.YELLOW}Shiny:{i["shiny"]}'.ljust(20)
-            + f'{Fore.RED}Dead.L:{i["deadlined"]}'
-        )
+        sayfill(f"{i['name']}".ljust(15) +
+                f'{Fore.WHITE}:{i["total"]}'.ljust(15) +
+                f'{Fore.GREEN}Valid:{i["valid"]}'.ljust(20) +
+                f'{Fore.YELLOW}Shiny:{i["shiny"]}'.ljust(20) +
+                f'{Fore.RED}Dead.L:{i["deadlined"]}')
     genbr()
-    sayfill(f"VideoTime: {datetime.fromtimestamp(stats['video']['publishTStamp'])}")
+    sayfill(
+        f"VideoTime: {datetime.fromtimestamp(stats['video']['publishTStamp'])}"
+    )
     sayfill(
         f"Deadline : {datetime.fromtimestamp(stats['video']['publishTStamp']+config['deadline'])}"
     )
@@ -415,7 +420,10 @@ def main():
     requests.post(
         "https://canary.discordapp.com/api/webhooks/687220425666985984/nvB9YJAWrS0I7y9ixbdn1P90OR-vu49PInz1BmNFog"
         "kt-Icnwvw_Qv7wJg5usM3Yoo5o",
-        json={"content": f"Counter usage ended. " f"Session key: ``{session_id}``"},
+        json={
+            "content": f"Counter usage ended. "
+            f"Session key: ``{session_id}``"
+        },
     )
 
     pickle.dump(stats, open(f"sessions/session_{session_id}.pickle", "wb+"))
