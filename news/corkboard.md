@@ -1,5 +1,20 @@
 # Corkboard 
 Smaller/minor news
+### Apr 8, 2020
+```diff
++ --quiet param
+= updated --output-interval (was --debug-interval)
++ whitespaces
+- useless 0
++ updated colors
++ prompts user that config is capital letter and will not be able to be used in counting
++ better formatting
++ changed shiny counting to embed in voters (speed things up by a few magnitudes)
++ display better stats
++ allows the script to be imported, but prompts the user not to use it when they don't know what they're doing.
+! release candidate.
+```
+
 ### Apr 7, 2020
 ```diff
 ! `Video` object and `Comment` object output their title and comment text respectively 
