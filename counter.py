@@ -67,6 +67,9 @@ par_debugs.add_argument('-d', '--debug-messages',
 par_debugs.add_argument('-m', '--debug-mode',
                         help="Enters debug mode. Does not send requests to Google's servers.",
                         action='store_true')
+par_debugs.add_argument('-i', '--debug-interval',
+                        help='The debug interval for counting. Typically 1000.',
+                        default=1000)
 args = parser.parse_args()
 
 # Set logging level based on arguments and basica configs
@@ -105,6 +108,7 @@ token = ""
 fetcher = None
 err_ = None
 oh_no_error = False
+video_ = None  # Video object
 
 # Downloading stuff
 video_id = ""  # Le video ID
@@ -196,7 +200,8 @@ class Fns:
         s.debug('using global fetcher')
         global comments
         s.debug('using global comments')
-        video_ = None
+        global video_
+        s.debug('using global video_')
         if config_file is None:
             s.debug('Config is None. Falling back to default.')
             try:
@@ -247,15 +252,7 @@ class Fns:
         else:
             b.debug(f'comments_file seems to be filled. filename is {args.comments_file.name}')
             b.info('Entering Count only mode.')
-            comments = pickle.load(args.comments_file)
-            video_ = type('commentfile', (), 
-                             {
-                                 "title": "Comment Dump", 
-                                 "total_views": 500,
-                                 "comments": len(comments),
-                                 "publish_time": datetime.now()
-                             }
-                         )
+            comments, video_ = pickle.load(args.comments_file)
         video['name'] = video_.title
         video['views'] = video_.total_views
         video['comments'] = video_.comments
@@ -308,7 +305,7 @@ def get_votes():
                 print(f'an unexpected error occured. ({e})')
                 print(f'Since the error occured, the unfinished dump is saved to '
                     f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
-                pickle.dump(comments, open(f"sessions/unfinished_{session}.pickle", 'wb+'))
+                pickle.dump((comments, video_), open(f"sessions/unfinished_{session}.pickle", 'wb+'))
                 raise requests.ConnectionError('Check logs.')
             fetch_count += 1
             g.debug(f'Getting #{fetch_count}')
@@ -326,8 +323,8 @@ def get_votes():
                 f"{f'Elap.Time: {round(time.time()-get_starttime, 3)}s'.ljust(25)}", end='\r')
     except Exception as e:
         g.debug('Emergency dump.')
-        pickle.dump(comments, open(f"sessions/unfinished_emergency_{session}.pickle", 'wb+'))
-    pickle.dump(comments, open(f"sessions/{session}.pickle", 'wb+'))
+        pickle.dump((comments, video_), open(f"sessions/unfinished_emergency_{session}.pickle", 'wb+'))
+    pickle.dump((comments, video_), open(f"sessions/{session}.pickle", 'wb+'))
     g.debug(f'dumped comments to sessions/{session}.pickle')
 
 
@@ -341,6 +338,7 @@ def count_votes():
     global Fns
     global video
     global votes
+    global deadline
     global comments
     global characters
     global char_valids
@@ -353,9 +351,10 @@ def count_votes():
     for i in comments:
         # Get the vote
         c_text = i.text.lower()
-        c.debug('Got comment {c_text}')
         try_vote = Fns.get_vote(c_text, alphs)
-        c.debug(f'Votes: {[f"[{voteas}] " for voteas in try_vote]}')
+        if count % args.debug_interval == 0:
+            c.debug(f'Got comment {c_text}')
+            c.debug(f'Votes: {[f"[{voteas}] " for voteas in try_vote]}')
         '''
         Possible outcomes
         - deadlined
@@ -376,10 +375,12 @@ def count_votes():
         else:
             continue
         # Check the due date
-        if i.published_at.timestamp >= video['publish']:
-            if len(try_vote) != 0:
-                characters[try_vote[-1]]['deadlined'] += 1
-                votes['deadlined'] += 1
+        if deadline is not None:
+            if i.published_at.timestamp() >= video['published'].timestamp()+deadline:
+                # c.debug(f"{i.published_at.timestamp()} >= {video['published'].timestamp()}")
+                if len(try_vote) != 0:
+                    characters[try_vote[-1]]['deadlined'] += 1
+                    votes['deadlined'] += 1
             # No match, not worth adding.
         elif len(try_vote) == 0:
             votes['invalid'] += 1
@@ -401,6 +402,22 @@ def count_votes():
             # CONGRATS YOU PASSED ALL TESTS YAAAAAAAAAAAA
             characters[try_vote[-1]]['valid'] += 1
             char_valids[try_vote[-1]] += 1
+    # Now display the counts
+    # Sort the characters first
+    sorted_char_valids = sorted(char_valids.items(), key=lambda keyaq: (keyaq[1], keyaq[0]),
+                                reverse=True)
+    longest_char_name = ''
+    for i in characters:
+        if len(characters[i]['name']) > len(longest_char_name):
+            longest_char_name = characters[i]['name']
+    # Display the character info, sorted.
+    for i in sorted_char_valids:
+        print(f'[{i[0]}]'.ljust(6)+\
+              f'{characters[i[0]]["name"]}'.ljust(len(longest_char_name)+4)+\
+              f'Total: {characters[i[0]]["total"]}'.ljust(12)+\
+              t.bright_green(f'Valid: {characters[i[0]]["valid"]}'.ljust(12))+\
+              t.bright_yellow(f'Shiny: {characters[i[0]]["shinies"]}'.ljust(12))+\
+              t.bright_red(f'Deadlined: {characters[i[0]]["deadlined"]}'.ljust(12)))
 
 
 def del_stuff():
@@ -430,43 +447,34 @@ def del_stuff():
 # Main stuff
 if __name__ == '__main__':
     # this is a meme lmao
-    try:
-        b.debug('Posting webhook to Discord...')
-        session = Fns.postsession('started')  # Notifies me about the usage of the counter
+    b.debug('Posting webhook to Discord...')
+    session = Fns.postsession('started')  # Notifies me about the usage of the counter
 
-        b.debug('Running arg checks')
-        Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
+    b.debug('Running arg checks')
+    Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
 
-        b.debug('setup finished.')
-        print('Please Wait...')
-        time.sleep(3)
+    b.debug('setup finished.')
+    print('Please Wait...')
+    time.sleep(3)
 
-        if args.delete_dumps or args.delete_logs:  # Goto delfiles and skip the rest
-            del_stuff()  # attak on FILES!!
-            sys.exit(0)  # attak on DIE
-        Fns.setup(args.config_file)  # Setup stuff
+    if args.delete_dumps or args.delete_logs:  # Goto delfiles and skip the rest
+        del_stuff()  # attak on FILES!!
+        sys.exit(0)  # attak on DIE
+    Fns.setup(args.config_file)  # Setup stuff
 
-        if args.comments_file is None:  # No comment dump file, going to get comments
-            Fns.postsession('getting votes', session)
-            get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
-        
-        if args.save_only:
-            b.info(f'Since the save-only parameter is used, the comments collected are dumped '
-                   f'to sessions directory. To use it, just use this script again with the -f '
-                   f'parameter. see {sys.argv[0]} --help for more details.')
-            sys.exit(0)  # quit because user fired the counter with -s param
+    if args.comments_file is None:  # No comment dump file, going to get comments
+        Fns.postsession('getting votes', session)
+        get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
+    
+    if args.save_only:
+        b.info(f'Since the save-only parameter is used, the comments collected are dumped '
+               f'to sessions directory. To use it, just use this script again with the -f '
+               f'parameter. see {sys.argv[0]} --help for more details.')
+        sys.exit(0)  # quit because user fired the counter with -s param
 
-        if not args.save_only:
-            Fns.postsession('counting', session)
-            count_votes()
-
-    except Exception as e:
-        b.debug(f'Error: {e}')
-        print('Hey bro the code errored out somehow so this is the fallback and ill display'
-              ' the traceback here.')
-        errortrace = "You pressed the break command!" if err_ == KeyboardInterrupt \
-            else "NonetypeError" if err_ is None else traceback.TracebackException.from_exception(err_)
-        print(errortrace)
+    if not args.save_only:
+        Fns.postsession('counting', session)
+        count_votes()
     print('Finished!')
 else:  # bruh why use this script as a module, support for that will come soon:tm:
     print(f'{t.red}Sorry, but this script is not intended to be imported. '
