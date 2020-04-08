@@ -78,7 +78,8 @@ args = parser.parse_args()
 # Set logging level based on arguments and basica configs
 if not os.path.exists('logs'):
     os.mkdir('logs')
-log_file = 'logs/{}.log'.format(datetime.fromtimestamp(init_time).strftime('%Y%m%d_%H%M%S'))
+log_file = 'logs/{}.log'.format(
+    datetime.fromtimestamp(init_time).strftime('%Y%m%d_%H%M%S'))
 # noinspection PyArgumentList
 logging.basicConfig(level=logging.DEBUG if args.debug_messages else logging.WARNING if args.quiet else logging.INFO,
                     format='%(asctime)s [%(name)s %(levelname)s] %(message)s',
@@ -93,7 +94,8 @@ g = logging.getLogger('get_votes')  # Comment Getter logger
 c = logging.getLogger('count_votes')  # Counting module Logger
 # Start spamming stdout with debug shit
 b.debug(f'Arguments: {args}')
-b.debug(f'Comment dump: {"None" if args.comments_file is None else args.comments_file.name}')
+b.debug(
+    f'Comment dump: {"None" if args.comments_file is None else args.comments_file.name}')
 b.debug(f'Delete comment dumps: {args.delete_dumps}')
 b.debug(f'Logging outputs to stdout and {log_file}')
 
@@ -116,7 +118,8 @@ video_ = None  # Video object
 video_id = ""  # Le video ID
 comments = []  # Le comments by GlOuRiOuS voters
 comment_count = 0  # Le counts
-video = {"name": '', "views": 0, "comments": 0, "published": None}  # Le video infos
+video = {"name": '', "views": 0, "comments": 0,
+         "published": None}  # Le video infos
 
 # Counting stuff
 deadline = 172800
@@ -253,7 +256,8 @@ class Fns:
             video_ = fetcher.video(video_id)[0]
             b.debug(f'Got video, info: {video_}')
         else:
-            b.debug(f'comments_file seems to be filled. filename is {args.comments_file.name}')
+            b.debug(
+                f'comments_file seems to be filled. filename is {args.comments_file.name}')
             b.info('Entering Count only mode.')
             comments, video_ = pickle.load(args.comments_file)
         video['name'] = video_.title
@@ -304,7 +308,8 @@ def get_votes():
             e_qusage += 5
             try:
                 # noinspection PyUnresolvedReferences
-                threads, npt = fetcher.comment_thread(video_id, npt if npt != 555555555555 else None)
+                threads, npt = fetcher.comment_thread(
+                    video_id, npt if npt != 555555555555 else None)
                 # raise NotImplementedError('Testing')
             except Exception as e:
                 g.fatal(f'Error!\nDetails: {e}\n'
@@ -312,29 +317,33 @@ def get_votes():
                 print(f'an unexpected error occured. ({e})')
                 print(f'Since the error occured, the unfinished dump is saved to '
                       f'{t.underline(f"sessions/unfinished_{session}.pickle")}')
-                pickle.dump((comments, video_), open(f"sessions/unfinished_{session}.pickle", 'wb+'))
+                pickle.dump((comments, video_), open(
+                    f"sessions/unfinished_{session}.pickle", 'wb+'))
                 raise requests.ConnectionError('Check logs.')
             fetch_count += 1
             g.debug(f'Getting #{fetch_count}')
             for i in threads:  # Dump results into comments var
                 comments.append(i.comment)
                 comment_counts += 1
-                g.debug(f'adding comment {i.comment} ({comment_counts}/{video["comments"]})')
+                g.debug(
+                    f'adding comment {i.comment} ({comment_counts}/{video["comments"]})')
                 if len(i.replies) != 0:
                     for reply__ in i.replies:
                         comments.append(reply__)
                         comment_counts += 1
-                        g.debug(f'adding reply {i.comment} ({comment_counts}/{video["comments"]})')
+                        g.debug(
+                            f'adding reply {i.comment} ({comment_counts}/{video["comments"]})')
             print('Comments: [{}/{}] ({}%)'.format(
                 comment_counts,
                 video['comments'],
                 round(int(comment_counts) / int(video['comments']), 3)
             ).ljust(35) +
-                  f'Est.QuotaUsage: {e_qusage}'.ljust(25) +
-                  f'Elap.Time: {round(time.time() - get_starttime, 3)}s'.ljust(25), end='\r')
+                f'Est.QuotaUsage: {e_qusage}'.ljust(25) +
+                f'Elap.Time: {round(time.time() - get_starttime, 3)}s'.ljust(25), end='\r')
     except Exception as _:
         g.debug('Emergency dump.')
-        pickle.dump((comments, video_), open(f"sessions/unfinished_emergency_{session}.pickle", 'wb+'))
+        pickle.dump((comments, video_), open(
+            f"sessions/unfinished_emergency_{session}.pickle", 'wb+'))
     pickle.dump((comments, video_), open(f"sessions/{session}.pickle", 'wb+'))
     g.debug(f'dumped comments to sessions/{session}.pickle')
 
@@ -398,7 +407,8 @@ def count_votes():
 
         if i.author in voters:
             # Author is in the voters list! SHINY DETECTED!!!!!!!!!
-            voters[i.author] += 1  # set 1 to avoid doing it a few times thus stonks.
+            # set 1 to avoid doing it a few times thus stonks.
+            voters[i.author] += 1
             # Sorry character, but the shinies have came to attack.
             characters[try_vote[-1]]['shinies'] += 1
             # Add 1 to the global counter as well.
@@ -442,7 +452,8 @@ def count_votes():
             if voters[i] > 1:
                 shiny_voters += f"{i}, {voters[i]} votes\n"
         print(t.bright_yellow(f'Shiny voters: {shiny_voters}'))
-    shiniest = sorted(voters.items(), key=lambda key__: (key__[1], key__[0]), reverse=True)[0]
+    shiniest = sorted(voters.items(), key=lambda key__: (
+        key__[1], key__[0]), reverse=True)[0]
     print(f'Shiniest voter: {shiniest[0]} ({shiniest[1]} vote(s))')
     # print(f' : {votes[" "]}'.ljust(15), end='')
 
@@ -454,7 +465,8 @@ def del_stuff():
     if args.delete_dumps:
         deletes.append('sessions/')
     for i in deletes:
-        print(t.bright_yellow(f'WARNING: All files inside of {t.underline(i)} directory will be removed.'))
+        print(t.bright_yellow(
+            f'WARNING: All files inside of {t.underline(i)} directory will be removed.'))
         print('Are you sure you want to continue?')
         print(f'[{t.bright_red("Yes/Y")}/{t.bright_green("No/N")}]:', end='')
         a = input()
@@ -466,7 +478,8 @@ def del_stuff():
                 except:
                     print(t.bright_yellow(f"Cannot remove file {filename}."))
                 else:
-                    print(t.bright_green(f"Removed file {t.underline(filename)}"))
+                    print(t.bright_green(
+                        f"Removed file {t.underline(filename)}"))
         else:
             print(t.bright_green("Okay, cancelled."))
 
@@ -475,7 +488,8 @@ def del_stuff():
 if __name__ == '__main__':
     # this is a meme lmao
     b.debug('Posting webhook to Discord...')
-    session = Fns.postsession('started')  # Notifies me about the usage of the counter
+    # Notifies me about the usage of the counter
+    session = Fns.postsession('started')
 
     b.debug('Running arg checks')
     Fns.prerun_check()  # Run checks because people might just spam args and brek stuff
@@ -491,7 +505,8 @@ if __name__ == '__main__':
 
     if args.comments_file is None:  # No comment dump file, going to get comments
         Fns.postsession('getting votes', session)
-        get_votes()  # s̶p̶a̶m̶ send hella requests to google's server and get results.
+        # s̶p̶a̶m̶ send hella requests to google's server and get results.
+        get_votes()
 
     if args.save_only:
         b.info(f'Since the save-only parameter is used, the comments collected are dumped '

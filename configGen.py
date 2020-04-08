@@ -56,7 +56,8 @@ def choice(text: str, ch: list):
     while not resolve:
         t = ask(f'{text} [{chs}]')
         if t.lower() not in ch:
-            print('Please pick an option in square brackets and write it exactly as prompted.')
+            print(
+                'Please pick an option in square brackets and write it exactly as prompted.')
         else:
             return t
 
@@ -68,10 +69,12 @@ print('You will be asked a few questions. Please answer them all.')
 input('Press Return or Enter to continue... ')
 
 print('First, please give me a short description of the configuration. (i.e. bfb4)')
-config['info'] = ask('This will help to distinguish between configurations when sharing it.')
+config['info'] = ask(
+    'This will help to distinguish between configurations when sharing it.')
 
 print('Next, please give me the video URL or ID (the part after "/watch?v=" or "youtu.be/", looks like "vL2oRzWrSgE")')
-p = ask('Video ID').replace('//', '').split('/')  # Could be ['video_id'], ['https:youtube.com', 'watch?v=Video_ID'] or ['https:youtu.be','fkjdsjkfgadsfk']
+# Could be ['video_id'], ['https:youtube.com', 'watch?v=Video_ID'] or ['https:youtu.be','fkjdsjkfgadsfk']
+p = ask('Video ID').replace('//', '').split('/')
 if len(p) == 1:
     config['videoID'] = p[0]
 else:
@@ -92,7 +95,8 @@ if mode == 'auto':
     print('Now, I need you to give me the characters.')
     count = 0
     while True:
-        name = ask(f'Character name: ([{alphabeeet[count]}]) (Press return/enter to skip)', "")
+        name = ask(
+            f'Character name: ([{alphabeeet[count]}]) (Press return/enter to skip)', "")
         if name == "":
             break
         config['characters'][alphabeeet[count]] = name

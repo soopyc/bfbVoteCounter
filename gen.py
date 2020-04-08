@@ -178,7 +178,8 @@ class Fetchers:
         elif temp.status_code == 400:
             for i in r["error"]["errors"]:
                 if i["reason"] == "keyInvalid":
-                    raise InvalidToken('The token is invalid. Please check and try again.')
+                    raise InvalidToken(
+                        'The token is invalid. Please check and try again.')
         if len(r["items"]) == 0:
             raise VideoNotFoundException(f"Video with ID {vid} not found.")
         for i in r["items"]:

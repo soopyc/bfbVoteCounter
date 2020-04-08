@@ -294,8 +294,10 @@ def main():
             stats['votes']['deadlined'] += 1  # Deadlined vote doesn't count.
             # noinspection PyUnboundLocalVariable
             if len(vote_alph) != 0 and vote in stats['alphs']:
-                stats['votes']['characters'][vote]['deadlined'] += 1  # Add 1 to the deadline count for the character
-                stats['votes']['characters'][vote]['total'] += 1  # Add 1 to the character's total vote count.
+                # Add 1 to the deadline count for the character
+                stats['votes']['characters'][vote]['deadlined'] += 1
+                # Add 1 to the character's total vote count.
+                stats['votes']['characters'][vote]['total'] += 1
             continue
         elif vote not in stats['alphs']:
             # Check if vote is in alphs, better ngl, less bugs.
@@ -371,7 +373,8 @@ def main():
     genbr()
     sayfill("-- CHARACTERS --")
     fchar = stats["votes"]["characters"]  # (UNOFFICIAL) Final character count
-    sorted_chars = [ret_char[1] for ret_char in sorted(fchar.items(), key=lambda keya: (keya[0], keya[1]['valid']))]
+    sorted_chars = [ret_char[1] for ret_char in sorted(
+        fchar.items(), key=lambda keya: (keya[0], keya[1]['valid']))]
     for i in sorted_chars:
         sayfill(f"{i['name']}".ljust(15) +
                 f'{Fore.WHITE}:{i["total"]}'.ljust(15) +
@@ -379,8 +382,10 @@ def main():
                 f'{Fore.YELLOW}Shiny:{i["shiny"]}'.ljust(20) +
                 f'{Fore.RED}Dead.L:{i["deadlined"]}')
     genbr()
-    sayfill(f"VideoTime: {datetime.fromtimestamp(stats['video']['publishTStamp'])}")
-    sayfill(f"Deadline : {datetime.fromtimestamp(stats['video']['publishTStamp']+config['deadline'])}")
+    sayfill(
+        f"VideoTime: {datetime.fromtimestamp(stats['video']['publishTStamp'])}")
+    sayfill(
+        f"Deadline : {datetime.fromtimestamp(stats['video']['publishTStamp']+config['deadline'])}")
     ############################################################
     # End session monitorings
     requests.post(
