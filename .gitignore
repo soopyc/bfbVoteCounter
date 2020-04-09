@@ -25,3 +25,7 @@ logs/
 # GitPod stuff
 index.html 
 gitlogs.txt 
+ 
+ 
+# Windows stuff 
+desktop.ini 

@@ -10,11 +10,30 @@ REM pyinstaller --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-
 REM mv __pyinst__/dist/upgrader.exe __pyinst__/
 
 REM ## Using pyenv shit
-c:\Users\administrator\.pyenv\pyenv-win\versions\3.8.0\Scripts\pyinstaller.exe --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-level DEBUG --onefile --noupx counter.py --hidden-import=jinxed.terminfo.vtwin10
-REM -i __pyinst__/counter.ico (disabled because fuck the virus detection)
-c:\Users\administrator\.pyenv\pyenv-win\versions\3.8.0\Scripts\pyinstaller.exe --distpath __pyinst__/dist --workpath __pyinst__/build -y --log-level DEBUG --onefile --noupx configGen.py
+c:\Users\administrator\.pyenv\pyenv-win\versions\3.8.0\Scripts\pyinstaller.exe ^
+--distpath __pyinst__/ ^
+--workpath __pyinst__/build ^
+-y --log-level DEBUG ^
+--onefile --noupx counter.py ^
+--hidden-import=jinxed.terminfo.ansicon ^
+--hidden-import=jinxed.terminfo.vtwin10 ^
+--hidden-import=jinxed.terminfo.xterm ^
+--hidden-import=jinxed.terminfo.xterm_256color ^
+--hidden-import=jinxed.terminfo.xterm_256colors ^
+-i __pyinst__/counter.ico
+REM (disabled because fuck the virus detection)
 
-mv __pyinst__/dist/configGen.exe __pyinst__/
-mv __pyinst__/dist/counter.exe __pyinst__/
+
+c:\Users\administrator\.pyenv\pyenv-win\versions\3.8.0\Scripts\pyinstaller.exe ^
+--distpath __pyinst__/ ^
+--workpath __pyinst__/build ^
+-y --log-level DEBUG ^
+--onefile --noupx configGen.py
+
+rem mv __pyinst__/dist/configGen.exe __pyinst__/
+rem mv __pyinst__/dist/counter.exe __pyinst__/
 
 cp config.json __pyinst__/dist/config.json
+
+REM Jinxed location
+REM C:\Users\Administrator\.pyenv\pyenv-win\versions\3.8.0\Lib\site-packages\jinxed\terminfo
