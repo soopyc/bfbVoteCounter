@@ -17,7 +17,7 @@ import gen
 
 init_time = time.time()
 t = Terminal()
-version = ("1", "0", "0")
+version = ("1", "1-alpha", "rewrite-3")
 ver = "%s.%s.%s" % version
 
 # Parse arguments
