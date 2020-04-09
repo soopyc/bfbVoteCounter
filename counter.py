@@ -228,6 +228,8 @@ class Fns:
         )
         if sbb:
             return keyid
+        else:
+            return None
 
     @staticmethod
     def prerun_check():
