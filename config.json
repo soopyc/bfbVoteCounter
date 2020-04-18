@@ -1,34 +1,15 @@
 {
-  "info": "bfb 16 rc debut config",
-  "videoID": "gs3lqEJHSnA",
-  "token": "AIzaSyDD2Y-CM7yKTTLJb7WyTc2NJR2djv28TY4",
-  "characters": {
-    "a": "9 ball",
-    "b": "Anchor",
-    "c": "Avocado ",
-    "d": "Battery",
-    "e": "Blender",
-    "f": "Boom mic",
-    "g": "Camera",
-    "h": "Chapboard",
-    "i": "Conch Shell",
-    "j": "Discy",
-    "k": "Income Tax Return Document",
-    "l": "Kitchen sink",
-    "m": "Leek",
-    "n": "Nonexisty",
-    "o": "Onigiri",
-    "p": "PDA",
-    "q": "Price Tag",
-    "r": "Rubber Spatula",
-    "s": "Salt Lamp",
-    "t": "Scissors",
-    "u": "Shampoo",
-    "v": "Shopping Cart",
-    "w": "Snare Drum",
-    "x": "Tape",
-    "y": "VHSy",
-    "z": "Winner"
-  },
-  "deadline": 172800
+    "info": "bfb 17 saving config",
+    "videoID": "oav0TXI6bqc",
+    "token": "AIzaSyDD2Y-CM7yKTTLJb7WyTc2NJR2djv28TY4",
+    "characters": {
+        "a": "Balloony",
+        "b": "Bubble",
+        "c": "Gelatin",
+        "d": "Leafy",
+        "e": "Lollipop",
+        "f": "Ruby",
+        "g": "Tearbrop"
+    },
+    "deadline": 172800
 }

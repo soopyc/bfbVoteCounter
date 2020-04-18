@@ -398,7 +398,7 @@ def get_votes():
                 "Comments: [{}/{}] ({}%)".format(
                     comment_counts,
                     video["comments"],
-                    round(int(comment_counts) / int(video["comments"]), 3),
+                    round(int(comment_counts) / int(video["comments"])*100, 3),
                 ).ljust(35) + f"Est.QuotaUsage: {e_qusage}".ljust(25) +
                 f"Elap.Time: {round(time.time() - get_starttime, 3)}s".ljust(
                     25),
@@ -455,6 +455,8 @@ def count_votes():
             # Check if its a character
             if len(try_vote) != 0:
                 # oh it is a char, gonna add it to the global counter.
+                while try_vote[-1] == ' ':
+                    try_vote.remove(try_vote[-1])
                 characters[try_vote[-1]]["total"] += 1
         else:
             continue
