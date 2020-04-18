@@ -1,5 +1,7 @@
 version = 1
 
+exclude_patterns = ["dumpsters_n_files"]
+
 [[analyzers]]
 name = "python"
 enabled = true
