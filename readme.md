@@ -4,7 +4,11 @@
 
 # BFB Votes Collector
 
-Rewriting in progress. Watch this repo for changes. Code currently is half
-broken but its too messy.
+Rewrited code
+
+Misses a lot of votes. Currently debugging. Please do not use this, but it would still be fairly accurate.
 
 Link to the branch: https://github.com/kcomain/bfbVoteCounter/tree/rewrite-1
+
+# Legal
+wip
