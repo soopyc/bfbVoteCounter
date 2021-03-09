@@ -557,8 +557,8 @@ def del_stuff():
             for filename in dire:
                 try:
                     os.remove(i + filename)
-                except:
-                    print(t.bright_yellow(f"Cannot remove file {filename}."))
+                except Exception as e:
+                    print(t.bright_yellow(f"Cannot remove file {filename}: {e}"))
                 else:
                     print(
                         t.bright_green(
